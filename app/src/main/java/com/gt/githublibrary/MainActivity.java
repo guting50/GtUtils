@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "CODE_CAMERA : 允许", Toast.LENGTH_LONG).show();
             }
 
+            @Override
             public void onRefuseGranted() {
                 Toast.makeText(MainActivity.this, "CODE_CAMERA : 拒绝", Toast.LENGTH_LONG).show();
             }
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "CODE_RECORD_AUDIO : 允许", Toast.LENGTH_LONG).show();
             }
 
+            @Override
             public void onRefuseGranted() {
                 Toast.makeText(MainActivity.this, "CODE_RECORD_AUDIO : 拒绝", Toast.LENGTH_LONG).show();
             }
