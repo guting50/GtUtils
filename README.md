@@ -37,8 +37,14 @@ floatingeditor：浮动编辑器，在键盘上面方显示
   PermissionUtils.requestPermission(this, PermissionUtils.CODE_CAMERA, new PermissionUtils.PermissionGrant() {
       @Override
       public void onPermissionGranted(int... requestCode) {
-          Toast.makeText(MainActivity.this, "CODE_CAMERA : " + ((requestCode[0] == -1) ? "已拒绝" : "已允许"), Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, "CODE_CAMERA : 允许", Toast.LENGTH_LONG).show();
       }
+
+      @Override
+      public void onRefuseGranted() {
+        Toast.makeText(MainActivity.this, "CODE_CAMERA : 拒绝", Toast.LENGTH_LONG).show();
+      }
+      
   });
 ```
 #### 设置拒绝后的弹窗提示语  默认提示语：没有此权限，无法开启这个功能，请开启权限：摄像头
