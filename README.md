@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/guting50/MyGtUtils.svg)](https://jitpack.io/#guting50/MyGtUtils)
+[![](https://jitpack.io/v/guting50/GtUtils.svg)](https://jitpack.io/#guting50/MyGtUtils)
 [![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15) 
 [![作者](https://img.shields.io/badge/%E4%BD%9C%E8%80%85-guting50-brightgreen.svg)](https://github.com/guting50)
 
@@ -29,7 +29,7 @@ floatingeditor：浮动编辑器，在键盘上面方显示
 然后，将库添加到模块中 build.gradle
 ```Xml
     dependencies {
-        implementation 'com.github.guting50:MyGtUtils:Tag'
+        implementation 'com.github.guting50:GtUtils:Tag'
     }
 ```
 #### PermissionUtils 的使用
