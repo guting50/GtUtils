@@ -18,10 +18,10 @@
         android:layout_height="100dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="100dp"
-        app:solid_color="@color/colorPrimary"
-        app:corners_radius_right_top="100dp"
         app:corners_radius_left_bottom="100dp"
-        app:solid_gradual_change_orientation="horizontal"/>
+        app:corners_radius_right_top="100dp"
+        app:solid_color="@color/colorPrimary"
+        app:solid_gradual_change_orientation="horizontal" />
 
     <com.gt.utils.view.FlowLayout
         android:id="@+id/fl_flow"
@@ -38,13 +38,22 @@
         android:layout_height="200dp"
         android:layout_marginLeft="300dp"
         app:progress_size="1dp"
-        app:seek_orientation="vertical"/>
+        app:seek_orientation="vertical" />
 
     <Button
-        android:layout_marginTop="230dp"
-        android:text="shosEdit"
-        android:onClick="bnOnSeClick"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="230dp"
+        android:onClick="bnOnSeClick"
+        android:text="shosEdit" />
+
+    <com.gt.utils.view.CircleButtonView
+        android:id="@+id/circle_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="500dp"
+        app:maxTime="3"
+        app:minTime="2" />
 
 </FrameLayout>

@@ -74,4 +74,11 @@
         <attr name="flMaxRows" format="integer" /><!--最大行数-->
         <attr name="android:gravity" /><!--layout_gravity-->
     </declare-styleable>
+
+    <declare-styleable name="CircleButtonView">
+        <attr name="minTime" format="integer" />
+        <attr name="maxTime" format="integer" />
+        <attr name="progressColor" format="color" />
+        <attr name="progressWidth" format="dimension" />
+    </declare-styleable>
 </resources>

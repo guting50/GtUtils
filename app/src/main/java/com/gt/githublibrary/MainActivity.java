@@ -16,10 +16,12 @@ import com.gt.utils.floatingeditor.EditorCallback;
 import com.gt.utils.floatingeditor.FloatEditorActivity;
 import com.gt.utils.floatingeditor.InputCheckRule;
 import com.gt.utils.PermissionUtils;
+import com.gt.utils.view.CircleButtonView;
 import com.gt.utils.view.FlowLayout;
 
 public class MainActivity extends AppCompatActivity {
     FlowLayout fl_flow;
+    CircleButtonView circleButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +37,29 @@ public class MainActivity extends AppCompatActivity {
             tv.setText("测试" + i);
             fl_flow.addView(tv);
         }
+        circleButton = findViewById(R.id.circle_button);
+        circleButton.setOnClickListener(new CircleButtonView.OnClickListener() {
+            @Override
+            public void onClick() {
+                Toast.makeText(MainActivity.this,"onClick",Toast.LENGTH_LONG).show();
+            }
+        });
+        circleButton.setOnLongClickListener(new CircleButtonView.OnLongClickListener() {
+            @Override
+            public void onLongClick() {
+                Toast.makeText(MainActivity.this,"onLongClick",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNoMinRecord(int currentTime) {
+                Toast.makeText(MainActivity.this,"onNoMinRecord",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onRecordFinished() {
+                Toast.makeText(MainActivity.this,"onRecordFinished",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void bnOnRpClick(View view) {

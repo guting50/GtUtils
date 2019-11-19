@@ -1,4 +1,4 @@
-#Mon Nov 18 15:44:48 CST 2019
+#Tue Nov 19 17:47:08 CST 2019
 base.0=D\:\\project\\GitHubLibrary\\GtUtils\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
 renamed.0=classes.dex
