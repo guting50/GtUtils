@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main_layout);
         fl_flow = findViewById(R.id.fl_flow);
         for (int i = 0; i < 10; i++) {
