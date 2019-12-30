@@ -349,7 +349,7 @@ public class MuchThreadDown {
 
     public static void main(String[] args) {
         try {
-            new MuchThreadDown("http://img1.kuaimashi.com/69_1526640731373.mp4", "D:/video/").isShowLog(true).download(new OnDownloadListener() {
+            new MuchThreadDown("https://dldir1.qq.com/weixin/android/weixin7010android1580.apk", "D:/video/").isShowLog(true).download(new OnDownloadListener() {
                 @Override
                 protected void onDownloadComplete(String name, String url, String filePath) {
                     System.out.println("下载成功==" + "url:" + url);
