@@ -80,6 +80,10 @@ public class MuchThreadDown {
      * @param listener 下载回调监听
      */
     public void download(OnDownloadListener listener) {
+        download(false, listener);
+    }
+
+    public void download(final boolean isAlone, OnDownloadListener listener) {
         this.downloadListener = listener;
         SCHEDULEDTHREADPOOL.execute(new Runnable() {
             @Override
@@ -116,7 +120,7 @@ public class MuchThreadDown {
                          * 将下载任务分配给每个线程
                          */
                         int blockSize = 1024 * 3000;//每个线程下载的数量.最多3M;
-                        if (connectionLength <= blockSize) {
+                        if (isAlone || connectionLength <= blockSize) {
                             threadCount = 1;
                         } else {
                             threadCount = connectionLength % blockSize == 0 ? connectionLength / blockSize : connectionLength / blockSize + 1;
@@ -307,7 +311,7 @@ public class MuchThreadDown {
 
     public static void main(String[] args) {
         try {
-            new MuchThreadDown("http://img1.kuaimashi.com/69_1526641455014.mp4", "D:/video/").download(new OnDownloadListener() {
+            new MuchThreadDown("http://img1.kuaimashi.com/69_1526640731373.mp4", "D:/video/").download(true,new OnDownloadListener() {
                 @Override
                 protected void onDownloadComplete(String name, String url, String filePath) {
                     System.out.println("下载成功==" + "url:" + url);
@@ -323,7 +327,7 @@ public class MuchThreadDown {
                     System.out.println("下载中==" + "url:" + url + ":（" + completed + "||" + endIndex + "）");
                 }
             });
-            new MuchThreadDown("http://img1.kuaimashi.com/69_1526640731373.mp4", "D:/video/").download(new OnDownloadListener() {
+            /*new MuchThreadDown("http://img1.kuaimashi.com/69_1526640731373.mp4", "D:/video/").download(new OnDownloadListener() {
                 @Override
                 protected void onDownloadComplete(String name, String url, String filePath) {
                     System.out.println("下载成功==" + "url:" + url);
@@ -346,7 +350,7 @@ public class MuchThreadDown {
                 protected void onDownloadComplete(String name, String url, String filePath) {
                     System.out.println("下载成功==" + "url:" + url);
                 }
-            });
+            });*/
         } catch (Exception e) {
             e.printStackTrace();
         }
