@@ -63,6 +63,8 @@ public class MuchThreadDown {
      */
     private int completedTotalLength;
 
+    private boolean showLog = false, isAlone = false;
+
     public MuchThreadDown(String fileUrl) {
         this(fileUrl, Environment.getExternalStorageDirectory() + File.separator + "kms" + File.separator + "image");
     }
@@ -82,17 +84,24 @@ public class MuchThreadDown {
         }
     }
 
+    public MuchThreadDown isAlone(boolean isAlone) {
+        this.isAlone = isAlone;
+        return this;
+    }
+
+    public MuchThreadDown isShowLog(boolean showLog) {
+        this.showLog = showLog;
+        return this;
+    }
+
     /**
      * 下载文件
      *
      * @param listener 下载回调监听
      */
     public void download(OnDownloadListener listener) {
-        download(false, listener);
-    }
-
-    public void download(final boolean isAlone, OnDownloadListener listener) {
         this.downloadListener = listener;
+        startTime = System.currentTimeMillis();
         SCHEDULEDTHREADPOOL.execute(new Runnable() {
             @Override
             public void run() {
@@ -122,7 +131,6 @@ public class MuchThreadDown {
                                 return;
                             }
                         }
-                        System.out.println("$$" + getFileName(url) + "$$ 总长度" + fileTotalLength);
                         filePath = file.getPath();
                         /*
                          * 将下载任务分配给每个线程
@@ -133,14 +141,35 @@ public class MuchThreadDown {
                         } else {
                             threadCount = fileTotalLength % blockSize == 0 ? fileTotalLength / blockSize : fileTotalLength / blockSize + 1;
                         }
+                        //加载下载位置的文件
+                        File downThreadFile = new File(targetFilePath, "downThread_" + getFileName(url).split("\\.")[0] + "_.dt");
+                        RandomAccessFile downThreadStream = new RandomAccessFile(downThreadFile, "rwd");
+                        String tempStr = downThreadStream.readLine();
+                        downThreadStream.close();
+                        String[] tempList = tempStr == null ? null : tempStr.split("\\*");
                         for (int threadId = 0; threadId < threadCount; threadId++) {//为每个线程分配任务
                             int startIndex = threadId * blockSize; //线程开始下载的位置
                             int endIndex = (threadId + 1) * blockSize; //线程结束下载的位置
                             if (threadId == (threadCount - 1)) {  //如果是最后一个线程,将剩下的文件全部交给这个线程完成
                                 endIndex = fileTotalLength;
                             }
-                            SCHEDULEDTHREADPOOL.execute(new DownLoadRunnable(threadId, startIndex, endIndex));
+
+                            int completed = 0;
+                            if (tempList != null && tempList.length == threadCount) {
+                                completed = Integer.parseInt(tempList[threadId].split("&")[2]);
+                            } else {
+                                String tempStrItem = startIndex + "&" + endIndex + "&" + completed + (threadId == threadCount - 1 ? "" : "*");
+                                RandomAccessFile stream = new RandomAccessFile(downThreadFile, "rwd");
+                                stream.seek(threadId * (fileTotalLength + "").length() * 4);
+                                stream.write(tempStrItem.getBytes("UTF-8"));
+                                stream.close();
+                            }
+
+                            completedTotalLength += completed;
+//                            if (endIndex - startIndex > completed) // 已下载完的就不用再开线程下载了
+                            SCHEDULEDTHREADPOOL.execute(new DownLoadRunnable(threadId, startIndex, endIndex, completed));
                         }
+                        Log("======" + getFileName(url) + "======" + "总共已完成 " + completedTotalLength + "  总长度: " + fileTotalLength);
                     } else {
                         if (downloadListener != null) {
                             downloadListener.onDownloadError(fileUrl, new Exception(code + ""));
@@ -163,63 +192,52 @@ public class MuchThreadDown {
         private int endIndex;
         private int completed;
 
-        public DownLoadRunnable(int threadId, int startIndex, int endIndex) {
+        public DownLoadRunnable(int threadId, int startIndex, int endIndex, int completed) {
             this.threadId = threadId;
             this.startIndex = startIndex;
             this.endIndex = endIndex;
+            this.completed = completed;
         }
 
         @Override
         public void run() {
-            if (completeNum == 0) {
-                startTime = System.currentTimeMillis();
-            }
             try {
                 //分段请求网络连接,分段将文件保存到本地.
                 URL url = new URL(MuchThreadDown.this.fileUrl);
-                System.out.println("$$" + getFileName(url) + "$$" + "线程" + threadId + "开始下载");
-
-                //加载下载位置的文件
-                File downThreadFile = new File(targetFilePath, "downThread_" + getFileName(url).split("\\.")[0] + "_" + threadId + ".dt");
-                RandomAccessFile downThreadStream = new RandomAccessFile(downThreadFile, "rwd");
-                String startIndex_str = downThreadStream.readLine();
-                if (null != startIndex_str && !"".equals(startIndex_str)) {
-                    int start_index = Integer.parseInt(startIndex_str) - 1;
-                    completedTotalLength += start_index - startIndex;
-                    this.startIndex = start_index;//设置下载起点
-                }
+                Log("======" + getFileName(url) + "======" + "线程" + threadId + "开始下载");
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setConnectTimeout(100000);
 
                 //设置分段下载的头信息。  Range:做分段数据请求用的。格式: Range bytes=0-1024  或者 bytes:0-1024
-                connection.setRequestProperty("Range", "bytes=" + startIndex + "-" + endIndex);
+                connection.setRequestProperty("Range", "bytes=" + (startIndex + completed) + "-" + endIndex);
 
-                System.out.println("$$" + getFileName(url) + "$$" + "线程_" + threadId + "的下载起点是 " + startIndex + "  下载终点是: " + endIndex);
-                System.out.println("$$" + getFileName(url) + "$$" + "总共已完成 " + completedTotalLength + "  总长度: " + fileTotalLength);
+                Log("======" + getFileName(url) + "======" + "线程_" + threadId + "的下载起点是 " + startIndex + "  下载终点是: " + endIndex + " 已完成：" + completed);
 
                 if (connection.getResponseCode() == 206) {//200：请求全部资源成功， 206代表部分资源请求成功
                     InputStream inputStream = connection.getInputStream();//获取流
                     RandomAccessFile randomAccessFile = new RandomAccessFile(
                             new File(filePath + ".bak"), "rw");//获取前面已创建的文件.
-                    randomAccessFile.seek(startIndex);//文件写入的开始位置.
+                    randomAccessFile.seek(startIndex + completed);//文件写入的开始位置.
 
+                    //加载下载位置的文件
+                    File downThreadFile = new File(targetFilePath, "downThread_" + getFileName(url).split("\\.")[0] + "_.dt");
+                    RandomAccessFile downThreadStream = new RandomAccessFile(downThreadFile, "rwd");
                     /*
                      * 将网络流中的文件写入本地
                      */
                     byte[] buffer = new byte[5 * 1024];
                     int length = -1;
-                    int total = 0;//记录本次下载文件的大小
                     while ((length = inputStream.read(buffer)) != -1) {
                         randomAccessFile.write(buffer, 0, length);
-                        total += length;
+                        completed += length;
                         /*
                          * 将当前现在到的位置保存到文件中
                          */
-                        downThreadStream.seek(0);
-                        downThreadStream.write((startIndex + total + "").getBytes("UTF-8"));
-                        completed = startIndex + total;
+                        int seek = (threadId * (fileTotalLength + "").length() * 4) + (startIndex + "&" + endIndex + "&").length();
+                        downThreadStream.seek(seek);
+                        downThreadStream.write((completed + (threadId == threadCount - 1 ? "" : "*")).getBytes("UTF-8"));
                         completedTotalLength += length;
                         if (downloadListener != null) {
                             downloadListener.onDownloads("《threadId:" + threadId + "》" + fileUrl, completedTotalLength, fileTotalLength);
@@ -228,24 +246,23 @@ public class MuchThreadDown {
 
                     inputStream.close();
                     randomAccessFile.close();
-                    connection.disconnect();
                     downThreadStream.close();
-                    System.out.println("$$" + getFileName(url) + "$$" + "线程" + threadId + "下载完毕");
+                    connection.disconnect();
+                    Log("======" + getFileName(url) + "======" + "线程" + threadId + "下载完毕");
                     completeNum++;
+//                    if (completedTotalLength >= fileTotalLength) {
                     if (completeNum == threadCount) {
                         if (downloadListener != null) {
                             downloadListener.onDownloadComplete(getFileName(url), fileUrl, filePath);
-                            System.out.println("$$" + getFileName(url) + "$$" + "耗时" + format(System.currentTimeMillis() - startTime));
+                            Log("======" + getFileName(url) + "======" + "耗时" + format(System.currentTimeMillis() - startTime));
                             new File(filePath + ".bak").renameTo(new File(filePath)); // 重命名
 
-                            for (int i = 0; i < threadCount; i++) { // 下载完成后统一删除临时文件
-                                File downTempFile = new File(targetFilePath, "downThread_" + getFileName(url).split("\\.")[0] + "_" + i + ".dt");
-                                cleanTemp(downTempFile);//删除临时文件
-                            }
+                            cleanTemp(downThreadFile);//删除临时文件
                         }
                     }
                 } else {
-                    System.out.println("$$" + getFileName(url) + "$$" + "响应码是" + connection.getResponseCode() + ". 服务器不支持多线程下载");
+                    completeNum++;
+                    Log("======" + getFileName(url) + "======" + "线程" + threadId + "响应码是" + connection.getResponseCode() + ". 服务器不支持多线程下载");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -256,6 +273,10 @@ public class MuchThreadDown {
         }
     }
 
+    private void Log(String msg) {
+        if (showLog)
+            System.out.println(msg);
+    }
 
     // 将毫秒数格式化
     private String format(long elapsed) {
@@ -309,7 +330,7 @@ public class MuchThreadDown {
          */
         protected void onDownloadError(String url, Exception e) {
             Log.e("onDownloadError", url + "下载失败");
-//            System.out.println("onDownloadError:" + url + "下载失败");
+//            Log("onDownloadError:" + url + "下载失败");
             e.printStackTrace();
         }
 
@@ -322,13 +343,13 @@ public class MuchThreadDown {
          */
         protected void onDownloads(String url, int completed, int endIndex) {
             Log.i("onDownloads", url + ":（" + completed + "||" + endIndex + "）");
-//            System.out.println("onDownloads:" + url + ":（" + completed + "||" + endIndex + "）");
+//            Log("onDownloads:" + url + ":（" + completed + "||" + endIndex + "）");
         }
     }
 
     public static void main(String[] args) {
         try {
-            new MuchThreadDown("http://img1.kuaimashi.com/69_1526640731373.mp4", "D:/video/").download(new OnDownloadListener() {
+            new MuchThreadDown("http://img1.kuaimashi.com/69_1526640731373.mp4", "D:/video/").isShowLog(true).download(new OnDownloadListener() {
                 @Override
                 protected void onDownloadComplete(String name, String url, String filePath) {
                     System.out.println("下载成功==" + "url:" + url);
