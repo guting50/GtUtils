@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/guting50/GtUtils.svg)](https://jitpack.io/#guting50/MyGtUtils)
+[![](https://jitpack.io/v/guting50/GtUtils.svg)](https://jitpack.io/#guting50/GtUtils)
 [![API](https://img.shields.io/badge/API-15%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=15) 
 [![作者](https://img.shields.io/badge/%E4%BD%9C%E8%80%85-guting50-brightgreen.svg)](https://github.com/guting50)
 
