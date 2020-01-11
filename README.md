@@ -15,6 +15,7 @@ TryLightStatus：修改状态栏背景色
 NestedRecyclerView、FlowLayout：流式布局，当一行显示不下自动跳转到第二行  
 HaveHeaderRecyclerView：仿美团联动ListView  
 floatingeditor：浮动编辑器，在键盘上面方显示
+GsonUtils：解决int类型转换成double
 
 #### 依赖
 将其添加到根build.gradle文件（而不是模块build.gradle文件）中：
@@ -81,6 +82,12 @@ static void clearAllCache(Context context);
           System.out.println("下载中==" + "url:" + url + ":（" + completed + "||" + endIndex + "）");
       }
   });
+  //是否显示日志
+  public MuchThreadDown isShowLog(boolean showLog);
+  //是否单线程下载
+  public MuchThreadDown isAlone(boolean alone);
+  //是否覆盖下载
+  public MuchThreadDown isCover(boolean cover);
 ````
 
 #### AntiShake、OnNoDoubleClickListener
