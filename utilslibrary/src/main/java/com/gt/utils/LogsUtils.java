@@ -19,7 +19,7 @@ import java.util.Map;
  * Created by Administrator on 2017/6/12.
  */
 
-public class ErrorLogsUtils {
+public class LogsUtils {
 
     private static final String KMS_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath() + File.separator + "gt";
 
