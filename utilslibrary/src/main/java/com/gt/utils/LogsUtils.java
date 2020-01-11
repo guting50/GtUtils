@@ -21,13 +21,27 @@ import java.util.Map;
 
 public class LogsUtils {
 
-    private static final String KMS_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath() + File.separator + "gt";
+    private static final String KMS_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath() + File.separator + "gt" + File.separator + "log";
 
-    public static void writeLog(Context ct, String error) {
-        writeLog(ct, "", error);
+    public static void writeInfoLog(Context ct, String error) {
+        writeLog(ct, "", "info", error);
     }
 
-    public static void writeLog(Context ct, String id, String context) {
+    public static void writeInfoLog(Context ct, String id, String error) {
+        writeLog(ct, id, "info", error);
+    }
+
+    public static void writeEooroLog(Context ct, String error) {
+        writeLog(ct, "", "error", error);
+        writeLog(ct, "", "info", error);
+    }
+
+    public static void writeEooroLog(Context ct, String id, String error) {
+        writeLog(ct, id, "error", error);
+        writeLog(ct, id, "info", error);
+    }
+
+    private static void writeLog(Context ct, String id, String pathName, String context) {
         String versionName = "";
         int versioncode = 0;
         try {
@@ -46,7 +60,7 @@ public class LogsUtils {
                 + android.os.Build.VERSION.RELEASE);
         param.put("version", version);
         param.put("id", id);
-        writeFileToSD(ct, new Gson().toJson(param) + "[error:" + context + "]");
+        writeFileToSD(ct, pathName, new Gson().toJson(param) + "[error:" + context + "]");
     }
 
     /**
@@ -54,7 +68,7 @@ public class LogsUtils {
      *
      * @param context
      */
-    public static void writeFileToSD(Context ct, final String context) {
+    public static void writeFileToSD(Context ct, final String pathName, final String context) {
         PermissionUtils.requestPermission(ct, PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE, new PermissionUtils.PermissionGrant() {
             @Override
             public void onPermissionGranted(int... requestCode) {
@@ -66,18 +80,18 @@ public class LogsUtils {
                     Log.e("TestFile", "SD card is not avaiable/writeable icon_xingge_right now.");
                     return;
                 }
-                writeFile(context);
+                writeFile(pathName, context);
             }
         });
     }
 
-    private static void writeFile(final String context) {
+    private static void writeFile(String pathName, final String context) {
         try {
-            File path = new File(KMS_DIR + File.separator + "log");
-            String str = "gt_" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + ".log";
+            File path = new File(KMS_DIR);
+            String str = "gt_" + pathName + "_" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + ".log";
             File file = new File(path.getPath() + File.separator + str);
             if (!path.exists()) {
-                path.mkdir();
+                path.mkdirs();
             }
             if (!file.exists()) {
                 file.createNewFile();
@@ -104,7 +118,7 @@ public class LogsUtils {
                 + android.os.Build.VERSION.RELEASE);
         param.put("version", version);
         param.put("id", id);
-        writeFile(new Gson().toJson(param) + "[error:" + context + "]");
+        writeFile("error", new Gson().toJson(param) + "[error:" + context + "]");
     }
 
     public static void main(String[] a) {
