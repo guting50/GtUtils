@@ -63,7 +63,7 @@ public class MuchThreadDown {
      */
     private int completedTotalLength;
 
-    private boolean showLog = false, isAlone = false;
+    private boolean showLog = false, alone = false, cover = false;
 
     public MuchThreadDown(String fileUrl) {
         this(fileUrl, Environment.getExternalStorageDirectory() + File.separator + "kms" + File.separator + "image");
@@ -84,13 +84,18 @@ public class MuchThreadDown {
         }
     }
 
-    public MuchThreadDown isAlone(boolean isAlone) {
-        this.isAlone = isAlone;
+    public MuchThreadDown isAlone(boolean alone) {
+        this.alone = alone;
         return this;
     }
 
     public MuchThreadDown isShowLog(boolean showLog) {
         this.showLog = showLog;
+        return this;
+    }
+
+    public MuchThreadDown isCover(boolean cover) {
+        this.cover = cover;
         return this;
     }
 
@@ -124,19 +129,23 @@ public class MuchThreadDown {
                             path.mkdirs();
                         }
                         File file = new File(targetFilePath, getFileName(url));
+                        filePath = file.getPath();
                         if (file.exists()) {
-                            //如果这个文件存在，不在重复下载。
-                            if (downloadListener != null) {
-                                downloadListener.onDownloadComplete(getFileName(url), fileUrl, file.getPath());
-                                return;
+                            if (!cover) {
+                                //如果这个文件存在，并且不覆盖，不再重复下载。
+                                if (downloadListener != null) {
+                                    downloadListener.onDownloadComplete(getFileName(url), fileUrl, file.getPath());
+                                    return;
+                                }
+                            } else {
+                                file.delete();
                             }
                         }
-                        filePath = file.getPath();
                         /*
                          * 将下载任务分配给每个线程
                          */
                         int blockSize = 1024 * 10000;//每个线程下载的数量.最多10M;
-                        if (isAlone || fileTotalLength <= blockSize) {
+                        if (alone || fileTotalLength <= blockSize) {
                             threadCount = 1;
                         } else {
                             threadCount = fileTotalLength % blockSize == 0 ? fileTotalLength / blockSize : fileTotalLength / blockSize + 1;
@@ -349,7 +358,7 @@ public class MuchThreadDown {
 
     public static void main(String[] args) {
         try {
-            new MuchThreadDown("https://dldir1.qq.com/weixin/android/weixin7010android1580.apk", "D:/video/").isShowLog(true).download(new OnDownloadListener() {
+            new MuchThreadDown("https://dldir1.qq.com/weixin/android/weixin7010android1580.apk", "D:/video/").isCover(true).isShowLog(true).download(new OnDownloadListener() {
                 @Override
                 protected void onDownloadComplete(String name, String url, String filePath) {
                     System.out.println("下载成功==" + "url:" + url);

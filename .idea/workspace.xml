@@ -10,15 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="beb9c8da-51ae-496b-b0d2-aedf7c0609ed" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_code_gson_gson_2_8_6_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilslibrary/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/utilslibrary/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/FileUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/MuchThreadDown.java" beforeDir="false" afterPath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/MuchThreadDown.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -59,13 +61,58 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/MuchThreadDown.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="362" column="25" lean-forward="true" selection-start-line="362" selection-start-column="25" selection-end-line="362" selection-end-column="25" />
+            <state relative-caret-position="137">
+              <caret line="133" column="41" lean-forward="true" selection-start-line="133" selection-start-column="41" selection-end-line="133" selection-end-column="41" />
               <folding>
-                <element signature="e#2212#6665#0" expanded="true" />
-                <element signature="e#6664#6665#0" expanded="true" />
-                <element signature="e#11749#11750#0" expanded="true" />
+                <element signature="e#2346#6899#0" expanded="true" />
+                <element signature="e#6898#6899#0" expanded="true" />
+                <element signature="e#12043#12044#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-209">
+              <caret line="7" column="55" lean-forward="true" selection-start-line="7" selection-start-column="55" selection-end-line="7" selection-end-column="55" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/FileUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="416">
+              <caret line="222" column="67" selection-start-line="222" selection-start-column="67" selection-end-line="222" selection-end-column="67" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/DataCleanManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utilslibrary/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="551">
+              <caret line="29" column="41" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -81,7 +128,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>permissionsHint</find>
       <find>onRefuseGranted</find>
       <find>startAnimation</find>
       <find>public</find>
@@ -111,6 +157,7 @@
       <find>System.out.println</find>
       <find>completeNum</find>
       <find>completedTotalLength</find>
+      <find>installApk</find>
     </findStrings>
     <replaceStrings>
       <replace>======</replace>
@@ -136,7 +183,6 @@
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/view/PaintView.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/view/RoundRect.java" />
         <option value="$PROJECT_DIR$/gradle.properties" />
-        <option value="$PROJECT_DIR$/utilslibrary/build.gradle" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/view/flowView/NestedRecyclerView.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/view/flowView/SpaceItemDecoration.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/view/flowView/FlowLayoutManager.java" />
@@ -168,13 +214,15 @@
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/view/CircleButtonView.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gt/githublibrary/MainActivity.java" />
+        <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java" />
+        <option value="$PROJECT_DIR$/utilslibrary/build.gradle" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/FileUtils.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/MuchThreadDown.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1912" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1066" />
@@ -187,26 +235,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="MyGtUtils" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MyGtUtils" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="AndroidView">
         <subPane>
           <expand>
-            <path>
-              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
             <path>
               <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
               <item name="utilslibrary" type="feadf853:AndroidModuleNode" />
@@ -224,18 +256,19 @@
             </path>
             <path>
               <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
-              <item name="utilslibrary" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
-              <item name="utilslibrary" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="xml" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="MyGtUtils" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MyGtUtils" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -255,16 +288,23 @@
     <property name="device.picker.selection" value="X6GNU18308110580" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/test/java" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../StudioProjects/shadowsocks-android-master" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Dependencies" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Signing Configs" />
+    <option name="BUILD_VARIANTS_TAB" value="Build Types" />
+    <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.gt.utils" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.gt.utils" />
       <recent name="com.gt.view" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -394,8 +434,8 @@
     <list>
       <item itemvalue="Android App.app" />
       <item itemvalue="Application.MainActivity" />
-      <item itemvalue="Gradle.D:/project/GitHubLibrary/MyGtUtils/utilslibrary [assembleAndroidTest]" />
       <item itemvalue="Application.MuchThreadDown" />
+      <item itemvalue="Gradle.D:/project/GitHubLibrary/MyGtUtils/utilslibrary [assembleAndroidTest]" />
     </list>
     <recent_temporary>
       <list>
@@ -428,7 +468,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1066" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
@@ -448,7 +488,7 @@
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32939914" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.30760986" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.30686694" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.32832617" />
       <window_info anchor="bottom" id="Android Profiler" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Messages" order="10" />
@@ -494,8 +534,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Desktop/VerticalSeekBarWithText.java" />
-    <entry file="file://D:/sdk/sources/android-28/android/graphics/Canvas.java" />
     <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/view/OnNoDoubleClickListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -550,20 +588,20 @@
     <entry file="file://$PROJECT_DIR$/floatingeditor/src/main/res/layout/view_component_write.xml" />
     <entry file="file://$PROJECT_DIR$/floatingeditor/build.gradle" />
     <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
           <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
         </state>
       </provider>
-      <provider editor-type-id="android-manifest" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
           <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
         </state>
       </provider>
-      <provider editor-type-id="android-manifest" />
     </entry>
     <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/res/values/style.xml">
       <provider selected="true" editor-type-id="text-editor">
@@ -595,13 +633,6 @@
     </entry>
     <entry file="android-dummy://D:/project/GitHubLibrary/GtUtils/utilslibrary/Translations Editor">
       <provider selected="true" editor-type-id="string-resource-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PermissionUtils.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -725,22 +756,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utilslibrary/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/res/xml/gt_utils_provider_paths.xml">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/FileUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="208" column="21" selection-start-line="208" selection-start-column="21" selection-end-line="208" selection-end-column="21" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://D:/sdk/sources/android-28/java/util/concurrent/Executor.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -756,14 +773,49 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilslibrary/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="29" column="41" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/DataCleanManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-209">
+          <caret line="7" column="55" lean-forward="true" selection-start-line="7" selection-start-column="55" selection-end-line="7" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/FileUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="222" column="67" selection-start-line="222" selection-start-column="67" selection-end-line="222" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/MuchThreadDown.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="362" column="25" lean-forward="true" selection-start-line="362" selection-start-column="25" selection-end-line="362" selection-end-column="25" />
+        <state relative-caret-position="137">
+          <caret line="133" column="41" lean-forward="true" selection-start-line="133" selection-start-column="41" selection-end-line="133" selection-end-column="41" />
           <folding>
-            <element signature="e#2212#6665#0" expanded="true" />
-            <element signature="e#6664#6665#0" expanded="true" />
-            <element signature="e#11749#11750#0" expanded="true" />
+            <element signature="e#2346#6899#0" expanded="true" />
+            <element signature="e#6898#6899#0" expanded="true" />
+            <element signature="e#12043#12044#0" expanded="true" />
           </folding>
         </state>
       </provider>

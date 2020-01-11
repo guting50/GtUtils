@@ -220,6 +220,7 @@ public class FileUtils {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
         context.startActivity(intent);
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     /**
