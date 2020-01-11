@@ -107,7 +107,7 @@ public class LogsUtils {
         }
     }
 
-    public static void writeLog(String id, String context) {
+    private static void writeLog(String id, String context) {
         String versionName = "";
         int versioncode = 0;
         final String version = versioncode + "；" + versionName;
