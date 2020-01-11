@@ -208,7 +208,7 @@ public class FileUtils {
      *
      * @param file 文件
      */
-    public void installApk(Context context,File file) {
+    public static void installApk(Context context, File file) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
