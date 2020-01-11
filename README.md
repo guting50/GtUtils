@@ -16,6 +16,7 @@ NestedRecyclerView、FlowLayout：流式布局，当一行显示不下自动跳�
 HaveHeaderRecyclerView：仿美团联动ListView  
 floatingeditor：浮动编辑器，在键盘上面方显示  
 GsonUtils：解决int类型转换成double  
+ErrorLogsUtils：保存日志  
 
 #### 依赖
 将其添加到根build.gradle文件（而不是模块build.gradle文件）中：
