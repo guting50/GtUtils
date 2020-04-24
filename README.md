@@ -148,7 +148,7 @@ static void clearAllCache(Context context);
 ```Xml
   <com.gt.utils.view.GtSeekBar
       android:layout_width="30dp"
-      android:layout_height="145dp
+      android:layout_height="145dp"
       android:layout_marginTop="20dp"
       app:thumb_color="#FF0000"
       app:progress_future_color="#4d5a74"
