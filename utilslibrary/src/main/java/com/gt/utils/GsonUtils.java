@@ -18,6 +18,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 解决int类型转换成double
+ */
 public class GsonUtils {
     public static Gson getGson() {
         Gson gson = new GsonBuilder().create();

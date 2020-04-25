@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 漂浮在键盘上的输入框
+ * 浮动编辑器，在键盘上面方显示
  *
  * @author kevin
  */

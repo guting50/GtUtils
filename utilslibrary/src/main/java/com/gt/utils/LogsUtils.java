@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 保存日志
  * Created by Administrator on 2017/6/12.
  */
 
