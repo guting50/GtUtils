@@ -108,7 +108,7 @@ static void clearAllCache(Context context);
 
 #### BgFrameLayout 的使用
 ```Xml
-  <com.gt.utils.view.BgFrameLayout
+  <com.gt.utils.widget.BgFrameLayout
       android:layout_width="200dp"
       android:layout_height="100dp"
       app:corners_radius="10dp"
@@ -146,7 +146,7 @@ static void clearAllCache(Context context);
 
 #### GtSeekBar 的使用
 ```Xml
-  <com.gt.utils.view.GtSeekBar
+  <com.gt.utils.widget.GtSeekBar
       android:layout_width="30dp"
       android:layout_height="145dp"
       android:layout_marginTop="20dp"
@@ -190,7 +190,7 @@ static void clearAllCache(Context context);
 
 #### PaintView 的使用
 ```Xml
-  <com.gt.utils.view.PaintView
+  <com.gt.utils.widget.PaintView
       android:layout_width="match_parent"
       android:layout_height="match_parent" />
 ```
@@ -233,7 +233,7 @@ NestedRecyclerView是RecyclerView的子类，用法与RecyclerView一样，区�
 ```
 FlowLayout是ViewGroup的子类
 ```xml
-    <com.gt.utils.view.FlowLayout
+    <com.gt.utils.widget.FlowLayout
         android:id="@+id/fl_flow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
