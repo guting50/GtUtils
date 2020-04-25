@@ -1,4 +1,4 @@
-package com.gt.utils.view.listviewlinkage;
+package com.gt.utils.widget.listviewlinkage;
 
 import android.util.SparseArray;
 import android.view.ViewGroup;

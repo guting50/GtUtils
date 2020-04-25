@@ -19,7 +19,7 @@
         android:onClick="bnOnHttpRClick"
         android:text="httpRequest" />
 
-    <com.gt.utils.view.BgFrameLayout
+    <com.gt.utils.widget.BgFrameLayout
         android:id="@+id/aaa"
         android:layout_width="200dp"
         android:layout_height="100dp"
@@ -30,7 +30,7 @@
         app:solid_color="@color/colorPrimary"
         app:solid_gradual_change_orientation="horizontal" />
 
-    <com.gt.utils.view.FlowLayout
+    <com.gt.utils.widget.FlowLayout
         android:id="@+id/fl_flow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         app:flChildSpacingForLastRow="align"
         app:flRowSpacing="10dp" />
 
-    <com.gt.utils.view.GtSeekBar
+    <com.gt.utils.widget.GtSeekBar
         android:layout_width="50dp"
         android:layout_height="200dp"
         android:layout_marginLeft="300dp"
@@ -54,7 +54,7 @@
         android:onClick="bnOnSeClick"
         android:text="shosEdit" />
 
-    <com.gt.utils.view.CircleButtonView
+    <com.gt.utils.widget.CircleButtonView
         android:id="@+id/circle_button"
         android:layout_width="100dp"
         android:layout_height="100dp"

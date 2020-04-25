@@ -1,4 +1,4 @@
-package com.gt.utils.view;
+package com.gt.utils.widget;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -63,11 +63,11 @@ public class LoadingDialog {
 
             closeDialog();
 
-            return dialog = loadingDialog;
+            dialog = loadingDialog;
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
-        return null;
+        return dialog;
     }
 
     /**

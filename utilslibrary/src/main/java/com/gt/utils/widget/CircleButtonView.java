@@ -1,4 +1,4 @@
-package com.gt.utils.view;
+package com.gt.utils.widget;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;

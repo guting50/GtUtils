@@ -15,8 +15,8 @@ import com.gt.utils.floatingeditor.EditorCallback;
 import com.gt.utils.floatingeditor.FloatEditorActivity;
 import com.gt.utils.floatingeditor.InputCheckRule;
 import com.gt.utils.http.RetrofitHelper;
-import com.gt.utils.view.CircleButtonView;
-import com.gt.utils.view.FlowLayout;
+import com.gt.utils.widget.CircleButtonView;
+import com.gt.utils.widget.FlowLayout;
 
 import java.util.HashMap;
 import java.util.Map;

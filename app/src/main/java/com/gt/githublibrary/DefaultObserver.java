@@ -3,7 +3,7 @@ package com.gt.githublibrary;
 import android.util.Log;
 
 import com.google.gson.JsonParseException;
-import com.gt.utils.view.LoadingDialog;
+import com.gt.utils.widget.LoadingDialog;
 
 import org.json.JSONException;
 
