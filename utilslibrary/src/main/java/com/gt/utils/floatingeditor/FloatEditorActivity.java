@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 创建日期：2017/9/13.
+ * 漂浮在键盘上的输入框
  *
  * @author kevin
  */
@@ -86,13 +86,12 @@ public class FloatEditorActivity extends Activity implements View.OnClickListene
     }
 
     /**
-     *
-     * @param context  上下文
-     * @param editorCallback  回调接口
-     * @param holder  编辑框样式
-     * @param checkRule  检验规则 可为null
-     * @param dimAmount  背景透明度
-     * @param isFinishOnTouchOutside  点击空白区域是否关闭编辑框
+     * @param context                上下文
+     * @param editorCallback         回调接口
+     * @param holder                 编辑框样式
+     * @param checkRule              检验规则 可为null
+     * @param dimAmount              背景透明度
+     * @param isFinishOnTouchOutside 点击空白区域是否关闭编辑框
      */
     public static void openEditor(Context context, EditorCallback editorCallback, EditorHolder holder, InputCheckRule checkRule, float dimAmount, boolean isFinishOnTouchOutside) {
         Intent intent = new Intent(context, FloatEditorActivity.class);
@@ -120,12 +119,11 @@ public class FloatEditorActivity extends Activity implements View.OnClickListene
     }
 
     /**
-     *
-     * @param context  上下文
-     * @param editorCallback  回调接口
-     * @param checkRule  检验规则 可为null
-     * @param dimAmount  背景透明度
-     * @param isFinishOnTouchOutside  点击空白区域是否关闭编辑框
+     * @param context                上下文
+     * @param editorCallback         回调接口
+     * @param checkRule              检验规则 可为null
+     * @param dimAmount              背景透明度
+     * @param isFinishOnTouchOutside 点击空白区域是否关闭编辑框
      */
     public static void openDefaultEditor(Context context, EditorCallback editorCallback, InputCheckRule checkRule, float dimAmount, boolean isFinishOnTouchOutside) {
         openEditor(context, editorCallback, DefaultEditorHolder.createDefaultHolder(), checkRule, dimAmount, isFinishOnTouchOutside);

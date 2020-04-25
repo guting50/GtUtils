@@ -2,8 +2,6 @@ package com.gt.githublibrary;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +9,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gt.utils.PermissionUtils;
 import com.gt.utils.floatingeditor.DefaultEditorHolder;
 import com.gt.utils.floatingeditor.EditorCallback;
 import com.gt.utils.floatingeditor.FloatEditorActivity;
 import com.gt.utils.floatingeditor.InputCheckRule;
-import com.gt.utils.PermissionUtils;
+import com.gt.utils.http.RetrofitHelper;
 import com.gt.utils.view.CircleButtonView;
 import com.gt.utils.view.FlowLayout;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     FlowLayout fl_flow;
@@ -41,23 +46,23 @@ public class MainActivity extends AppCompatActivity {
         circleButton.setOnClickListener(new CircleButtonView.OnClickListener() {
             @Override
             public void onClick() {
-                Toast.makeText(MainActivity.this,"onClick",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "onClick", Toast.LENGTH_LONG).show();
             }
         });
         circleButton.setOnLongClickListener(new CircleButtonView.OnLongClickListener() {
             @Override
             public void onLongClick() {
-                Toast.makeText(MainActivity.this,"onLongClick",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "onLongClick", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onNoMinRecord(int currentTime) {
-                Toast.makeText(MainActivity.this,"onNoMinRecord",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "onNoMinRecord", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onRecordFinished() {
-                Toast.makeText(MainActivity.this,"onRecordFinished",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "onRecordFinished", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -86,6 +91,21 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "CODE_RECORD_AUDIO : 拒绝", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void bnOnHttpRClick(View view) {
+        RetrofitHelper.init(this, ApiService.ApiUrl.BASE_URL);
+        Map<String, Object> params = new HashMap<>();
+        params.put("phone", "18672307670");
+        params.put("password", "123456");
+        RetrofitHelper.execute(
+                RetrofitHelper.create(ApiService.class).userLogin(params),
+                new DefaultObserver() {
+                    @Override
+                    public void onSuccess(Object response) {
+                        Toast.makeText(MainActivity.this, "请求成功", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     public void bnOnSeClick(View view) {

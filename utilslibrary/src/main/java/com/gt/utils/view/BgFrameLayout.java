@@ -11,12 +11,13 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 import com.gt.utils.R;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.RequiresApi;
 
 
 /**

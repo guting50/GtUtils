@@ -2,8 +2,6 @@ package com.gt.utils.view;
 
 import android.app.Activity;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.v4.graphics.ColorUtils;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -15,6 +13,9 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import androidx.annotation.ColorInt;
+import androidx.core.graphics.ColorUtils;
+
 /**
  * 修改状态栏字体颜色
  * Created by Administrator on 2017/6/17.
@@ -23,6 +24,7 @@ import java.lang.reflect.Method;
 public class TryLightStatus {
     /**
      * 状态栏颜色修改
+     *
      * @param activity
      * @param color
      */

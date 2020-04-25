@@ -1,7 +1,6 @@
 package com.gt.utils.view.flowView;
 
 import android.graphics.Rect;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -9,6 +8,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 一种流式布局的LayoutManager

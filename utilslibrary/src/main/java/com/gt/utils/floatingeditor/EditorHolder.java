@@ -1,9 +1,10 @@
 package com.gt.utils.floatingeditor;
 
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
 
 import java.io.Serializable;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
 
 /**
  * 创建日期：2017/9/14.

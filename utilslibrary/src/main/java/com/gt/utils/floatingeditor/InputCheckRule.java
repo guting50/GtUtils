@@ -1,8 +1,8 @@
 package com.gt.utils.floatingeditor;
 
-import android.support.annotation.StringRes;
-
 import java.io.Serializable;
+
+import androidx.annotation.StringRes;
 
 /**
  * Created by like on 2017/9/18.
@@ -15,13 +15,12 @@ public class InputCheckRule implements Serializable {
     int regxWarn;
 
     public InputCheckRule(int maxLength, int minLength) {
-        this(maxLength,minLength, null, 0);
+        this(maxLength, minLength, null, 0);
     }
 
     /**
-     *
-     * @param maxLength  最少输入字符数
-     * @param minLength  最多输入字符数
+     * @param maxLength 最少输入字符数
+     * @param minLength 最多输入字符数
      * @param regxRule  正则表达式校验
      * @param regxWarn  正则表达式失败提示
      */

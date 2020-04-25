@@ -11,7 +11,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -20,6 +19,8 @@ import android.view.View;
 import com.gt.utils.R;
 
 import java.util.LinkedList;
+
+import androidx.annotation.ColorInt;
 
 /**
  * 自定义手写板控件
