@@ -49,19 +49,6 @@ public class RetrofitHelper {
     }
 
     public static <T> void execute(Observable<? super T> observable, Observer observer) {
-        execute(observable, true, observer);
-    }
-
-    public static <T> void execute(Observable<? super T> observable, boolean showLoading, Observer observer) {
-        if (showLoading)
-            LoadingDialog.createLoadingDialog(context).show();
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
-    }
-
-    public static <T> void execute(Observable<? super T> observable, String msg, boolean isCancelable, Observer observer) {
-        LoadingDialog.createLoadingDialog(context, msg, isCancelable).show();
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
