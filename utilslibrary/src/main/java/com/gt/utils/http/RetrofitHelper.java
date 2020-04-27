@@ -2,6 +2,7 @@ package com.gt.utils.http;
 
 import android.content.Context;
 import android.util.Log;
+import android.webkit.WebSettings;
 
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
@@ -9,9 +10,9 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.gt.utils.widget.LoadingDialog;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -27,7 +28,10 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -83,6 +87,20 @@ public class RetrofitHelper {
                 // https认证 如果要使用https且为自定义证书 可以去掉这两行注释，并自行配制证书。
 //                .sslSocketFactory(createBadSslSocketFactory())
 //                .hostnameVerifier(new SafeHostnameVerifier())
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request request = null;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                            request = chain.request()
+                                    .newBuilder()
+                                    .removeHeader("User-Agent")//移除旧的
+                                    .addHeader("User-Agent", WebSettings.getDefaultUserAgent(context))//添加真正的头部
+                                    .build();
+                        }
+                        return chain.proceed(request);
+                    }
+                })
                 .cache(cache);
     }
 
