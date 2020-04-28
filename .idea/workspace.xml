@@ -10,7 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="beb9c8da-51ae-496b-b0d2-aedf7c0609ed" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/gt/githublibrary/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/gt/githublibrary/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/LogsUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/LogsUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PermissionUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PermissionUtils.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,16 +54,23 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/widget/GtSeekBar.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gt/githublibrary/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="82" column="89" selection-start-line="82" selection-start-column="89" selection-end-line="82" selection-end-column="89" />
+            <state relative-caret-position="286">
+              <caret line="79" column="13" lean-forward="true" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
               <folding>
-                <element signature="e#2540#2541#0" expanded="true" />
-                <element signature="e#2575#2576#0" expanded="true" />
-                <element signature="e#2636#2637#0" expanded="true" />
-                <element signature="e#2675#2676#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider editor-type-id="android-manifest" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="7" column="82" selection-start-line="7" selection-start-column="82" selection-end-line="7" selection-end-column="82" />
             </state>
           </provider>
         </entry>
@@ -72,11 +85,48 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="39" column="17" lean-forward="true" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
+            <state relative-caret-position="133">
+              <caret line="23" column="24" lean-forward="true" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PermissionActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="473">
+              <caret line="56" column="40" selection-start-line="56" selection-start-column="40" selection-end-line="56" selection-end-column="40" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/LogsUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="219">
+              <caret line="76" column="27" lean-forward="true" selection-start-line="76" selection-start-column="27" selection-end-line="76" selection-end-column="27" />
+              <folding>
+                <element signature="e#2417#2989#0" expanded="true" />
+                <element signature="e#2988#2989#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PermissionUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="456">
+              <caret line="36" column="52" selection-start-line="36" selection-start-column="28" selection-end-line="36" selection-end-column="52" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -93,7 +143,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GlideTransform.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
+            <state relative-caret-position="133">
               <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
             </state>
           </provider>
@@ -128,10 +178,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>onRecordFinishedListener</find>
-      <find>69_1526641455014</find>
-      <find>fileprovider</find>
-      <find>connectionLength</find>
       <find>onDownloads</find>
       <find>File</find>
       <find>downThread_</find>
@@ -158,6 +204,10 @@
       <find>getInstance</find>
       <find>gson</find>
       <find>okhttp/3.12.1</find>
+      <find>PERMISSION_RECORD_AUDIO</find>
+      <find>RECORD_AUDIO</find>
+      <find>requestCode</find>
+      <find>READ_SMS</find>
     </findStrings>
     <replaceStrings>
       <replace>======</replace>
@@ -193,12 +243,10 @@
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/floatingeditor/InputCheckRule.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/res/layout/activity_test.xml" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/http/GtObservable.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/FileUtils.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/floatingeditor/EditorHolder.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/MyGtUtilsFileProvider.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PermissionActivity.java" />
-        <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PermissionUtils.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/view/BgFrameLayout.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/view/flowView/FlowLayoutManager.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/view/flowView/NestedRecyclerView.java" />
@@ -216,15 +264,17 @@
         <option value="$PROJECT_DIR$/utilslibrary/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/http/DefaultObserver.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gt/githublibrary/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gt/githublibrary/ApiService.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gt/githublibrary/DefaultObserver.java" />
-        <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/LogsUtils.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/floatingeditor/FloatEditorActivity.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/widget/LoadingDialog.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PhoneInfoUtils.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/http/RetrofitHelper.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java" />
+        <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PermissionUtils.java" />
+        <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/LogsUtils.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gt/githublibrary/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       </list>
     </option>
   </component>
@@ -242,6 +292,34 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
+              <item name="utilslibrary" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
+              <item name="utilslibrary" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
+              <item name="utilslibrary" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="utils" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -253,58 +331,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView">
-        <subPane>
-          <expand>
-            <path>
-              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
-              <item name="utilslibrary" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
-              <item name="utilslibrary" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
-              <item name="utilslibrary" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="utils" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
-              <item name="utilslibrary" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="utils" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="widget" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
-              <item name="utilslibrary" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
-              <item name="utilslibrary" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
-              <item name="utilslibrary" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="xml" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="GtUtils" type="1abcf292:AndroidViewProjectNode" />
-              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -540,9 +566,9 @@
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32939914" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="6" weight="0.32939914" />
-      <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.222103" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.50965667" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.32832617" />
-      <window_info anchor="bottom" id="Android Profiler" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Android Profiler" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" />
       <window_info anchor="right" id="Flutter Outline" order="0" />
       <window_info anchor="right" id="Flutter Performance" order="1" />
@@ -558,16 +584,6 @@
     </layout>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PermissionUtils.java</url>
-          <line>229</line>
-          <properties />
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="app">
         <watch expression="rootView.getHeight()" language="JAVA" />
@@ -634,14 +650,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/Ac.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="22" column="19" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/widget/flowView/FlowLayoutManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="146">
@@ -726,26 +734,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PermissionUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="153" selection-start-line="153" selection-end-line="153" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PermissionActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="26" column="21" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/widget/TryLightStatus.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -813,16 +801,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gt/githublibrary/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1425">
-          <caret line="97" column="53" selection-start-line="97" selection-start-column="53" selection-end-line="97" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="646">
@@ -847,13 +825,6 @@
           <folding>
             <element signature="class#ExceptionReason#0;class#DefaultObserver#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/LogsUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -909,23 +880,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/res/values/attrs.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="e#56#1650#0" />
-            <element signature="e#1656#2190#0" />
-            <element signature="e#3150#4101#0" />
-            <element signature="e#4107#4383#0" />
-            <element signature="e#4389#4515#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/widget/GtSeekBar.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
+        <state relative-caret-position="1254">
           <caret line="82" column="89" selection-start-line="82" selection-start-column="89" selection-end-line="82" selection-end-column="89" />
           <folding>
             <element signature="e#2540#2541#0" expanded="true" />
@@ -953,15 +910,78 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GlideTransform.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
+        <state relative-caret-position="133">
           <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/res/values/attrs.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="e#56#1650#0" />
+            <element signature="e#1656#2190#0" />
+            <element signature="e#3150#4101#0" />
+            <element signature="e#4107#4383#0" />
+            <element signature="e#4389#4515#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="39" column="17" lean-forward="true" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
+        <state relative-caret-position="133">
+          <caret line="23" column="24" lean-forward="true" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/LogsUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="76" column="27" lean-forward="true" selection-start-line="76" selection-start-column="27" selection-end-line="76" selection-end-column="27" />
+          <folding>
+            <element signature="e#2417#2989#0" expanded="true" />
+            <element signature="e#2988#2989#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PermissionActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="56" column="40" selection-start-line="56" selection-start-column="40" selection-end-line="56" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PermissionUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="36" column="52" selection-start-line="36" selection-start-column="28" selection-end-line="36" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gt/githublibrary/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="79" column="13" lean-forward="true" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="82" selection-start-line="7" selection-start-column="82" selection-end-line="7" selection-end-column="82" />
         </state>
       </provider>
     </entry>

@@ -23,17 +23,18 @@ import androidx.core.app.ActivityCompat;
 
 public class PermissionUtils {
     private static final String TAG = PermissionUtils.class.getSimpleName();
-    public static final int CODE_RECORD_AUDIO = 0;
-    public static final int CODE_GET_ACCOUNTS = 1;
-    public static final int CODE_READ_PHONE_STATE = 2;
-    public static final int CODE_CALL_PHONE = 3;
-    public static final int CODE_CAMERA = 4;
-    public static final int CODE_ACCESS_FINE_LOCATION = 5;
-    public static final int CODE_ACCESS_COARSE_LOCATION = 6;
-    public static final int CODE_READ_EXTERNAL_STORAGE = 7;
-    public static final int CODE_WRITE_EXTERNAL_STORAGE = 8;
-    public static final int CODE_READ_CONTACTS = 9;
-    public static final int CODE_READ_SMS = 10;
+    public static final int RECORD_AUDIO = 0;
+    public static final int GET_ACCOUNTS = 1;
+    public static final int READ_PHONE_STATE = 2;
+    public static final int CALL_PHONE = 3;
+    public static final int CAMERA = 4;
+    public static final int ACCESS_FINE_LOCATION = 5;
+    public static final int ACCESS_COARSE_LOCATION = 6;
+    public static final int READ_EXTERNAL_STORAGE = 7;
+    public static final int WRITE_EXTERNAL_STORAGE = 8;
+    public static final int READ_CONTACTS = 9;
+    public static final int READ_SMS = 10;
+    public static final int REQUEST_INSTALL_PACKAGES = 11;
 
     public static final String PERMISSION_RECORD_AUDIO = Manifest.permission.RECORD_AUDIO;
     public static final String PERMISSION_GET_ACCOUNTS = Manifest.permission.GET_ACCOUNTS;
@@ -46,6 +47,7 @@ public class PermissionUtils {
     public static final String PERMISSION_WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     public static final String PERMISSION_READ_CONTACTS = Manifest.permission.READ_CONTACTS;
     public static final String PERMISSION_READ_SMS = Manifest.permission.READ_SMS;
+    public static final String PERMISSION_REQUEST_INSTALL_PACKAGES = Manifest.permission.REQUEST_INSTALL_PACKAGES;
     private static final String[] mRequestPermissions = {
             PERMISSION_RECORD_AUDIO,
             PERMISSION_GET_ACCOUNTS,
@@ -58,6 +60,7 @@ public class PermissionUtils {
             PERMISSION_WRITE_EXTERNAL_STORAGE,
             PERMISSION_READ_CONTACTS,
             PERMISSION_READ_SMS,
+            PERMISSION_REQUEST_INSTALL_PACKAGES
     };
     public static String permissionsHintHead = "没有此权限，无法开启这个功能，请开启权限：";
     private static final String[] permissionsHint = {
@@ -71,7 +74,8 @@ public class PermissionUtils {
             permissionsHintHead + "存储",
             permissionsHintHead + "存储",
             permissionsHintHead + "读写联系人",
-            permissionsHintHead + "读写短信"
+            permissionsHintHead + "读写短信",
+            permissionsHintHead + "安装未知来源应用"
     };
 
     public static int REQUEST_CODE = 50;

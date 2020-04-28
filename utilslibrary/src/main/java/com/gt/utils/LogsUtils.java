@@ -70,7 +70,7 @@ public class LogsUtils {
      * @param context
      */
     public static void writeFileToSD(Context ct, final String pathName, final String context) {
-        PermissionUtils.requestPermission(ct, PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE, new PermissionUtils.PermissionGrant() {
+        PermissionUtils.requestPermission(ct, PermissionUtils.WRITE_EXTERNAL_STORAGE, new PermissionUtils.PermissionGrant() {
             @Override
             public void onPermissionGranted(int... requestCode) {
                 if (requestCode[0] == -1) {

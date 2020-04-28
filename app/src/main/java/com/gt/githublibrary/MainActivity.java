@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bnOnRpClick(View view) {
-        PermissionUtils.requestPermission(this, PermissionUtils.CODE_CAMERA, new PermissionUtils.PermissionGrant() {
+        PermissionUtils.requestPermission(this, PermissionUtils.CAMERA, new PermissionUtils.PermissionGrant() {
             @Override
             public void onPermissionGranted(int... requestCode) {
                 Toast.makeText(MainActivity.this, "CODE_CAMERA : 允许", Toast.LENGTH_LONG).show();
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        PermissionUtils.requestPermission(this, PermissionUtils.CODE_RECORD_AUDIO, new PermissionUtils.PermissionGrant() {
+        PermissionUtils.requestPermission(this, PermissionUtils.REQUEST_INSTALL_PACKAGES, new PermissionUtils.PermissionGrant() {
             @Override
             public void onPermissionGranted(int... requestCode) {
                 Toast.makeText(MainActivity.this, "CODE_RECORD_AUDIO : 允许", Toast.LENGTH_LONG).show();
