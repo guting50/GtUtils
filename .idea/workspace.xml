@@ -10,12 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="beb9c8da-51ae-496b-b0d2-aedf7c0609ed" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PhoneInfoUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/http/RetrofitHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/http/RetrofitHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -77,6 +72,15 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="39" column="17" lean-forward="true" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/res/xml/network_security_config.xml">
           <provider selected="true" editor-type-id="text-editor">
@@ -86,7 +90,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GlideTransform.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="76">
@@ -215,16 +219,16 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/gt/githublibrary/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gt/githublibrary/ApiService.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gt/githublibrary/DefaultObserver.java" />
-        <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/LogsUtils.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/floatingeditor/FloatEditorActivity.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/widget/LoadingDialog.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/PhoneInfoUtils.java" />
         <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/http/RetrofitHelper.java" />
+        <option value="$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -516,7 +520,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
@@ -826,19 +830,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
-          <folding>
-            <element signature="e#1729#2096#0" expanded="true" />
-            <element signature="e#2095#2096#0" expanded="true" />
-            <element signature="e#2176#2177#0" expanded="true" />
-            <element signature="e#2216#2217#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/widget/LoadingDialog.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -964,6 +955,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilslibrary/src/main/java/com/gt/utils/GsonUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="39" column="17" lean-forward="true" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
         </state>
       </provider>
     </entry>

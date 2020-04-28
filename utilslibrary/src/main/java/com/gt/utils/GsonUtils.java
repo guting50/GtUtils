@@ -40,7 +40,6 @@ public class GsonUtils {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return gson;
     }
