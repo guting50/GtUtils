@@ -94,12 +94,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void bnOnHttpRClick(View view) {
-        RetrofitHelper.init(this, ApiService.ApiUrl.BASE_URL);
         Map<String, Object> params = new HashMap<>();
         params.put("phone", "18672307670");
         params.put("password", "123456");
         RetrofitHelper.execute(
-                RetrofitHelper.create(ApiService.class).userLogin(params),
+                RetrofitHelper.create(this, ApiService.ApiUrl.BASE_URL, ApiService.class).userLogin(params),
                 new DefaultObserver() {
                     @Override
                     public void onSuccess(Object response) {

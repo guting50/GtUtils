@@ -1,5 +1,6 @@
 package com.gt.utils.http;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.webkit.WebSettings;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
@@ -40,16 +42,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitHelper {
 
     private static final int DEFAULT_TIMEOUT = 10;
-    public static Context context;
-    public static Retrofit retrofit;
+    @SuppressLint("StaticFieldLeak")
+    private static Context mContext;
+    private static List<Interceptor> mInterceptors;
 
-    public static void init(Context c, String baseUrl) {
-        context = c;
-        retrofit = getRetrofitBuilder(baseUrl).build();
+    public static <T> T create(Context context, String baseUrl, Class<T> clazz) {
+        return create(context, baseUrl, null, clazz);
     }
 
-    public static <T> T create(Class<T> clazz) {
-        return retrofit.create(clazz);
+    public static <T> T create(Context context, String baseUrl, List<Interceptor> interceptors, Class<T> clazz) {
+        mContext = context;
+        mInterceptors = interceptors;
+        return getRetrofitBuilder(baseUrl).build().create(clazz);
     }
 
     public static <T> void execute(Observable<? super T> observable, Observer observer) {
@@ -58,7 +62,7 @@ public class RetrofitHelper {
                 .subscribe(observer);
     }
 
-    public static OkHttpClient.Builder getOkHttpClientBuilder() {
+    private static OkHttpClient.Builder getOkHttpClientBuilder() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -71,37 +75,44 @@ public class RetrofitHelper {
         });
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        File cacheFile = new File(context.getCacheDir(), "cache");
+        File cacheFile = new File(mContext.getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
 
         ClearableCookieJar cookieJar =
-                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
-        return new OkHttpClient.Builder()
-                .cookieJar(cookieJar)
-                .addInterceptor(loggingInterceptor)
-                .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(mContext));
+
+        OkHttpClient.Builder builder =
+                new OkHttpClient.Builder()
+                        .cookieJar(cookieJar)
+                        .addInterceptor(loggingInterceptor)
+                        .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                        .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                        .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
 //                .addInterceptor(new HttpHeaderInterceptor())
 //                .addNetworkInterceptor(new HttpCacheInterceptor())
-                // https认证 如果要使用https且为自定义证书 可以去掉这两行注释，并自行配制证书。
+                        // https认证 如果要使用https且为自定义证书 可以去掉这两行注释，并自行配制证书。
 //                .sslSocketFactory(createBadSslSocketFactory())
 //                .hostnameVerifier(new SafeHostnameVerifier())
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request request = null;
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                            request = chain.request()
-                                    .newBuilder()
-                                    .removeHeader("User-Agent")//移除旧的
-                                    .addHeader("User-Agent", WebSettings.getDefaultUserAgent(context))//添加真正的头部
-                                    .build();
-                        }
-                        return chain.proceed(request);
-                    }
-                })
-                .cache(cache);
+                        .addInterceptor(new Interceptor() {
+                            @Override
+                            public Response intercept(Chain chain) throws IOException {
+                                Request request = null;
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                                    request = chain.request()
+                                            .newBuilder()
+                                            .removeHeader("User-Agent")//移除旧的
+                                            .addHeader("User-Agent", WebSettings.getDefaultUserAgent(mContext))//添加真正的头部
+                                            .build();
+                                }
+                                return chain.proceed(request);
+                            }
+                        })
+                        .cache(cache);
+        if (mInterceptors != null) {
+            for (Interceptor interceptor : mInterceptors)
+                builder.addInterceptor(interceptor);
+        }
+        return builder;
     }
 
     public static Retrofit.Builder getRetrofitBuilder(String baseUrl) {
@@ -113,7 +124,6 @@ public class RetrofitHelper {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(baseUrl);
     }
-
 
     private static SSLSocketFactory createBadSslSocketFactory() {
         try {
