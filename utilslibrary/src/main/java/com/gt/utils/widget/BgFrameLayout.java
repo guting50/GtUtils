@@ -105,12 +105,11 @@ public class BgFrameLayout extends FrameLayout {
         paint.setAntiAlias(true);
         paint.setDither(true);
         Path path = new Path();
-        float strokeWidth = stroke_width * 2;
 
         //画边框
         {
             paint.setStyle(Paint.Style.STROKE);
-            paint.setStrokeWidth(strokeWidth);
+            paint.setStrokeWidth(stroke_width);
             int startX = 0, startY = 0, endX = this.getWidth(), endY = this.getHeight();
             if (stroke_gradual_change_orientation == 0) {
                 startY = endY = this.getHeight() / 2;
@@ -122,7 +121,7 @@ public class BgFrameLayout extends FrameLayout {
 
             if (stroke_dash_width > 0)
                 paint.setPathEffect(new DashPathEffect(new float[]{stroke_dash_width, stroke_dash_gap}, 0));
-            path.addRoundRect(new RectF(strokeWidth / 2, strokeWidth / 2, this.getWidth() - strokeWidth / 2, this.getHeight() - strokeWidth / 2),
+            path.addRoundRect(new RectF(stroke_width / 2, stroke_width / 2, this.getWidth() - stroke_width / 2, this.getHeight() - stroke_width / 2),
                     new float[]{corners_radius_left_top, corners_radius_left_top, corners_radius_right_top, corners_radius_right_top,
                             corners_radius_right_bottom, corners_radius_right_bottom, corners_radius_left_bottom, corners_radius_left_bottom},
                     Path.Direction.CW);
@@ -147,7 +146,7 @@ public class BgFrameLayout extends FrameLayout {
             //该方法5.0以上才支持
 //        path.addRoundRect(strokeWidth * 2, strokeWidth * 2, this.getWidth() - strokeWidth * 2, this.getHeight() - strokeWidth * 2,
 //                corners_radius, corners_radius, Path.Direction.CW);
-            path.addRoundRect(new RectF(strokeWidth, strokeWidth, this.getWidth() - strokeWidth, this.getHeight() - strokeWidth),
+            path.addRoundRect(new RectF(stroke_width, stroke_width, this.getWidth() - stroke_width, this.getHeight() - stroke_width),
                     new float[]{corners_radius_left_top, corners_radius_left_top, corners_radius_right_top, corners_radius_right_top,
                             corners_radius_right_bottom, corners_radius_right_bottom, corners_radius_left_bottom, corners_radius_left_bottom},
                     Path.Direction.CW);
