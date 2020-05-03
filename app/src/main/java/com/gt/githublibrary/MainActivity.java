@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             view.findViewById(R.id.bgFrameLayout).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    v.setEnabled(false);
+                    v.setEnabled(false);
                 }
             });
 
