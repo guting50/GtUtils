@@ -19,16 +19,28 @@
         android:onClick="bnOnHttpRClick"
         android:text="httpRequest" />
 
-    <com.gt.utils.widget.BgFrameLayout
-        android:id="@+id/aaa"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="100dp"
-        app:corners_radius_left_bottom="100dp"
-        app:corners_radius_right_top="100dp"
-        app:solid_color="@color/colorPrimary"
-        app:solid_gradual_change_orientation="horizontal" />
+        android:background="#80000000">
+
+        <com.gt.utils.widget.BgFrameLayout
+            android:id="@+id/aaa"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            app:corners_radius="100dp"
+            app:solid_color="@color/colorPrimary"
+            app:stroke_color="@color/colorAccent"
+            app:stroke_width="10dp" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="85dp"
+            android:layout_gravity="bottom"
+            android:background="#000000" />
+    </FrameLayout>
 
     <com.gt.utils.widget.FlowLayout
         android:id="@+id/fl_flow"
