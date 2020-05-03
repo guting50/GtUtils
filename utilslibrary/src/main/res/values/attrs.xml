@@ -2,6 +2,7 @@
 <resources>
 
     <declare-styleable name="BgFrameLayout">
+        <!--default-->
         <attr name="solid_color" format="color" /><!--填充色-->
         <attr name="solid_start_color" format="color" /><!--填充渐变开始颜色-->
         <attr name="solid_end_color" format="color" /><!--填充渐变结束颜色-->
@@ -26,6 +27,58 @@
         <attr name="corners_radius_right_top" format="dimension" /><!--圆角弧度 右上角-->
         <attr name="corners_radius_left_bottom" format="dimension" /><!--圆角弧度 左下角-->
         <attr name="corners_radius_right_bottom" format="dimension" /><!--圆角弧度 右下角-->
+
+        <!--noEnabled-->
+        <attr name="solid_color_no_enabled" format="color" /><!--填充色-->
+        <attr name="solid_start_color_no_enabled" format="color" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_no_enabled" format="color" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_change_orientation_no_enabled" format="enum"><!--填充渐变方向，默认diagonal-->
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+            <enum name="diagonal" value="-1" />
+        </attr>
+        <attr name="stroke_color_no_enabled" format="color" /><!--边框颜色-->
+        <attr name="stroke_start_color_no_enabled" format="color" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_no_enabled" format="color" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_change_orientation_no_enabled" format="enum"><!--边框渐变方向，默认diagonal-->
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+            <enum name="diagonal" value="-1" />
+        </attr>
+        <attr name="stroke_width_no_enabled" format="dimension" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_no_enabled" format="dimension" /><!--间隔-->
+        <attr name="stroke_dash_width_no_enabled" format="dimension" /><!--点的大小-->
+        <attr name="corners_radius_no_enabled" format="dimension" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_no_enabled" format="dimension" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_no_enabled" format="dimension" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_no_enabled" format="dimension" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_no_enabled" format="dimension" /><!--圆角弧度 右下角-->
+
+        <!--selected-->
+        <attr name="solid_color_selected" format="color" /><!--填充色-->
+        <attr name="solid_start_color_selected" format="color" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_selected" format="color" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_change_orientation_selected" format="enum"><!--填充渐变方向，默认diagonal-->
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+            <enum name="diagonal" value="-1" />
+        </attr>
+        <attr name="stroke_color_selected" format="color" /><!--边框颜色-->
+        <attr name="stroke_start_color_selected" format="color" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_selected" format="color" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_change_orientation_selected" format="enum"><!--边框渐变方向，默认diagonal-->
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+            <enum name="diagonal" value="-1" />
+        </attr>
+        <attr name="stroke_width_selected" format="dimension" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_selected" format="dimension" /><!--间隔-->
+        <attr name="stroke_dash_width_selected" format="dimension" /><!--点的大小-->
+        <attr name="corners_radius_selected" format="dimension" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_selected" format="dimension" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_selected" format="dimension" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_selected" format="dimension" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_selected" format="dimension" /><!--圆角弧度 右下角-->
     </declare-styleable>
 
     <declare-styleable name="PaintView">

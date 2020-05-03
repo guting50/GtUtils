@@ -1,8 +1,7 @@
 package com.gt.githublibrary;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -15,6 +14,7 @@ import com.gt.utils.floatingeditor.EditorCallback;
 import com.gt.utils.floatingeditor.FloatEditorActivity;
 import com.gt.utils.floatingeditor.InputCheckRule;
 import com.gt.utils.http.RetrofitHelper;
+import com.gt.utils.widget.BgFrameLayout;
 import com.gt.utils.widget.CircleButtonView;
 import com.gt.utils.widget.FlowLayout;
 
@@ -34,13 +34,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_layout);
         fl_flow = findViewById(R.id.fl_flow);
         for (int i = 0; i < 10; i++) {
-            TextView tv = new TextView(this);
-            tv.setLayoutParams(new ViewGroup.LayoutParams(250, 100));
-            tv.setGravity(Gravity.CENTER);
-            tv.setBackgroundColor(0xff123456);
-            tv.setTextColor(Color.WHITE);
-            tv.setText("测试" + i);
-            fl_flow.addView(tv);
+            View view = LayoutInflater.from(this).inflate(R.layout.item_table_layout, null);
+            view.findViewById(R.id.bgFrameLayout).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    v.setEnabled(false);
+                }
+            });
+
+            fl_flow.addView(view);
         }
         circleButton = findViewById(R.id.circle_button);
         circleButton.setOnClickListener(new CircleButtonView.OnClickListener() {
@@ -63,6 +65,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRecordFinished() {
                 Toast.makeText(MainActivity.this, "onRecordFinished", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        BgFrameLayout bgFrameLayout = findViewById(R.id.bgFrameLayout);
+        bgFrameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bgFrameLayout.isSelected())
+                    bgFrameLayout.setSelected(false);
+                else
+                    bgFrameLayout.setSelected(true);
             }
         });
     }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.gt.utils.widget.BgFrameLayout
+        android:id="@+id/bgFrameLayout"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        app:solid_color="@color/colorAccent"
+        app:solid_color_no_enabled="#80000000"
+        app:solid_color_selected="@color/colorPrimaryDark"
+        app:solid_end_color="#ff8B74E4"
+        app:solid_end_color_no_enabled="#ffffffff"
+        app:solid_end_color_selected="#ff5380F5"
+        app:solid_start_color="#ff5380F5"
+        app:solid_start_color_no_enabled="#ff000000"
+        app:solid_start_color_selected="#ff8B74E4">
+
+    </com.gt.utils.widget.BgFrameLayout>
+
+</FrameLayout>
