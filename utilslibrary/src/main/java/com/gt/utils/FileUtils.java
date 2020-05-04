@@ -168,6 +168,7 @@ public class FileUtils {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         String type = getMIMEType(filesPath);
         intent.setDataAndType(uri, type);
