@@ -8,16 +8,20 @@ import android.graphics.DashPathEffect;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
 import com.gt.utils.R;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.view.ViewCompat;
 
 
 /*
@@ -124,7 +128,7 @@ public class BgFrameLayout extends FrameLayout {
         private float corners_radius_right_bottom;
     }
 
-    private Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), selectedStyle = new Style();
+    private Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), selectedStyle = new Style(), pressedStyle = new Style();
 
     public BgFrameLayout(Context context) {
         super(context);
@@ -188,6 +192,23 @@ public class BgFrameLayout extends FrameLayout {
         selectedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_selected, selectedStyle.corners_radius == 0 ? defStyle.corners_radius_right_top : selectedStyle.corners_radius);
         selectedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_selected, selectedStyle.corners_radius == 0 ? defStyle.corners_radius_left_bottom : selectedStyle.corners_radius);
         selectedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_selected, selectedStyle.corners_radius == 0 ? defStyle.corners_radius_right_bottom : selectedStyle.corners_radius);
+
+        pressedStyle.solid_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_color_pressed, Color.TRANSPARENT);
+        pressedStyle.solid_start_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_start_color_pressed, pressedStyle.solid_color == Color.TRANSPARENT ? selectedStyle.solid_start_color : pressedStyle.solid_color);
+        pressedStyle.solid_end_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_end_color_pressed, pressedStyle.solid_color == Color.TRANSPARENT ? selectedStyle.solid_end_color : pressedStyle.solid_color);
+        pressedStyle.solid_gradual_change_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_solid_gradual_change_orientation_pressed, selectedStyle.solid_gradual_change_orientation);
+        pressedStyle.stroke_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_color_pressed, Color.TRANSPARENT);
+        pressedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_start_color_pressed, pressedStyle.stroke_color == Color.TRANSPARENT ? selectedStyle.stroke_start_color : pressedStyle.stroke_color);
+        pressedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_end_color_pressed, pressedStyle.stroke_color == Color.TRANSPARENT ? selectedStyle.stroke_end_color : pressedStyle.stroke_color);
+        pressedStyle.stroke_gradual_change_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_stroke_gradual_change_orientation_pressed, selectedStyle.stroke_gradual_change_orientation);
+        pressedStyle.stroke_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_width_pressed, selectedStyle.stroke_width);
+        pressedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_gap_pressed, selectedStyle.stroke_dash_gap);
+        pressedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_width_pressed, selectedStyle.stroke_dash_width);
+        pressedStyle.corners_radius = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_pressed, 0);
+        pressedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_top_pressed, pressedStyle.corners_radius == 0 ? selectedStyle.corners_radius_left_top : pressedStyle.corners_radius);
+        pressedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_pressed, pressedStyle.corners_radius == 0 ? selectedStyle.corners_radius_right_top : pressedStyle.corners_radius);
+        pressedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_pressed, pressedStyle.corners_radius == 0 ? selectedStyle.corners_radius_left_bottom : pressedStyle.corners_radius);
+        pressedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_pressed, pressedStyle.corners_radius == 0 ? selectedStyle.corners_radius_right_bottom : pressedStyle.corners_radius);
 
         typedArray.recycle();//释放资源
     }
@@ -260,6 +281,7 @@ public class BgFrameLayout extends FrameLayout {
 
     public void setSelected(boolean selected) {
         super.setSelected(selected);
+        System.out.println("setSelected========" + selected);
         if (selected) {
             currentStyle = selectedStyle;
         } else {
@@ -268,25 +290,45 @@ public class BgFrameLayout extends FrameLayout {
         invalidate();
     }
 
-    /*@Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (isEnabled())
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    setSelected(true);
-                    Log.e("ACTION_DOWN", "=======================");
-                    break;
-                case MotionEvent.ACTION_UP:
-                    Log.e("ACTION_UP", "=======================");
-                    setSelected(false);
-                    break;
-                case MotionEvent.ACTION_CANCEL:
-                    Log.e("ACTION_CANCEL", "=======================");
-                    setSelected(false);
-                    break;
-            }
-        return super.onTouchEvent(event);
-    }*/
+    public void SetPressed(boolean pressed) {
+        super.setPressed(pressed);
+        System.out.println("pressed========" + pressed);
+        if (pressed) {
+            currentStyle = pressedStyle;
+        } else {
+            currentStyle = defStyle;
+        }
+        invalidate();
+    }
+
+    protected void onFocusChanged(boolean gainFocus, @ViewCompat.FocusDirection int direction,
+                                  @Nullable Rect previouslyFocusedRect) {
+        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                System.out.println("dispatchTouchEvent ACTION_DOWN" + "=======================");
+                SetPressed(true);
+                break;
+            case MotionEvent.ACTION_UP:
+                System.out.println("dispatchTouchEvent ACTION_UP" + "=======================");
+                SetPressed(false);
+                setSelected(!isSelected());
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                System.out.println("dispatchTouchEvent ACTION_CANCEL" + "=======================");
+                SetPressed(false);
+                break;
+        }
+        if (!hasOnClickListeners()) {
+            return !super.dispatchTouchEvent(ev) ? true : super.dispatchTouchEvent(ev);
+        } else {
+            return super.dispatchTouchEvent(ev);
+        }
+    }
 
     public void setSolidColor(@ColorInt int solid_color) {
         defStyle.solid_color = solid_color;

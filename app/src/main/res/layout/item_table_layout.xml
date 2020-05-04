@@ -9,15 +9,27 @@
         android:id="@+id/bgFrameLayout"
         android:layout_width="100dp"
         android:layout_height="50dp"
+        app:corners_radius="30dp"
+        app:corners_radius_pressed="10dp"
+        app:corners_radius_selected="5dp"
         app:solid_color="@color/colorAccent"
         app:solid_color_no_enabled="#80000000"
         app:solid_color_selected="@color/colorPrimaryDark"
         app:solid_end_color="#ff8B74E4"
         app:solid_end_color_no_enabled="#ffffffff"
-        app:solid_end_color_selected="#ff5380F5"
+        app:solid_end_color_pressed="#ff5830F5"
+        app:solid_end_color_selected="#ff8F5350"
         app:solid_start_color="#ff5380F5"
         app:solid_start_color_no_enabled="#ff000000"
+        app:solid_start_color_pressed="#ff87b4E4"
         app:solid_start_color_selected="#ff8B74E4">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="测试"
+            android:textColor="#ffffff" />
 
     </com.gt.utils.widget.BgFrameLayout>
 

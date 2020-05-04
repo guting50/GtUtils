@@ -1,87 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="bnOnRpClick"
-        android:text="requestPermission" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:onClick="bnOnHttpRClick"
-        android:text="httpRequest" />
+    android:layout_height="match_parent">
 
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="100dp"
-        android:background="#80000000">
+        android:id="@+id/rootView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-        <com.gt.utils.widget.BgFrameLayout
-            android:id="@+id/bgFrameLayout"
-            android:layout_width="200dp"
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="bnOnRpClick"
+            android:text="requestPermission" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:onClick="bnOnHttpRClick"
+            android:text="httpRequest" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="100dp">
+
+            <com.gt.utils.widget.BgFrameLayout
+                android:id="@+id/bgLogin"
+                android:layout_width="200dp"
+                android:layout_height="46dp"
+                app:corners_radius="30dp"
+                app:solid_color="#5380F5"
+                app:solid_color_pressed="#333333"
+                app:solid_color_selected="#8B74E4">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="登录"
+                    android:textColor="#ffffffff"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </com.gt.utils.widget.BgFrameLayout>
+        </FrameLayout>
+
+        <com.gt.utils.widget.FlowLayout
+            android:id="@+id/fl_flow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="300dp"
+            android:background="#FFFFFF"
+            app:flChildSpacing="auto"
+            app:flChildSpacingForLastRow="align"
+            app:flRowSpacing="10dp" />
+
+        <com.gt.utils.widget.GtSeekBar
+            android:layout_width="50dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="300dp"
+            app:progress_size="1dp"
+            app:seek_orientation="vertical" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="230dp"
+            android:onClick="bnOnSeClick"
+            android:text="shosEdit" />
+
+        <com.gt.utils.widget.CircleButtonView
+            android:id="@+id/circle_button"
+            android:layout_width="100dp"
             android:layout_height="100dp"
-            app:corners_radius_right_bottom="100dp"
-            app:corners_radius_right_top="100dp"
-            app:solid_color="#00000000"
-            app:stroke_color="@color/colorAccent"
-            app:stroke_width="1dp" />
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="500dp"
+            app:maxTime="3"
+            app:minTime="2" />
 
-        <View
-            android:layout_width="195dp"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:background="#000000" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="85dp"
-            android:layout_gravity="bottom"
-            android:background="#000000" />
     </FrameLayout>
 
-    <com.gt.utils.widget.FlowLayout
-        android:id="@+id/fl_flow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:background="#FFFFFF"
-        app:flChildSpacing="auto"
-        app:flChildSpacingForLastRow="align"
-        app:flRowSpacing="10dp" />
-
-    <com.gt.utils.widget.GtSeekBar
-        android:layout_width="50dp"
-        android:layout_height="200dp"
-        android:layout_marginLeft="300dp"
-        app:progress_size="1dp"
-        app:seek_orientation="vertical" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="230dp"
-        android:onClick="bnOnSeClick"
-        android:text="shosEdit" />
-
-    <com.gt.utils.widget.CircleButtonView
-        android:id="@+id/circle_button"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="500dp"
-        app:maxTime="3"
-        app:minTime="2" />
-
-</FrameLayout>
+</androidx.core.widget.NestedScrollView>
