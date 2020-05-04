@@ -58,7 +58,8 @@ public class LoadingDialog {
             lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
             window.setGravity(Gravity.CENTER);
             window.setAttributes(lp);
-            window.setWindowAnimations(R.style.PopWindowAnimStyle);
+            //去掉动画，避免切换页面时闪烁
+//            window.setWindowAnimations(R.style.PopWindowAnimStyle);
             loadingDialog.show();
 
             closeDialog();
@@ -76,8 +77,9 @@ public class LoadingDialog {
      * http://blog.csdn.net/qq_21376985
      */
     public static void closeDialog() {
-        if (dialog != null) {
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
+            dialog = null;
         }
     }
 }
