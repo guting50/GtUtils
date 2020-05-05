@@ -15,6 +15,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import com.gt.utils.R;
@@ -330,6 +331,7 @@ public class BgFrameLayout extends FrameLayout {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 SetPressed(true);
+                setOnChildViewFocusChangeListener();
                 break;
             case MotionEvent.ACTION_UP:
                 SetPressed(false);
@@ -350,6 +352,26 @@ public class BgFrameLayout extends FrameLayout {
     protected void onFocusChanged(boolean gainFocus, int direction, @Nullable Rect previouslyFocusedRect) {
         super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
         setSelected(gainFocus);
+    }
+
+    //当this被按下的时候，获取子EditText控件，先取出它的OnFocusChangeListener，然后重新设置监听，在回调里面
+    //在调用原来OnFocusChangeListener的onFocusChange
+    private void setOnChildViewFocusChangeListener() {
+        for (int i = 0; i < getChildCount(); i++) {
+            View view = getChildAt(i);
+            if (view instanceof EditText) {
+                final OnFocusChangeListener onFocusChangeListener = view.getOnFocusChangeListener();
+                view.setOnFocusChangeListener(new OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        setSelected(hasFocus);
+                        if (onFocusChangeListener != null) {
+                            onFocusChangeListener.onFocusChange(v, hasFocus);
+                        }
+                    }
+                });
+            }
+        }
     }
 
     public void setOnClickListener(@Nullable OnClickListener l) {
