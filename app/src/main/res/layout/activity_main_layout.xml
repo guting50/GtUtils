@@ -70,6 +70,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="200dp"
             android:background="@color/colorPrimary"
+            android:focusableInTouchMode="true"
             android:gravity="center"
             android:text="登录"
             android:textColor="#ffffffff"

@@ -87,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("tv_3===========" + hasFocus);
             }
         });
+        findViewById(R.id.tv_3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("tv_3  TouchMode===========" + v.isFocusableInTouchMode());
+            }
+        });
     }
 
     public void bnOnRpClick(View view) {

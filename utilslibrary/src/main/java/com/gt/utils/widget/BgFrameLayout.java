@@ -8,10 +8,10 @@ import android.graphics.DashPathEffect;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,10 +19,8 @@ import android.widget.FrameLayout;
 
 import com.gt.utils.R;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-
 import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 
@@ -130,11 +128,8 @@ public class BgFrameLayout extends FrameLayout {
         private float corners_radius_right_bottom;
     }
 
-    private Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), checkedStyle = new Style(), pressedStyle = new Style();
-
-    public BgFrameLayout(Context context) {
-        super(context);
-    }
+    private Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), checkedStyle = new Style(), selectedStyle = new Style(), pressedStyle = new Style();
+    private OnClickListener onClickListener;
 
     public BgFrameLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -213,6 +208,19 @@ public class BgFrameLayout extends FrameLayout {
         pressedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_pressed, pressedStyle.corners_radius == 0 ? checkedStyle.corners_radius_right_bottom : pressedStyle.corners_radius);
 
         typedArray.recycle();//释放资源
+
+        selectedStyle = checkedStyle;
+//        setFocusableInTouchMode(true);
+
+        //当设置在触摸模式下可以获取焦点时，如果不设置点击事件，onFocusChanged不回调
+        super.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onClickListener != null) {
+                    onClickListener.onClick(v);
+                }
+            }
+        });
     }
 
     private boolean checked;
@@ -303,6 +311,20 @@ public class BgFrameLayout extends FrameLayout {
         invalidate();
     }
 
+    public void setSelected(boolean selected) {
+        super.setSelected(selected);
+        if (selected) {
+            currentStyle = selectedStyle;
+            // 当设置允许获取焦点后，要点击两下才能执行onClick，所以当selected为true时，执行onClick
+            if (onClickListener != null) {
+                onClickListener.onClick(this);
+            }
+        } else {
+            currentStyle = defStyle;
+        }
+        invalidate();
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
@@ -324,73 +346,83 @@ public class BgFrameLayout extends FrameLayout {
         }
     }
 
+    @Override
+    protected void onFocusChanged(boolean gainFocus, int direction, @Nullable Rect previouslyFocusedRect) {
+        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
+        setSelected(gainFocus);
+    }
+
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        this.onClickListener = l;
+    }
+
     public boolean isChecked() {
         return checked;
     }
 
     public void setSolidColor(@ColorInt int solid_color) {
-        defStyle.solid_color = solid_color;
-        defStyle.solid_start_color = solid_color;
-        defStyle.solid_end_color = solid_color;
+        currentStyle.solid_color = solid_color;
+        currentStyle.solid_start_color = solid_color;
+        currentStyle.solid_end_color = solid_color;
         invalidate();
     }
 
     public void setSolidStartColor(@ColorInt int solid_start_color) {
-        defStyle.solid_start_color = solid_start_color;
+        currentStyle.solid_start_color = solid_start_color;
         invalidate();
     }
 
     public void setSolidEndColor(@ColorInt int solid_end_color) {
-        defStyle.solid_end_color = solid_end_color;
+        currentStyle.solid_end_color = solid_end_color;
         invalidate();
     }
 
     public void setStrokeColor(@ColorInt int stroke_color) {
-        defStyle.stroke_color = stroke_color;
-        defStyle.stroke_start_color = stroke_color;
-        defStyle.stroke_end_color = stroke_color;
+        currentStyle.stroke_color = stroke_color;
+        currentStyle.stroke_start_color = stroke_color;
+        currentStyle.stroke_end_color = stroke_color;
         invalidate();
     }
 
     public void setStrokeStartColor(@ColorInt int stroke_start_color) {
-        defStyle.stroke_start_color = stroke_start_color;
+        currentStyle.stroke_start_color = stroke_start_color;
         invalidate();
     }
 
     public void setStrokeEndColor(@ColorInt int stroke_end_color) {
-        defStyle.stroke_end_color = stroke_end_color;
+        currentStyle.stroke_end_color = stroke_end_color;
         invalidate();
     }
 
     public void setStrokeWidth(float stroke_width) {
-        defStyle.stroke_width = stroke_width;
+        currentStyle.stroke_width = stroke_width;
         invalidate();
     }
 
     public void setStrokeDashGap(float stroke_dashGap) {
-        defStyle.stroke_dash_gap = stroke_dashGap;
+        currentStyle.stroke_dash_gap = stroke_dashGap;
         invalidate();
     }
 
     public void setStrokeDashWidth(float stroke_dashWidth) {
-        defStyle.stroke_dash_width = stroke_dashWidth;
+        currentStyle.stroke_dash_width = stroke_dashWidth;
         invalidate();
     }
 
     public void setCornersRadius(float corners_radius) {
-        defStyle.corners_radius = corners_radius;
-        defStyle.corners_radius_left_top = corners_radius;
-        defStyle.corners_radius_right_top = corners_radius;
-        defStyle.corners_radius_left_bottom = corners_radius;
-        defStyle.corners_radius_right_bottom = corners_radius;
+        currentStyle.corners_radius = corners_radius;
+        currentStyle.corners_radius_left_top = corners_radius;
+        currentStyle.corners_radius_right_top = corners_radius;
+        currentStyle.corners_radius_left_bottom = corners_radius;
+        currentStyle.corners_radius_right_bottom = corners_radius;
         invalidate();
     }
 
     public void setCornersRadius(float corners_radius_left_top, float corners_radius_right_top, float corners_radius_right_bottom, float corners_radius_left_bottom) {
-        defStyle.corners_radius_left_top = corners_radius_left_top;
-        defStyle.corners_radius_right_top = corners_radius_right_top;
-        defStyle.corners_radius_right_bottom = corners_radius_right_bottom;
-        defStyle.corners_radius_left_bottom = corners_radius_left_bottom;
+        currentStyle.corners_radius_left_top = corners_radius_left_top;
+        currentStyle.corners_radius_right_top = corners_radius_right_top;
+        currentStyle.corners_radius_right_bottom = corners_radius_right_bottom;
+        currentStyle.corners_radius_left_bottom = corners_radius_left_bottom;
         invalidate();
     }
 }
