@@ -2,7 +2,6 @@ package com.gt.githublibrary;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -66,6 +65,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRecordFinished() {
                 Toast.makeText(MainActivity.this, "onRecordFinished", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        findViewById(R.id.et_1).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                System.out.println("et_1===========" + hasFocus);
+            }
+        });
+        findViewById(R.id.et_2).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                System.out.println("et_2===========" + hasFocus);
+            }
+        });
+        findViewById(R.id.tv_3).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                System.out.println("tv_3===========" + hasFocus);
             }
         });
     }

@@ -28,7 +28,7 @@
 
         <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="100dp">
 
@@ -38,8 +38,8 @@
                 android:layout_height="46dp"
                 app:corners_radius="30dp"
                 app:solid_color="#5380F5"
-                app:solid_color_pressed="#333333"
-                app:solid_color_selected="#8B74E4">
+                app:solid_color_checked="#8B74E4"
+                app:solid_color_pressed="#333333">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -50,11 +50,30 @@
                     android:textSize="16sp" />
 
                 <EditText
+                    android:id="@+id/et_1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
             </com.gt.utils.widget.BgFrameLayout>
+
+            <EditText
+                android:id="@+id/et_2"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom" />
         </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_3"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="200dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="登录"
+            android:textColor="#ffffffff"
+            android:textSize="16sp" />
 
         <com.gt.utils.widget.FlowLayout
             android:id="@+id/fl_flow"

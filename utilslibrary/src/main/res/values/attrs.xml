@@ -54,31 +54,31 @@
         <attr name="corners_radius_left_bottom_no_enabled" format="dimension" /><!--圆角弧度 左下角-->
         <attr name="corners_radius_right_bottom_no_enabled" format="dimension" /><!--圆角弧度 右下角-->
 
-        <!--selected-->
-        <attr name="solid_color_selected" format="color" /><!--填充色-->
-        <attr name="solid_start_color_selected" format="color" /><!--填充渐变开始颜色-->
-        <attr name="solid_end_color_selected" format="color" /><!--填充渐变结束颜色-->
-        <attr name="solid_gradual_change_orientation_selected" format="enum"><!--填充渐变方向，默认horizontal-->
+        <!--checked-->
+        <attr name="solid_color_checked" format="color" /><!--填充色-->
+        <attr name="solid_start_color_checked" format="color" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_checked" format="color" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_change_orientation_checked" format="enum"><!--填充渐变方向，默认horizontal-->
             <enum name="horizontal" value="0" />
             <enum name="vertical" value="1" />
             <enum name="diagonal" value="-1" />
         </attr>
-        <attr name="stroke_color_selected" format="color" /><!--边框颜色-->
-        <attr name="stroke_start_color_selected" format="color" /><!--边框渐变开始颜色-->
-        <attr name="stroke_end_color_selected" format="color" /><!--边框渐变结束颜色-->
-        <attr name="stroke_gradual_change_orientation_selected" format="enum"><!--边框渐变方向，默认horizontal-->
+        <attr name="stroke_color_checked" format="color" /><!--边框颜色-->
+        <attr name="stroke_start_color_checked" format="color" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_checked" format="color" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_change_orientation_checked" format="enum"><!--边框渐变方向，默认horizontal-->
             <enum name="horizontal" value="0" />
             <enum name="vertical" value="1" />
             <enum name="diagonal" value="-1" />
         </attr>
-        <attr name="stroke_width_selected" format="dimension" /><!--边框宽度-->
-        <attr name="stroke_dash_gap_selected" format="dimension" /><!--间隔-->
-        <attr name="stroke_dash_width_selected" format="dimension" /><!--点的大小-->
-        <attr name="corners_radius_selected" format="dimension" /><!--圆角弧度-->
-        <attr name="corners_radius_left_top_selected" format="dimension" /><!--圆角弧度 左上角-->
-        <attr name="corners_radius_right_top_selected" format="dimension" /><!--圆角弧度 右上角-->
-        <attr name="corners_radius_left_bottom_selected" format="dimension" /><!--圆角弧度 左下角-->
-        <attr name="corners_radius_right_bottom_selected" format="dimension" /><!--圆角弧度 右下角-->
+        <attr name="stroke_width_checked" format="dimension" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_checked" format="dimension" /><!--间隔-->
+        <attr name="stroke_dash_width_checked" format="dimension" /><!--点的大小-->
+        <attr name="corners_radius_checked" format="dimension" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_checked" format="dimension" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_checked" format="dimension" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_checked" format="dimension" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_checked" format="dimension" /><!--圆角弧度 右下角-->
         <!--pressed-->
         <attr name="solid_color_pressed" format="color" /><!--填充色-->
         <attr name="solid_start_color_pressed" format="color" /><!--填充渐变开始颜色-->

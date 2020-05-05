@@ -8,20 +8,22 @@ import android.graphics.DashPathEffect;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.gt.utils.R;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+
 import androidx.annotation.ColorInt;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.view.ViewCompat;
 
 
 /*
@@ -128,7 +130,7 @@ public class BgFrameLayout extends FrameLayout {
         private float corners_radius_right_bottom;
     }
 
-    private Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), selectedStyle = new Style(), pressedStyle = new Style();
+    private Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), checkedStyle = new Style(), pressedStyle = new Style();
 
     public BgFrameLayout(Context context) {
         super(context);
@@ -176,42 +178,44 @@ public class BgFrameLayout extends FrameLayout {
         noEnabledStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_no_enabled, noEnabledStyle.corners_radius == 0 ? defStyle.corners_radius_left_bottom : noEnabledStyle.corners_radius);
         noEnabledStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_no_enabled, noEnabledStyle.corners_radius == 0 ? defStyle.corners_radius_right_bottom : noEnabledStyle.corners_radius);
 
-        selectedStyle.solid_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_color_selected, Color.TRANSPARENT);
-        selectedStyle.solid_start_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_start_color_selected, selectedStyle.solid_color == Color.TRANSPARENT ? defStyle.solid_start_color : selectedStyle.solid_color);
-        selectedStyle.solid_end_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_end_color_selected, selectedStyle.solid_color == Color.TRANSPARENT ? defStyle.solid_end_color : selectedStyle.solid_color);
-        selectedStyle.solid_gradual_change_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_solid_gradual_change_orientation_selected, defStyle.solid_gradual_change_orientation);
-        selectedStyle.stroke_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_color_selected, Color.TRANSPARENT);
-        selectedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_start_color_selected, selectedStyle.stroke_color == Color.TRANSPARENT ? defStyle.stroke_start_color : selectedStyle.stroke_color);
-        selectedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_end_color_selected, selectedStyle.stroke_color == Color.TRANSPARENT ? defStyle.stroke_end_color : selectedStyle.stroke_color);
-        selectedStyle.stroke_gradual_change_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_stroke_gradual_change_orientation_selected, defStyle.stroke_gradual_change_orientation);
-        selectedStyle.stroke_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_width_selected, defStyle.stroke_width);
-        selectedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_gap_selected, defStyle.stroke_dash_gap);
-        selectedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_width_selected, defStyle.stroke_dash_width);
-        selectedStyle.corners_radius = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_selected, 0);
-        selectedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_top_selected, selectedStyle.corners_radius == 0 ? defStyle.corners_radius_left_top : selectedStyle.corners_radius);
-        selectedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_selected, selectedStyle.corners_radius == 0 ? defStyle.corners_radius_right_top : selectedStyle.corners_radius);
-        selectedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_selected, selectedStyle.corners_radius == 0 ? defStyle.corners_radius_left_bottom : selectedStyle.corners_radius);
-        selectedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_selected, selectedStyle.corners_radius == 0 ? defStyle.corners_radius_right_bottom : selectedStyle.corners_radius);
+        checkedStyle.solid_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_color_checked, Color.TRANSPARENT);
+        checkedStyle.solid_start_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_start_color_checked, checkedStyle.solid_color == Color.TRANSPARENT ? defStyle.solid_start_color : checkedStyle.solid_color);
+        checkedStyle.solid_end_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_end_color_checked, checkedStyle.solid_color == Color.TRANSPARENT ? defStyle.solid_end_color : checkedStyle.solid_color);
+        checkedStyle.solid_gradual_change_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_solid_gradual_change_orientation_checked, defStyle.solid_gradual_change_orientation);
+        checkedStyle.stroke_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_color_checked, Color.TRANSPARENT);
+        checkedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_start_color_checked, checkedStyle.stroke_color == Color.TRANSPARENT ? defStyle.stroke_start_color : checkedStyle.stroke_color);
+        checkedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_end_color_checked, checkedStyle.stroke_color == Color.TRANSPARENT ? defStyle.stroke_end_color : checkedStyle.stroke_color);
+        checkedStyle.stroke_gradual_change_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_stroke_gradual_change_orientation_checked, defStyle.stroke_gradual_change_orientation);
+        checkedStyle.stroke_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_width_checked, defStyle.stroke_width);
+        checkedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_gap_checked, defStyle.stroke_dash_gap);
+        checkedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_width_checked, defStyle.stroke_dash_width);
+        checkedStyle.corners_radius = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_checked, 0);
+        checkedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_top_checked, checkedStyle.corners_radius == 0 ? defStyle.corners_radius_left_top : checkedStyle.corners_radius);
+        checkedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_checked, checkedStyle.corners_radius == 0 ? defStyle.corners_radius_right_top : checkedStyle.corners_radius);
+        checkedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_checked, checkedStyle.corners_radius == 0 ? defStyle.corners_radius_left_bottom : checkedStyle.corners_radius);
+        checkedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_checked, checkedStyle.corners_radius == 0 ? defStyle.corners_radius_right_bottom : checkedStyle.corners_radius);
 
         pressedStyle.solid_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_color_pressed, Color.TRANSPARENT);
-        pressedStyle.solid_start_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_start_color_pressed, pressedStyle.solid_color == Color.TRANSPARENT ? selectedStyle.solid_start_color : pressedStyle.solid_color);
-        pressedStyle.solid_end_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_end_color_pressed, pressedStyle.solid_color == Color.TRANSPARENT ? selectedStyle.solid_end_color : pressedStyle.solid_color);
-        pressedStyle.solid_gradual_change_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_solid_gradual_change_orientation_pressed, selectedStyle.solid_gradual_change_orientation);
+        pressedStyle.solid_start_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_start_color_pressed, pressedStyle.solid_color == Color.TRANSPARENT ? checkedStyle.solid_start_color : pressedStyle.solid_color);
+        pressedStyle.solid_end_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_end_color_pressed, pressedStyle.solid_color == Color.TRANSPARENT ? checkedStyle.solid_end_color : pressedStyle.solid_color);
+        pressedStyle.solid_gradual_change_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_solid_gradual_change_orientation_pressed, checkedStyle.solid_gradual_change_orientation);
         pressedStyle.stroke_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_color_pressed, Color.TRANSPARENT);
-        pressedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_start_color_pressed, pressedStyle.stroke_color == Color.TRANSPARENT ? selectedStyle.stroke_start_color : pressedStyle.stroke_color);
-        pressedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_end_color_pressed, pressedStyle.stroke_color == Color.TRANSPARENT ? selectedStyle.stroke_end_color : pressedStyle.stroke_color);
-        pressedStyle.stroke_gradual_change_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_stroke_gradual_change_orientation_pressed, selectedStyle.stroke_gradual_change_orientation);
-        pressedStyle.stroke_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_width_pressed, selectedStyle.stroke_width);
-        pressedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_gap_pressed, selectedStyle.stroke_dash_gap);
-        pressedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_width_pressed, selectedStyle.stroke_dash_width);
+        pressedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_start_color_pressed, pressedStyle.stroke_color == Color.TRANSPARENT ? checkedStyle.stroke_start_color : pressedStyle.stroke_color);
+        pressedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_end_color_pressed, pressedStyle.stroke_color == Color.TRANSPARENT ? checkedStyle.stroke_end_color : pressedStyle.stroke_color);
+        pressedStyle.stroke_gradual_change_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_stroke_gradual_change_orientation_pressed, checkedStyle.stroke_gradual_change_orientation);
+        pressedStyle.stroke_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_width_pressed, checkedStyle.stroke_width);
+        pressedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_gap_pressed, checkedStyle.stroke_dash_gap);
+        pressedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_width_pressed, checkedStyle.stroke_dash_width);
         pressedStyle.corners_radius = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_pressed, 0);
-        pressedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_top_pressed, pressedStyle.corners_radius == 0 ? selectedStyle.corners_radius_left_top : pressedStyle.corners_radius);
-        pressedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_pressed, pressedStyle.corners_radius == 0 ? selectedStyle.corners_radius_right_top : pressedStyle.corners_radius);
-        pressedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_pressed, pressedStyle.corners_radius == 0 ? selectedStyle.corners_radius_left_bottom : pressedStyle.corners_radius);
-        pressedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_pressed, pressedStyle.corners_radius == 0 ? selectedStyle.corners_radius_right_bottom : pressedStyle.corners_radius);
+        pressedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_top_pressed, pressedStyle.corners_radius == 0 ? checkedStyle.corners_radius_left_top : pressedStyle.corners_radius);
+        pressedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_pressed, pressedStyle.corners_radius == 0 ? checkedStyle.corners_radius_right_top : pressedStyle.corners_radius);
+        pressedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_pressed, pressedStyle.corners_radius == 0 ? checkedStyle.corners_radius_left_bottom : pressedStyle.corners_radius);
+        pressedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_pressed, pressedStyle.corners_radius == 0 ? checkedStyle.corners_radius_right_bottom : pressedStyle.corners_radius);
 
         typedArray.recycle();//释放资源
     }
+
+    private boolean checked;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -279,11 +283,10 @@ public class BgFrameLayout extends FrameLayout {
         invalidate();
     }
 
-    public void setSelected(boolean selected) {
-        super.setSelected(selected);
-        System.out.println("setSelected========" + selected);
-        if (selected) {
-            currentStyle = selectedStyle;
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+        if (checked) {
+            currentStyle = checkedStyle;
         } else {
             currentStyle = defStyle;
         }
@@ -292,7 +295,6 @@ public class BgFrameLayout extends FrameLayout {
 
     public void SetPressed(boolean pressed) {
         super.setPressed(pressed);
-        System.out.println("pressed========" + pressed);
         if (pressed) {
             currentStyle = pressedStyle;
         } else {
@@ -301,25 +303,17 @@ public class BgFrameLayout extends FrameLayout {
         invalidate();
     }
 
-    protected void onFocusChanged(boolean gainFocus, @ViewCompat.FocusDirection int direction,
-                                  @Nullable Rect previouslyFocusedRect) {
-        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
-    }
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                System.out.println("dispatchTouchEvent ACTION_DOWN" + "=======================");
                 SetPressed(true);
                 break;
             case MotionEvent.ACTION_UP:
-                System.out.println("dispatchTouchEvent ACTION_UP" + "=======================");
                 SetPressed(false);
-                setSelected(!isSelected());
+                setChecked(!isChecked());
                 break;
             case MotionEvent.ACTION_CANCEL:
-                System.out.println("dispatchTouchEvent ACTION_CANCEL" + "=======================");
                 SetPressed(false);
                 break;
         }
@@ -328,6 +322,10 @@ public class BgFrameLayout extends FrameLayout {
         } else {
             return super.dispatchTouchEvent(ev);
         }
+    }
+
+    public boolean isChecked() {
+        return checked;
     }
 
     public void setSolidColor(@ColorInt int solid_color) {
