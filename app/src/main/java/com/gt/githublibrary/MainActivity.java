@@ -1,5 +1,6 @@
 package com.gt.githublibrary;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,28 +69,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        findViewById(R.id.et_1).setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                System.out.println("et_1===========" + hasFocus);
-            }
-        });
-        findViewById(R.id.et_2).setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                System.out.println("et_2===========" + hasFocus);
-            }
-        });
-        findViewById(R.id.tv_3).setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                System.out.println("tv_3===========" + hasFocus);
-            }
-        });
         findViewById(R.id.tv_3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TestBgLayoutActivity.class));
             }
         });
     }

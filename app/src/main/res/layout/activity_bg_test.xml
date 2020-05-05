@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.gt.utils.widget.BgFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:solid_color="#000000"
+    app:solid_color_pressed="@color/colorAccent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp"
+        tools:context=".TestBgLayoutActivity">
+
+        <com.gt.utils.widget.BgFrameLayout
+            android:id="@+id/bgLogin"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="@color/colorPrimary">
+
+        </com.gt.utils.widget.BgFrameLayout>
+
+        <TextView
+            android:id="@+id/bgLogin1"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="登录"
+            android:textColor="#ffffffff"
+            android:textSize="16sp" />
+
+        <com.gt.utils.widget.BgFrameLayout
+            android:id="@+id/bgLogin2"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginTop="20dp"
+            app:corners_radius="6dp"
+            app:solid_color_pressed="@color/colorAccent"
+            app:solid_end_color="@color/colorPrimary"
+            app:solid_start_color="@color/colorPrimary">
+
+        </com.gt.utils.widget.BgFrameLayout>
+
+    </LinearLayout>
+</com.gt.utils.widget.BgFrameLayout>

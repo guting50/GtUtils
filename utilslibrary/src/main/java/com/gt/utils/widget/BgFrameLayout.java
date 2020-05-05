@@ -329,7 +329,7 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     public void SetPressed(boolean pressed) {
-        super.setPressed(pressed);
+//        super.setPressed(pressed);
         if (pressed) {
             currentStyle = pressedStyle;
         } else {
