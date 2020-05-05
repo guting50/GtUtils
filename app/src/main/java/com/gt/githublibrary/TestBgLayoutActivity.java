@@ -13,22 +13,34 @@ public class TestBgLayoutActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bg_test);
-        findViewById(R.id.bgLogin).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.text_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TestBgLayoutActivity.this, "登录成功", Toast.LENGTH_LONG).show();
+                Toast.makeText(TestBgLayoutActivity.this, "text_view", Toast.LENGTH_LONG).show();
             }
         });
-        findViewById(R.id.bgLogin1).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bgLayout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TestBgLayoutActivity.this, "bgLogin1 登录成功", Toast.LENGTH_LONG).show();
+                Toast.makeText(TestBgLayoutActivity.this, "bgLayout", Toast.LENGTH_LONG).show();
             }
         });
-        findViewById(R.id.bgLogin2).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bgLayout1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TestBgLayoutActivity.this, "bgLogin2 登录成功", Toast.LENGTH_LONG).show();
+                Toast.makeText(TestBgLayoutActivity.this, "bgLayout1", Toast.LENGTH_LONG).show();
+            }
+        });
+        findViewById(R.id.bgLayout2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(TestBgLayoutActivity.this, "bgLayout2", Toast.LENGTH_LONG).show();
+            }
+        });
+        findViewById(R.id.bgLayout3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(TestBgLayoutActivity.this, "bgLayout3", Toast.LENGTH_LONG).show();
             }
         });
     }

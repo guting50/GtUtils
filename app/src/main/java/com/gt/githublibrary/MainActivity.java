@@ -1,8 +1,9 @@
 package com.gt.githublibrary;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -34,16 +35,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_layout);
         fl_flow = findViewById(R.id.fl_flow);
         for (int i = 0; i < 50; i++) {
-            View view = LayoutInflater.from(this).inflate(R.layout.item_table_layout, null);
-            if (i % 2 == 0) {
-                view.findViewById(R.id.bgFrameLayout).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        System.out.println("setOnClickListener" + "=======================");
-                    }
-                });
-            }
-            fl_flow.addView(view);
+            TextView tv = new TextView(this);
+            tv.setLayoutParams(new ViewGroup.LayoutParams(250, 100));
+            tv.setGravity(Gravity.CENTER);
+            tv.setBackgroundColor(0xff123456);
+            tv.setTextColor(Color.WHITE);
+            tv.setText("测试" + i);
+            fl_flow.addView(tv);
         }
         circleButton = findViewById(R.id.circle_button);
         circleButton.setOnClickListener(new CircleButtonView.OnClickListener() {

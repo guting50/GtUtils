@@ -15,8 +15,8 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.gt.utils.R;
 
@@ -155,7 +155,7 @@ public class BgFrameLayout extends FrameLayout {
         private float corners_radius_right_bottom;
     }
 
-    private Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), checkedStyle = new Style(), selectedStyle = new Style(), pressedStyle = new Style();
+    public Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), checkedStyle = new Style(), selectedStyle = new Style(), pressedStyle = new Style();
     private OnClickListener onClickListener;
 
     public BgFrameLayout(Context context, AttributeSet attrs) {
@@ -385,7 +385,7 @@ public class BgFrameLayout extends FrameLayout {
     private void setOnChildViewFocusChangeListener() {
         for (int i = 0; i < getChildCount(); i++) {
             View view = getChildAt(i);
-            if (view instanceof EditText) {
+            if (view instanceof TextView) {
                 final OnFocusChangeListener onFocusChangeListener = view.getOnFocusChangeListener();
                 view.setOnFocusChangeListener(new OnFocusChangeListener() {
                     @Override
