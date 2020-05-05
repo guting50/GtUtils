@@ -319,37 +319,42 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     public void setChecked(boolean checked) {
-        this.checked = checked;
-        if (checked) {
-            currentStyle = checkedStyle;
-        } else {
-            currentStyle = defStyle;
+        if (isEnabled()) {
+            this.checked = checked;
+            if (checked) {
+                currentStyle = checkedStyle;
+            } else {
+                currentStyle = defStyle;
+            }
+            invalidate();
         }
-        invalidate();
     }
 
     public void SetPressed(boolean pressed) {
-//        super.setPressed(pressed);
-        if (pressed) {
-            currentStyle = pressedStyle;
-        } else {
-            currentStyle = defStyle;
+        if (isEnabled()) {
+            if (pressed) {
+                currentStyle = pressedStyle;
+            } else {
+                currentStyle = defStyle;
+            }
+            invalidate();
         }
-        invalidate();
     }
 
     public void setSelected(boolean selected) {
-        super.setSelected(selected);
-        if (selected) {
-            currentStyle = selectedStyle;
-            // 当设置允许获取焦点后，要点击两下才能执行onClick，所以当selected为true时，执行onClick
-            if (onClickListener != null) {
-                onClickListener.onClick(this);
+        if (isEnabled()) {
+            super.setSelected(selected);
+            if (selected) {
+                currentStyle = selectedStyle;
+                // 当设置允许获取焦点后，要点击两下才能执行onClick，所以当selected为true时，执行onClick
+                if (onClickListener != null) {
+                    onClickListener.onClick(this);
+                }
+            } else {
+                currentStyle = defStyle;
             }
-        } else {
-            currentStyle = defStyle;
+            invalidate();
         }
-        invalidate();
     }
 
     @Override

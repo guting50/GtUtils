@@ -31,7 +31,7 @@
             android:layout_height="46dp"
             android:layout_marginTop="20dp"
             android:focusableInTouchMode="true"
-            app:corners_radius="6dp"
+            app:corners_radius="8dp"
             app:solid_color="@color/colorPrimary"
             app:solid_color_checked="@color/main"
             app:solid_color_no_enabled="#888888"
@@ -48,28 +48,60 @@
 
         </com.gt.utils.widget.BgFrameLayout>
 
-        <com.gt.utils.widget.BgFrameLayout
-            android:id="@+id/bgLayout1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:layout_marginTop="20dp"
-            android:focusableInTouchMode="true"
-            app:corners_radius="6dp"
-            app:solid_color="@color/colorPrimary"
-            app:solid_color_checked="@color/main"
-            app:solid_color_no_enabled="#888888"
-            app:solid_color_pressed="@color/colorAccent">
+            android:layout_height="wrap_content">
 
-            <TextView
+            <com.gt.utils.widget.BgFrameLayout
+                android:id="@+id/bgLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="文本框2"
-                android:textColor="#ffffffff"
-                android:textSize="16sp" />
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:focusableInTouchMode="true"
+                app:corners_radius="6dp"
+                app:solid_color="@color/colorPrimary"
+                app:solid_color_checked="@color/main"
+                app:solid_color_no_enabled="#888888"
+                app:solid_color_pressed="@color/colorAccent">
 
-        </com.gt.utils.widget.BgFrameLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="文本框2"
+                    android:textColor="#ffffffff"
+                    android:textSize="16sp" />
+
+            </com.gt.utils.widget.BgFrameLayout>
+
+            <View
+                android:layout_width="20dp"
+                android:layout_height="1dp" />
+
+            <com.gt.utils.widget.BgFrameLayout
+                android:id="@+id/bgLayout1_1"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1.5"
+                app:corners_radius="6dp"
+                app:solid_color="@color/colorPrimary"
+                app:solid_color_pressed="@color/colorAccent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="setEnabled"
+                    android:textColor="#ffffffff"
+                    android:textSize="16sp" />
+
+            </com.gt.utils.widget.BgFrameLayout>
+
+        </LinearLayout>
 
         <com.gt.utils.widget.BgFrameLayout
             android:id="@+id/bgLayout2"

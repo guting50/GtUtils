@@ -25,10 +25,18 @@ public class TestBgLayoutActivity extends AppCompatActivity {
                 Toast.makeText(TestBgLayoutActivity.this, "bgLayout", Toast.LENGTH_LONG).show();
             }
         });
+        findViewById(R.id.bgLayout1).setEnabled(false);
         findViewById(R.id.bgLayout1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(TestBgLayoutActivity.this, "bgLayout1", Toast.LENGTH_LONG).show();
+            }
+        });
+        findViewById(R.id.bgLayout1_1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findViewById(R.id.bgLayout1).setEnabled(!findViewById(R.id.bgLayout1).isEnabled());
+                Toast.makeText(TestBgLayoutActivity.this, "bgLayout1_1", Toast.LENGTH_LONG).show();
             }
         });
         findViewById(R.id.bgLayout2).setOnClickListener(new View.OnClickListener() {
