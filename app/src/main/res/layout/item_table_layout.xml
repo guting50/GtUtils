@@ -16,6 +16,7 @@
         app:solid_color="@color/colorAccent"
         app:solid_color_checked="@color/colorPrimaryDark"
         app:solid_color_no_enabled="#80000000"
+        app:solid_color_pressed="#ff5830F5"
         app:solid_end_color="#ff8B74E4"
         app:solid_end_color_checked="#ff8F5350"
         app:solid_end_color_no_enabled="#ffffffff"
