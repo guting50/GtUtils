@@ -107,6 +107,10 @@
         <attr name="corners_radius_right_bottom_pressed" format="dimension" /><!--圆角弧度 右下角-->
     </declare-styleable>
 
+    <declare-styleable name="BgTextView">
+
+    </declare-styleable>
+
     <declare-styleable name="PaintView">
         <attr name="paint_color" format="color" /><!--画笔的颜色-->
         <attr name="paint_stroke_width" format="float" /><!--画笔的宽度-->
