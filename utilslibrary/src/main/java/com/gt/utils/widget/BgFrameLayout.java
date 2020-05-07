@@ -335,7 +335,10 @@ public class BgFrameLayout extends FrameLayout {
             if (pressed) {
                 currentStyle = pressedStyle;
             } else {
-                currentStyle = defStyle;
+                if (checked) { //  当目前是选中状态时，抬起后设置成选中样式
+                    currentStyle = checkedStyle;
+                } else
+                    currentStyle = defStyle;
             }
             invalidate();
         }

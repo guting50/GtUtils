@@ -108,7 +108,15 @@
     </declare-styleable>
 
     <declare-styleable name="BgTextView">
+        <!--noEnabled-->
+        <attr name="textColor_no_enabled" format="color" />
+        <attr name="textSize_no_enabled" format="dimension" />
+        <attr name="text_no_enabled" format="string" />
 
+        <!--checked-->
+        <attr name="textColor_checked" format="color" />
+        <attr name="textSize_checked" format="dimension" />
+        <attr name="text_checked" format="string" />
     </declare-styleable>
 
     <declare-styleable name="PaintView">
