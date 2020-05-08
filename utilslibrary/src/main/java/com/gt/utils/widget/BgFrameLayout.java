@@ -13,6 +13,7 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -132,7 +133,57 @@ import androidx.annotation.RequiresApi;
         <attr name="corners_radius_right_top_pressed" format="dimension" /><!--圆角弧度 右上角-->
         <attr name="corners_radius_left_bottom_pressed" format="dimension" /><!--圆角弧度 左下角-->
         <attr name="corners_radius_right_bottom_pressed" format="dimension" /><!--圆角弧度 右下角-->
-    </declare-styleable>
+
+        <!--focused-->
+        <attr name="solid_color_focused" format="color" /><!--填充色-->
+        <attr name="solid_start_color_focused" format="color" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_focused" format="color" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation_focused" format="enum"><!--填充渐变方向，默认horizontal-->
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+            <enum name="diagonal" value="-1" />
+        </attr>
+        <attr name="stroke_color_focused" format="color" /><!--边框颜色-->
+        <attr name="stroke_start_color_focused" format="color" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_focused" format="color" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation_focused" format="enum"><!--边框渐变方向，默认horizontal-->
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+            <enum name="diagonal" value="-1" />
+        </attr>
+        <attr name="stroke_width_focused" format="dimension" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_focused" format="dimension" /><!--间隔-->
+        <attr name="stroke_dash_width_focused" format="dimension" /><!--点的大小-->
+        <attr name="corners_radius_focused" format="dimension" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_focused" format="dimension" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_focused" format="dimension" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_focused" format="dimension" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_focused" format="dimension" /><!--圆角弧度 右下角-->
+ */
+
+/*
+ * 获取焦点 需要设置android:focusableInTouchMode="true"
+ * 不要用这个来模拟单选，它和单选的逻辑不一样，全局只能有一个view可以获取焦点
+ * （当子控件获取焦点的时候，它就获取不到了，所以这里是模拟它获取到了，
+ * 应用场景是给获取到焦点的控件设置Style，比如给获取到焦点的文本输入框加背景）
+ *
+ * 当该view按下时，显示pressedStyle
+ * 抬起时，如果focused == true ，显示focusedStyle
+ *         如果checked == true，显示checkedStyle
+ *         否者显示defStyle
+ *
+ * 选中时，如果focused == true，显示focusedStyle
+ *         如果checked == true，显示checkedStyle
+ *         否者显示defStyle
+ *
+ * 获取到焦点时，显示focusedStyle
+ * 失去焦点时，如果checked == true，显示checkedStyle
+ *             否者显示defStyle
+ *
+ * checkedStyle   默认等于 defStyle
+ * pressedStyle   默认等于 checkedStyle
+ * focusedStyle   默认等于 checkedStyle
+ * noEnabledStyle 默认等于 defStyle
  */
 public class BgFrameLayout extends FrameLayout {
 
@@ -155,7 +206,8 @@ public class BgFrameLayout extends FrameLayout {
         private float corners_radius_right_bottom;
     }
 
-    public Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), checkedStyle = new Style(), selectedStyle = new Style(), pressedStyle = new Style();
+    public Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), checkedStyle = new Style(), focusedStyle = new Style(), pressedStyle = new Style();
+    private boolean checked, focused;
     private OnClickListener onClickListener;
 
     public BgFrameLayout(Context context, AttributeSet attrs) {
@@ -234,9 +286,25 @@ public class BgFrameLayout extends FrameLayout {
         pressedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_pressed, pressedStyle.corners_radius == 0 ? checkedStyle.corners_radius_left_bottom : pressedStyle.corners_radius);
         pressedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_pressed, pressedStyle.corners_radius == 0 ? checkedStyle.corners_radius_right_bottom : pressedStyle.corners_radius);
 
+        focusedStyle.solid_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_color_focused, Color.TRANSPARENT);
+        focusedStyle.solid_start_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_start_color_focused, focusedStyle.solid_color == Color.TRANSPARENT ? checkedStyle.solid_start_color : focusedStyle.solid_color);
+        focusedStyle.solid_end_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_end_color_focused, focusedStyle.solid_color == Color.TRANSPARENT ? checkedStyle.solid_end_color : focusedStyle.solid_color);
+        focusedStyle.solid_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_solid_gradual_orientation_focused, checkedStyle.solid_gradual_orientation);
+        focusedStyle.stroke_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_color_focused, Color.TRANSPARENT);
+        focusedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_start_color_focused, focusedStyle.stroke_color == Color.TRANSPARENT ? checkedStyle.stroke_start_color : focusedStyle.stroke_color);
+        focusedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_end_color_focused, focusedStyle.stroke_color == Color.TRANSPARENT ? checkedStyle.stroke_end_color : focusedStyle.stroke_color);
+        focusedStyle.stroke_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_stroke_gradual_orientation_focused, checkedStyle.stroke_gradual_orientation);
+        focusedStyle.stroke_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_width_focused, checkedStyle.stroke_width);
+        focusedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_gap_focused, checkedStyle.stroke_dash_gap);
+        focusedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_width_focused, checkedStyle.stroke_dash_width);
+        focusedStyle.corners_radius = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_focused, 0);
+        focusedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_top_focused, focusedStyle.corners_radius == 0 ? checkedStyle.corners_radius_left_top : focusedStyle.corners_radius);
+        focusedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_focused, focusedStyle.corners_radius == 0 ? checkedStyle.corners_radius_right_top : focusedStyle.corners_radius);
+        focusedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_focused, focusedStyle.corners_radius == 0 ? checkedStyle.corners_radius_left_bottom : focusedStyle.corners_radius);
+        focusedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_focused, focusedStyle.corners_radius == 0 ? checkedStyle.corners_radius_right_bottom : focusedStyle.corners_radius);
+
         typedArray.recycle();//释放资源
 
-        selectedStyle = checkedStyle;
 //        setFocusableInTouchMode(true);
 
         //当设置在触摸模式下可以获取焦点时，如果不设置点击事件，onFocusChanged不回调
@@ -249,8 +317,6 @@ public class BgFrameLayout extends FrameLayout {
             }
         });
     }
-
-    private boolean checked;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -321,10 +387,14 @@ public class BgFrameLayout extends FrameLayout {
     public void setChecked(boolean checked) {
         if (isEnabled()) {
             this.checked = checked;
-            if (checked) {
-                currentStyle = checkedStyle;
+            if (this.focused) {//  当该View是获取到焦点状态时，设置成focusedStyle
+                currentStyle = focusedStyle;
             } else {
-                currentStyle = defStyle;
+                if (this.checked) {
+                    currentStyle = checkedStyle;
+                } else {
+                    currentStyle = defStyle;
+                }
             }
             invalidate();
         }
@@ -335,7 +405,9 @@ public class BgFrameLayout extends FrameLayout {
             if (pressed) {
                 currentStyle = pressedStyle;
             } else {
-                if (checked) { //  当目前是选中状态时，抬起后设置成选中样式
+                if (this.focused) {//  当该View是获取到焦点状态时，抬起后设置成focusedStyle
+                    currentStyle = focusedStyle;
+                } else if (this.checked) { //  当该View是选中状态时，抬起后设置成checkedStyle
                     currentStyle = checkedStyle;
                 } else
                     currentStyle = defStyle;
@@ -344,17 +416,20 @@ public class BgFrameLayout extends FrameLayout {
         }
     }
 
-    public void setSelected(boolean selected) {
+    public void setFocused(boolean focused) {
         if (isEnabled()) {
-            super.setSelected(selected);
-            if (selected) {
-                currentStyle = selectedStyle;
+            this.focused = focused;
+            if (this.focused) {
+                currentStyle = focusedStyle;
                 // 当设置允许获取焦点后，要点击两下才能执行onClick，所以当selected为true时，执行onClick
                 if (onClickListener != null) {
                     onClickListener.onClick(this);
                 }
             } else {
-                currentStyle = defStyle;
+                if (this.checked) { //  当该View是选中状态时，失去焦点后设置成checkedStyle
+                    currentStyle = checkedStyle;
+                } else
+                    currentStyle = defStyle;
             }
             invalidate();
         }
@@ -369,10 +444,15 @@ public class BgFrameLayout extends FrameLayout {
                 break;
             case MotionEvent.ACTION_UP:
                 SetPressed(false);
-                setChecked(!isChecked());
+                setChecked(!this.checked);
                 break;
             case MotionEvent.ACTION_CANCEL:
                 SetPressed(false);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (!findTopChildUnder(ev.getX(), ev.getY())) {
+                    SetPressed(false);
+                }
                 break;
         }
         if (!hasOnClickListeners()) {
@@ -385,10 +465,10 @@ public class BgFrameLayout extends FrameLayout {
     @Override
     protected void onFocusChanged(boolean gainFocus, int direction, @Nullable Rect previouslyFocusedRect) {
         super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
-        setSelected(gainFocus);
+        setFocused(gainFocus);
     }
 
-    //当this被按下的时候，获取子EditText控件，先取出它的OnFocusChangeListener，然后重新设置监听，在回调里面
+    //当该View被按下的时候，获取子EditText控件，先取出它的OnFocusChangeListener，然后重新设置监听，在回调里面
     //在调用原来OnFocusChangeListener的onFocusChange
     private void setOnChildViewFocusChangeListener() {
         for (int i = 0; i < getChildCount(); i++) {
@@ -398,7 +478,7 @@ public class BgFrameLayout extends FrameLayout {
                 view.setOnFocusChangeListener(new OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
-                        setSelected(hasFocus);
+                        setFocused(hasFocus);
                         if (onFocusChangeListener != null) {
                             onFocusChangeListener.onFocusChange(v, hasFocus);
                         }
@@ -412,10 +492,28 @@ public class BgFrameLayout extends FrameLayout {
         this.onClickListener = l;
     }
 
-    public boolean isChecked() {
-        return checked;
+    /*
+     * 判断点击位置是否位于该View内
+     * @param x x坐标
+     * @param y y坐标
+     * @return
+     */
+    public boolean findTopChildUnder(float x, float y) {
+        Log.e("x:y=============>", x + "：" + y);
+        Log.e("l:r:t:b==========>", this.getLeft() + "：" + this.getRight() + "：" + this.getTop() + "：" + this.getBottom());
+        if (x >= this.getLeft() && x < this.getRight() &&
+                y >= this.getTop() && y < this.getBottom()) {
+            Log.e("result=============>", "true");
+            return true;
+        }
+        Log.e("result=============>", "false");
+        return false;
     }
 
+    /**
+     * 建议根据不同的状态去设置style
+     */
+    @Deprecated
     public void setSolidColor(@ColorInt int solid_color) {
         currentStyle.solid_color = solid_color;
         currentStyle.solid_start_color = solid_color;
@@ -423,16 +521,28 @@ public class BgFrameLayout extends FrameLayout {
         invalidate();
     }
 
+    /**
+     * 建议根据不同的状态去设置style
+     */
+    @Deprecated
     public void setSolidStartColor(@ColorInt int solid_start_color) {
         currentStyle.solid_start_color = solid_start_color;
         invalidate();
     }
 
+    /**
+     * 建议根据不同的状态去设置style
+     */
+    @Deprecated
     public void setSolidEndColor(@ColorInt int solid_end_color) {
         currentStyle.solid_end_color = solid_end_color;
         invalidate();
     }
 
+    /**
+     * 建议根据不同的状态去设置style
+     */
+    @Deprecated
     public void setStrokeColor(@ColorInt int stroke_color) {
         currentStyle.stroke_color = stroke_color;
         currentStyle.stroke_start_color = stroke_color;
@@ -440,31 +550,55 @@ public class BgFrameLayout extends FrameLayout {
         invalidate();
     }
 
+    /**
+     * 建议根据不同的状态去设置style
+     */
+    @Deprecated
     public void setStrokeStartColor(@ColorInt int stroke_start_color) {
         currentStyle.stroke_start_color = stroke_start_color;
         invalidate();
     }
 
+    /**
+     * 建议根据不同的状态去设置style
+     */
+    @Deprecated
     public void setStrokeEndColor(@ColorInt int stroke_end_color) {
         currentStyle.stroke_end_color = stroke_end_color;
         invalidate();
     }
 
+    /**
+     * 建议根据不同的状态去设置style
+     */
+    @Deprecated
     public void setStrokeWidth(float stroke_width) {
         currentStyle.stroke_width = stroke_width;
         invalidate();
     }
 
+    /**
+     * 建议根据不同的状态去设置style
+     */
+    @Deprecated
     public void setStrokeDashGap(float stroke_dashGap) {
         currentStyle.stroke_dash_gap = stroke_dashGap;
         invalidate();
     }
 
+    /**
+     * 建议根据不同的状态去设置style
+     */
+    @Deprecated
     public void setStrokeDashWidth(float stroke_dashWidth) {
         currentStyle.stroke_dash_width = stroke_dashWidth;
         invalidate();
     }
 
+    /**
+     * 建议根据不同的状态去设置style
+     */
+    @Deprecated
     public void setCornersRadius(float corners_radius) {
         currentStyle.corners_radius = corners_radius;
         currentStyle.corners_radius_left_top = corners_radius;
@@ -474,6 +608,10 @@ public class BgFrameLayout extends FrameLayout {
         invalidate();
     }
 
+    /**
+     * 建议根据不同的状态去设置style
+     */
+    @Deprecated
     public void setCornersRadius(float corners_radius_left_top, float corners_radius_right_top, float corners_radius_right_bottom, float corners_radius_left_bottom) {
         currentStyle.corners_radius_left_top = corners_radius_left_top;
         currentStyle.corners_radius_right_top = corners_radius_right_top;

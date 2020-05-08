@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.gt.utils.widget.BgFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:solid_color="#000000"
-    app:solid_color_pressed="#ffffff">
+    android:background="#000000">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -34,11 +33,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="20dp"
-                android:focusableInTouchMode="true"
                 app:corners_radius="8dp"
                 app:solid_color="@color/colorPrimary"
-                app:solid_color_checked="@color/main"
-                app:solid_color_no_enabled="#888888"
                 app:solid_color_pressed="@color/colorAccent">
 
                 <TextView
@@ -63,9 +59,10 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:focusableInTouchMode="true"
-                    app:corners_radius="6dp"
+                    app:corners_radius="8dp"
                     app:solid_color="@color/colorPrimary"
                     app:solid_color_checked="@color/main"
+                    app:solid_color_focused="#987987"
                     app:solid_color_no_enabled="#888888"
                     app:solid_color_pressed="@color/colorAccent">
 
@@ -90,7 +87,7 @@
                     android:layout_height="46dp"
                     android:layout_marginTop="20dp"
                     android:layout_weight="1.5"
-                    app:corners_radius="6dp"
+                    app:corners_radius="8dp"
                     app:solid_color="@color/colorPrimary"
                     app:solid_color_pressed="@color/colorAccent">
 
@@ -113,9 +110,10 @@
                 android:layout_height="46dp"
                 android:layout_marginTop="20dp"
                 android:focusableInTouchMode="true"
-                app:corners_radius="6dp"
+                app:corners_radius="8dp"
                 app:solid_color="@color/colorPrimary"
                 app:solid_color_checked="@color/main"
+                app:solid_color_focused="#987987"
                 app:solid_color_no_enabled="#888888"
                 app:solid_color_pressed="@color/colorAccent">
 
@@ -137,9 +135,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:focusableInTouchMode="true"
-                app:corners_radius="6dp"
+                app:corners_radius="8dp"
                 app:solid_color="@color/colorPrimary"
                 app:solid_color_checked="@color/main"
+                app:solid_color_focused="#987987"
                 app:solid_color_no_enabled="#888888"
                 app:solid_color_pressed="@color/colorAccent">
 
@@ -176,6 +175,7 @@
                 app:corners_radius="8dp"
                 app:solid_color="@color/colorPrimary"
                 app:solid_color_checked="@color/main"
+                app:solid_color_focused="#987987"
                 app:solid_color_no_enabled="#888888"
                 app:solid_color_pressed="@color/colorAccent">
 
@@ -196,4 +196,4 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-</com.gt.utils.widget.BgFrameLayout>
+</FrameLayout>

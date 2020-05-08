@@ -105,6 +105,33 @@
         <attr name="corners_radius_right_top_pressed" format="dimension" /><!--圆角弧度 右上角-->
         <attr name="corners_radius_left_bottom_pressed" format="dimension" /><!--圆角弧度 左下角-->
         <attr name="corners_radius_right_bottom_pressed" format="dimension" /><!--圆角弧度 右下角-->
+
+        <!--focused-->
+        <attr name="solid_color_focused" format="color" /><!--填充色-->
+        <attr name="solid_start_color_focused" format="color" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_focused" format="color" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation_focused" format="enum"><!--填充渐变方向，默认horizontal-->
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+            <enum name="diagonal" value="-1" />
+        </attr>
+        <attr name="stroke_color_focused" format="color" /><!--边框颜色-->
+        <attr name="stroke_start_color_focused" format="color" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_focused" format="color" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation_focused" format="enum"><!--边框渐变方向，默认horizontal-->
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+            <enum name="diagonal" value="-1" />
+        </attr>
+        <attr name="stroke_width_focused" format="dimension" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_focused" format="dimension" /><!--间隔-->
+        <attr name="stroke_dash_width_focused" format="dimension" /><!--点的大小-->
+        <attr name="corners_radius_focused" format="dimension" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_focused" format="dimension" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_focused" format="dimension" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_focused" format="dimension" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_focused" format="dimension" /><!--圆角弧度 右下角-->
+
     </declare-styleable>
 
     <declare-styleable name="BgTextView">
