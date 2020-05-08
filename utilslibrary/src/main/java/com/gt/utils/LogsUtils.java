@@ -22,8 +22,6 @@ import java.util.Map;
 
 public class LogsUtils {
 
-    private static final String KMS_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath() + File.separator + "gt" + File.separator + "log";
-
     public static void writeInfoLog(Context ct, String error) {
         writeLog(ct, "", "info", error);
     }
@@ -88,7 +86,7 @@ public class LogsUtils {
 
     private static void writeFile(String pathName, final String context) {
         try {
-            File path = new File(KMS_DIR);
+            File path = new File(FileUtils.GT_DIR);
             String str = "gt_" + pathName + "_" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + ".log";
             File file = new File(path.getPath() + File.separator + str);
             if (!path.exists()) {

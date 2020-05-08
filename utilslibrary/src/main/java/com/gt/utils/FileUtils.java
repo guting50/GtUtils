@@ -27,9 +27,9 @@ import androidx.core.content.FileProvider;
 
 public class FileUtils {
     /**
-     * 文件路径  Environment.getExternalStorageDirectory() + File.separator + "kms";
+     * 文件路径  Environment.getExternalStorageDirectory() + File.separator + "Gt";
      */
-    public static final String KMS_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath() + File.separator + "gt";
+    public static final String GT_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Gt";
 
     /**
      * 保存图片
@@ -40,7 +40,7 @@ public class FileUtils {
     public static String writeBitmapToSD(Context context, Bitmap bitmap) {
         if (bitmap != null) {
             //创建并保存图片文件
-            File dir = new File(KMS_DIR + File.separator + "camera");
+            File dir = new File(GT_DIR + File.separator + "camera");
             if (!dir.exists()) {
                 dir.mkdirs();
             }
@@ -103,10 +103,10 @@ public class FileUtils {
                     return;
                 }
                 try {
-                    File path = new File(KMS_DIR + File.separator + fileName);
+                    File path = new File(GT_DIR + File.separator + fileName);
                     String str = (append ? new SimpleDateFormat("yyyy-MM-dd").format(new Date()) : new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()))
                             .replace("-", "").replace(":", "").replace(" ", "") + ".log";
-                    File file = new File(KMS_DIR + File.separator + fileName + File.separator + str);
+                    File file = new File(path.getPath() + File.separator + str);
                     if (!path.exists()) {
                         path.mkdirs();
                     }
@@ -114,9 +114,11 @@ public class FileUtils {
                         file.createNewFile();
                     }
                     FileOutputStream fos = new FileOutputStream(file, append);
-                    fos.write(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date() + context + "\n").getBytes());
+                    fos.write((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "===========>\n" +
+                            context + "\n=================================>\n\n\n").getBytes());
                     fos.close();
                 } catch (Exception e) {
+                    e.printStackTrace();
                     Log.e("TestFile", "Error on writeFilToSD.");
                 }
             }

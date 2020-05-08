@@ -4,7 +4,6 @@ package com.gt.utils;
  * Created by Administrator on 2018/4/2 0002.
  */
 
-import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
@@ -66,7 +65,7 @@ public class MuchThreadDown {
     private boolean showLog = false, alone = false, cover = false;
 
     public MuchThreadDown(String fileUrl) {
-        this(fileUrl, Environment.getExternalStorageDirectory() + File.separator + "kms" + File.separator + "image");
+        this(fileUrl, FileUtils.GT_DIR + File.separator + "download");
     }
 
     /**
