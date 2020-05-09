@@ -41,8 +41,7 @@ public class TestBgLayoutActivity extends AppCompatActivity {
                 Toast.makeText(TestBgLayoutActivity.this, "bgLayout1_1", Toast.LENGTH_LONG).show();
             }
         });
-        BgFrameLayout bgLayout2 = findViewById(R.id.bgLayout2);
-        bgLayout2.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bgLayout2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(TestBgLayoutActivity.this, "bgLayout2", Toast.LENGTH_LONG).show();
