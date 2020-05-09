@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.gt.utils.GsonUtils;
 import com.gt.utils.R;
 
 import androidx.annotation.ColorInt;
@@ -179,10 +180,8 @@ import androidx.annotation.RequiresApi;
  * 失去焦点时，如果checked == true，显示checkedStyle
  *             否者显示defStyle
  *
- * checkedStyle   默认等于 defStyle
- * pressedStyle   默认等于 checkedStyle
- * focusedStyle   默认等于 checkedStyle
- * noEnabledStyle 默认等于 defStyle
+ * focusedStyle 和 checkedStyle 尽量不要同时使用，容易混淆
+ *
  */
 public class BgFrameLayout extends FrameLayout {
 
@@ -232,75 +231,75 @@ public class BgFrameLayout extends FrameLayout {
         defStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top, defStyle.corners_radius);
         defStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom, defStyle.corners_radius);
         defStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom, defStyle.corners_radius);
-        currentStyle = defStyle;
+        currentStyle = GsonUtils.getGson().fromJson(GsonUtils.getGson().toJson(defStyle), Style.class);
 
-        noEnabledStyle.solid_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_color_no_enabled, Color.TRANSPARENT);
-        noEnabledStyle.solid_start_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_start_color_no_enabled, noEnabledStyle.solid_color == Color.TRANSPARENT ? defStyle.solid_start_color : noEnabledStyle.solid_color);
-        noEnabledStyle.solid_end_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_end_color_no_enabled, noEnabledStyle.solid_color == Color.TRANSPARENT ? defStyle.solid_end_color : noEnabledStyle.solid_color);
-        noEnabledStyle.solid_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_solid_gradual_orientation_no_enabled, defStyle.solid_gradual_orientation);
-        noEnabledStyle.stroke_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_color_no_enabled, Color.TRANSPARENT);
-        noEnabledStyle.stroke_start_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_start_color_no_enabled, noEnabledStyle.stroke_color == Color.TRANSPARENT ? defStyle.stroke_start_color : noEnabledStyle.stroke_color);
-        noEnabledStyle.stroke_end_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_end_color_no_enabled, noEnabledStyle.stroke_color == Color.TRANSPARENT ? defStyle.stroke_end_color : noEnabledStyle.stroke_color);
-        noEnabledStyle.stroke_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_stroke_gradual_orientation_no_enabled, defStyle.stroke_gradual_orientation);
-        noEnabledStyle.stroke_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_width_no_enabled, defStyle.stroke_width);
-        noEnabledStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_gap_no_enabled, defStyle.stroke_dash_gap);
-        noEnabledStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_width_no_enabled, defStyle.stroke_dash_width);
-        noEnabledStyle.corners_radius = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_no_enabled, 0);
-        noEnabledStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_top_no_enabled, noEnabledStyle.corners_radius == 0 ? defStyle.corners_radius_left_top : noEnabledStyle.corners_radius);
-        noEnabledStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_no_enabled, noEnabledStyle.corners_radius == 0 ? defStyle.corners_radius_right_top : noEnabledStyle.corners_radius);
-        noEnabledStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_no_enabled, noEnabledStyle.corners_radius == 0 ? defStyle.corners_radius_left_bottom : noEnabledStyle.corners_radius);
-        noEnabledStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_no_enabled, noEnabledStyle.corners_radius == 0 ? defStyle.corners_radius_right_bottom : noEnabledStyle.corners_radius);
+        noEnabledStyle.solid_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_color_no_enabled, -1);
+        noEnabledStyle.solid_start_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_start_color_no_enabled, noEnabledStyle.solid_color);
+        noEnabledStyle.solid_end_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_end_color_no_enabled, noEnabledStyle.solid_color);
+        noEnabledStyle.solid_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_solid_gradual_orientation_no_enabled, -1);
+        noEnabledStyle.stroke_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_color_no_enabled, -1);
+        noEnabledStyle.stroke_start_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_start_color_no_enabled, noEnabledStyle.stroke_color);
+        noEnabledStyle.stroke_end_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_end_color_no_enabled, noEnabledStyle.stroke_color);
+        noEnabledStyle.stroke_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_stroke_gradual_orientation_no_enabled, -1);
+        noEnabledStyle.stroke_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_width_no_enabled, -1);
+        noEnabledStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_gap_no_enabled, -1);
+        noEnabledStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_width_no_enabled, -1);
+        noEnabledStyle.corners_radius = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_no_enabled, -1);
+        noEnabledStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_top_no_enabled, noEnabledStyle.corners_radius);
+        noEnabledStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_no_enabled, noEnabledStyle.corners_radius);
+        noEnabledStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_no_enabled, noEnabledStyle.corners_radius);
+        noEnabledStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_no_enabled, noEnabledStyle.corners_radius);
 
-        checkedStyle.solid_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_color_checked, Color.TRANSPARENT);
-        checkedStyle.solid_start_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_start_color_checked, checkedStyle.solid_color == Color.TRANSPARENT ? defStyle.solid_start_color : checkedStyle.solid_color);
-        checkedStyle.solid_end_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_end_color_checked, checkedStyle.solid_color == Color.TRANSPARENT ? defStyle.solid_end_color : checkedStyle.solid_color);
-        checkedStyle.solid_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_solid_gradual_orientation_checked, defStyle.solid_gradual_orientation);
-        checkedStyle.stroke_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_color_checked, Color.TRANSPARENT);
-        checkedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_start_color_checked, checkedStyle.stroke_color == Color.TRANSPARENT ? defStyle.stroke_start_color : checkedStyle.stroke_color);
-        checkedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_end_color_checked, checkedStyle.stroke_color == Color.TRANSPARENT ? defStyle.stroke_end_color : checkedStyle.stroke_color);
-        checkedStyle.stroke_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_stroke_gradual_orientation_checked, defStyle.stroke_gradual_orientation);
-        checkedStyle.stroke_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_width_checked, defStyle.stroke_width);
-        checkedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_gap_checked, defStyle.stroke_dash_gap);
-        checkedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_width_checked, defStyle.stroke_dash_width);
-        checkedStyle.corners_radius = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_checked, 0);
-        checkedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_top_checked, checkedStyle.corners_radius == 0 ? defStyle.corners_radius_left_top : checkedStyle.corners_radius);
-        checkedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_checked, checkedStyle.corners_radius == 0 ? defStyle.corners_radius_right_top : checkedStyle.corners_radius);
-        checkedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_checked, checkedStyle.corners_radius == 0 ? defStyle.corners_radius_left_bottom : checkedStyle.corners_radius);
-        checkedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_checked, checkedStyle.corners_radius == 0 ? defStyle.corners_radius_right_bottom : checkedStyle.corners_radius);
+        checkedStyle.solid_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_color_checked, -1);
+        checkedStyle.solid_start_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_start_color_checked, checkedStyle.solid_color);
+        checkedStyle.solid_end_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_end_color_checked, checkedStyle.solid_color);
+        checkedStyle.solid_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_solid_gradual_orientation_checked, -1);
+        checkedStyle.stroke_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_color_checked, -1);
+        checkedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_start_color_checked, checkedStyle.stroke_color);
+        checkedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_end_color_checked, checkedStyle.stroke_color);
+        checkedStyle.stroke_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_stroke_gradual_orientation_checked, -1);
+        checkedStyle.stroke_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_width_checked, -1);
+        checkedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_gap_checked, -1);
+        checkedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_width_checked, -1);
+        checkedStyle.corners_radius = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_checked, -1);
+        checkedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_top_checked, checkedStyle.corners_radius);
+        checkedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_checked, checkedStyle.corners_radius);
+        checkedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_checked, checkedStyle.corners_radius);
+        checkedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_checked, checkedStyle.corners_radius);
 
-        pressedStyle.solid_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_color_pressed, Color.TRANSPARENT);
-        pressedStyle.solid_start_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_start_color_pressed, pressedStyle.solid_color == Color.TRANSPARENT ? checkedStyle.solid_start_color : pressedStyle.solid_color);
-        pressedStyle.solid_end_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_end_color_pressed, pressedStyle.solid_color == Color.TRANSPARENT ? checkedStyle.solid_end_color : pressedStyle.solid_color);
-        pressedStyle.solid_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_solid_gradual_orientation_pressed, checkedStyle.solid_gradual_orientation);
-        pressedStyle.stroke_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_color_pressed, Color.TRANSPARENT);
-        pressedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_start_color_pressed, pressedStyle.stroke_color == Color.TRANSPARENT ? checkedStyle.stroke_start_color : pressedStyle.stroke_color);
-        pressedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_end_color_pressed, pressedStyle.stroke_color == Color.TRANSPARENT ? checkedStyle.stroke_end_color : pressedStyle.stroke_color);
-        pressedStyle.stroke_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_stroke_gradual_orientation_pressed, checkedStyle.stroke_gradual_orientation);
-        pressedStyle.stroke_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_width_pressed, checkedStyle.stroke_width);
-        pressedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_gap_pressed, checkedStyle.stroke_dash_gap);
-        pressedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_width_pressed, checkedStyle.stroke_dash_width);
-        pressedStyle.corners_radius = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_pressed, 0);
-        pressedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_top_pressed, pressedStyle.corners_radius == 0 ? checkedStyle.corners_radius_left_top : pressedStyle.corners_radius);
-        pressedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_pressed, pressedStyle.corners_radius == 0 ? checkedStyle.corners_radius_right_top : pressedStyle.corners_radius);
-        pressedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_pressed, pressedStyle.corners_radius == 0 ? checkedStyle.corners_radius_left_bottom : pressedStyle.corners_radius);
-        pressedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_pressed, pressedStyle.corners_radius == 0 ? checkedStyle.corners_radius_right_bottom : pressedStyle.corners_radius);
+        pressedStyle.solid_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_color_pressed, -1);
+        pressedStyle.solid_start_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_start_color_pressed, pressedStyle.solid_color);
+        pressedStyle.solid_end_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_end_color_pressed, pressedStyle.solid_color);
+        pressedStyle.solid_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_solid_gradual_orientation_pressed, -1);
+        pressedStyle.stroke_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_color_pressed, -1);
+        pressedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_start_color_pressed, pressedStyle.stroke_color);
+        pressedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_end_color_pressed, pressedStyle.stroke_color);
+        pressedStyle.stroke_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_stroke_gradual_orientation_pressed, -1);
+        pressedStyle.stroke_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_width_pressed, -1);
+        pressedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_gap_pressed, -1);
+        pressedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_width_pressed, -1);
+        pressedStyle.corners_radius = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_pressed, -1);
+        pressedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_top_pressed, pressedStyle.corners_radius);
+        pressedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_pressed, pressedStyle.corners_radius);
+        pressedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_pressed, pressedStyle.corners_radius);
+        pressedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_pressed, pressedStyle.corners_radius);
 
-        focusedStyle.solid_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_color_focused, Color.TRANSPARENT);
-        focusedStyle.solid_start_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_start_color_focused, focusedStyle.solid_color == Color.TRANSPARENT ? checkedStyle.solid_start_color : focusedStyle.solid_color);
-        focusedStyle.solid_end_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_end_color_focused, focusedStyle.solid_color == Color.TRANSPARENT ? checkedStyle.solid_end_color : focusedStyle.solid_color);
-        focusedStyle.solid_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_solid_gradual_orientation_focused, checkedStyle.solid_gradual_orientation);
-        focusedStyle.stroke_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_color_focused, Color.TRANSPARENT);
-        focusedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_start_color_focused, focusedStyle.stroke_color == Color.TRANSPARENT ? checkedStyle.stroke_start_color : focusedStyle.stroke_color);
-        focusedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_end_color_focused, focusedStyle.stroke_color == Color.TRANSPARENT ? checkedStyle.stroke_end_color : focusedStyle.stroke_color);
-        focusedStyle.stroke_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_stroke_gradual_orientation_focused, checkedStyle.stroke_gradual_orientation);
-        focusedStyle.stroke_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_width_focused, checkedStyle.stroke_width);
-        focusedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_gap_focused, checkedStyle.stroke_dash_gap);
-        focusedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_width_focused, checkedStyle.stroke_dash_width);
-        focusedStyle.corners_radius = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_focused, 0);
-        focusedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_top_focused, focusedStyle.corners_radius == 0 ? checkedStyle.corners_radius_left_top : focusedStyle.corners_radius);
-        focusedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_focused, focusedStyle.corners_radius == 0 ? checkedStyle.corners_radius_right_top : focusedStyle.corners_radius);
-        focusedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_focused, focusedStyle.corners_radius == 0 ? checkedStyle.corners_radius_left_bottom : focusedStyle.corners_radius);
-        focusedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_focused, focusedStyle.corners_radius == 0 ? checkedStyle.corners_radius_right_bottom : focusedStyle.corners_radius);
+        focusedStyle.solid_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_color_focused, -1);
+        focusedStyle.solid_start_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_start_color_focused, focusedStyle.solid_color);
+        focusedStyle.solid_end_color = typedArray.getColor(R.styleable.BgFrameLayout_solid_end_color_focused, focusedStyle.solid_color);
+        focusedStyle.solid_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_solid_gradual_orientation_focused, -1);
+        focusedStyle.stroke_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_color_focused, -1);
+        focusedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_start_color_focused, focusedStyle.stroke_color);
+        focusedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgFrameLayout_stroke_end_color_focused, focusedStyle.stroke_color);
+        focusedStyle.stroke_gradual_orientation = typedArray.getInteger(R.styleable.BgFrameLayout_stroke_gradual_orientation_focused, -1);
+        focusedStyle.stroke_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_width_focused, -1);
+        focusedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_gap_focused, -1);
+        focusedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgFrameLayout_stroke_dash_width_focused, -1);
+        focusedStyle.corners_radius = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_focused, -1);
+        focusedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_top_focused, focusedStyle.corners_radius);
+        focusedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_top_focused, focusedStyle.corners_radius);
+        focusedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_left_bottom_focused, focusedStyle.corners_radius);
+        focusedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgFrameLayout_corners_radius_right_bottom_focused, focusedStyle.corners_radius);
 
         typedArray.recycle();//释放资源
 
@@ -374,42 +373,42 @@ public class BgFrameLayout extends FrameLayout {
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         if (enabled) {
-            currentStyle = defStyle;
+            setCurrentStyle(defStyle);
         } else {
-            currentStyle = noEnabledStyle;
+            setCurrentStyle(noEnabledStyle);
         }
-        invalidate();
     }
 
     public void setChecked(boolean checked) {
         if (isEnabled()) {
             this.checked = checked;
-            if (this.focused) {//  当该View是获取到焦点状态时，设置成focusedStyle
-                currentStyle = focusedStyle;
+            if (this.focused) {
+                //  当该View是获取到焦点状态时，设置成focusedStyle
+                //当没有设置focusedStyle样式时，显示checkedStyle样式
+                setCurrentStyle(focusedStyle, checkedStyle);
             } else {
                 if (this.checked) {
-                    currentStyle = checkedStyle;
+                    setCurrentStyle(checkedStyle);
                 } else {
-                    currentStyle = defStyle;
+                    setCurrentStyle(defStyle);
                 }
             }
-            invalidate();
         }
     }
 
     public void SetPressed(boolean pressed) {
         if (isEnabled()) {
             if (pressed) {
-                currentStyle = pressedStyle;
+                //当没有设置pressedStyle样式时，样式不变
+                setCurrentStyle(pressedStyle, currentStyle);
             } else {
                 if (this.focused) {//  当该View是获取到焦点状态时，抬起后设置成focusedStyle
-                    currentStyle = focusedStyle;
+                    setCurrentStyle(focusedStyle);
                 } else if (this.checked) { //  当该View是选中状态时，抬起后设置成checkedStyle
-                    currentStyle = checkedStyle;
+                    setCurrentStyle(checkedStyle);
                 } else
-                    currentStyle = defStyle;
+                    setCurrentStyle(defStyle);
             }
-            invalidate();
         }
     }
 
@@ -418,16 +417,16 @@ public class BgFrameLayout extends FrameLayout {
             if (this.focused != focused) {
                 this.focused = focused;
                 if (this.focused) {
-                    currentStyle = focusedStyle;
+                    //当没有设置focusedStyle样式时，样式不变
+                    setCurrentStyle(focusedStyle, currentStyle);
                     // 当设置允许获取焦点后，要点击两下才能执行onClick，所以当selected为true时，执行onClick
                     onBgClick(this);
                 } else {
                     if (this.checked) { //  当该View是选中状态时，失去焦点后设置成checkedStyle
-                        currentStyle = checkedStyle;
+                        setCurrentStyle(checkedStyle);
                     } else
-                        currentStyle = defStyle;
+                        setCurrentStyle(defStyle);
                 }
-                invalidate();
             }
         }
     }
@@ -512,8 +511,113 @@ public class BgFrameLayout extends FrameLayout {
         return false;
     }
 
+
+    public void setCurrentStyle(Style style) {
+        setCurrentStyle(style, defStyle);
+    }
+
+    public void setCurrentStyle(Style style, Style defStyle) {
+        setCurrentStyle(style, defStyle, this.defStyle);
+    }
+
+    public void setCurrentStyle(Style style, Style assistStyle, Style defStyle) {
+        if (style.solid_start_color != -1)
+            currentStyle.solid_start_color = style.solid_start_color;
+        else if (assistStyle.solid_start_color != -1)
+            currentStyle.solid_start_color = assistStyle.solid_start_color;
+        else
+            currentStyle.solid_start_color = defStyle.solid_start_color;
+
+        if (style.solid_end_color != -1)
+            currentStyle.solid_end_color = style.solid_end_color;
+        else if (assistStyle.solid_end_color != -1)
+            currentStyle.solid_end_color = assistStyle.solid_end_color;
+        else
+            currentStyle.solid_end_color = defStyle.solid_end_color;
+
+        if (style.solid_gradual_orientation != -1)
+            currentStyle.solid_gradual_orientation = style.solid_gradual_orientation;
+        else if (assistStyle.solid_gradual_orientation != -1)
+            currentStyle.solid_gradual_orientation = assistStyle.solid_gradual_orientation;
+        else
+            currentStyle.solid_gradual_orientation = defStyle.solid_gradual_orientation;
+
+        if (style.stroke_start_color != -1)
+            currentStyle.stroke_start_color = style.stroke_start_color;
+        else if (assistStyle.stroke_start_color != -1)
+            currentStyle.stroke_start_color = assistStyle.stroke_start_color;
+        else
+            currentStyle.stroke_start_color = defStyle.stroke_start_color;
+
+        if (style.stroke_end_color != -1)
+            currentStyle.stroke_end_color = style.stroke_end_color;
+        else if (assistStyle.stroke_end_color != -1)
+            currentStyle.stroke_end_color = assistStyle.stroke_end_color;
+        else
+            currentStyle.stroke_end_color = defStyle.stroke_end_color;
+
+        if (style.stroke_gradual_orientation != -1)
+            currentStyle.stroke_gradual_orientation = style.stroke_gradual_orientation;
+        else if (assistStyle.stroke_gradual_orientation != -1)
+            currentStyle.stroke_gradual_orientation = assistStyle.stroke_gradual_orientation;
+        else
+            currentStyle.stroke_gradual_orientation = defStyle.stroke_gradual_orientation;
+
+        if (style.stroke_width != -1)
+            currentStyle.stroke_width = style.stroke_width;
+        else if (assistStyle.stroke_width != -1)
+            currentStyle.stroke_width = assistStyle.stroke_width;
+        else
+            currentStyle.stroke_width = defStyle.stroke_width;
+
+        if (style.stroke_dash_gap != -1)
+            currentStyle.stroke_dash_gap = style.stroke_dash_gap;
+        else if (assistStyle.stroke_dash_gap != -1)
+            currentStyle.stroke_dash_gap = assistStyle.stroke_dash_gap;
+        else
+            currentStyle.stroke_dash_gap = defStyle.stroke_dash_gap;
+
+        if (style.stroke_dash_width != -1)
+            currentStyle.stroke_dash_width = style.stroke_dash_width;
+        else if (assistStyle.stroke_dash_width != -1)
+            currentStyle.stroke_dash_width = assistStyle.stroke_dash_width;
+        else
+            currentStyle.stroke_dash_width = defStyle.stroke_dash_width;
+
+        if (style.corners_radius_left_top != -1)
+            currentStyle.corners_radius_left_top = style.corners_radius_left_top;
+        else if (assistStyle.corners_radius_left_top != -1)
+            currentStyle.corners_radius_left_top = assistStyle.corners_radius_left_top;
+        else
+            currentStyle.corners_radius_left_top = defStyle.corners_radius_left_top;
+
+        if (style.corners_radius_right_top != -1)
+            currentStyle.corners_radius_right_top = style.corners_radius_right_top;
+        else if (assistStyle.corners_radius_right_top != -1)
+            currentStyle.corners_radius_right_top = assistStyle.corners_radius_right_top;
+        else
+            currentStyle.corners_radius_right_top = defStyle.corners_radius_right_top;
+
+        if (style.corners_radius_left_bottom != -1)
+            currentStyle.corners_radius_left_bottom = style.corners_radius_left_bottom;
+        else if (assistStyle.corners_radius_left_bottom != -1)
+            currentStyle.corners_radius_left_bottom = assistStyle.corners_radius_left_bottom;
+        else
+            currentStyle.corners_radius_left_bottom = defStyle.corners_radius_left_bottom;
+
+        if (style.corners_radius_right_bottom != -1)
+            currentStyle.corners_radius_right_bottom = style.corners_radius_right_bottom;
+        else if (assistStyle.corners_radius_right_bottom != -1)
+            currentStyle.corners_radius_right_bottom = assistStyle.corners_radius_right_bottom;
+        else
+            currentStyle.corners_radius_right_bottom = defStyle.corners_radius_right_bottom;
+
+
+        invalidate();
+    }
+
     /**
-     * 建议根据不同的状态去设置style
+     * 建议使用setCurrentStyle()
      */
     @Deprecated
     public void setSolidColor(@ColorInt int solid_color) {
