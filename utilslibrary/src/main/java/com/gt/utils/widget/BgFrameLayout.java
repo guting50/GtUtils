@@ -13,7 +13,6 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -444,13 +443,15 @@ public class BgFrameLayout extends FrameLayout {
                 break;
             case MotionEvent.ACTION_UP:
                 SetPressed(false);
-                setChecked(!this.checked);
+                if (findTopChildUnder(ev.getRawX(), ev.getRawY())) {
+                    setChecked(!this.checked);
+                }
                 break;
             case MotionEvent.ACTION_CANCEL:
                 SetPressed(false);
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (!findTopChildUnder(ev.getX(), ev.getY())) {
+                if (!findTopChildUnder(ev.getRawX(), ev.getRawY())) {
                     SetPressed(false);
                 }
                 break;
@@ -499,14 +500,15 @@ public class BgFrameLayout extends FrameLayout {
      * @return
      */
     public boolean findTopChildUnder(float x, float y) {
-        Log.e("x:y=============>", x + "：" + y);
-        Log.e("l:r:t:b==========>", this.getLeft() + "：" + this.getRight() + "：" + this.getTop() + "：" + this.getBottom());
-        if (x >= this.getLeft() && x < this.getRight() &&
-                y >= this.getTop() && y < this.getBottom()) {
-            Log.e("result=============>", "true");
+        int[] position = new int[2];
+        this.getLocationOnScreen(position);
+        int left = position[0];
+        int top = position[1];
+        int right = left + this.getMeasuredWidth();
+        int bottom = top + this.getMeasuredHeight();
+        if (x >= left && x <= right && y >= top && y <= bottom) {
             return true;
         }
-        Log.e("result=============>", "false");
         return false;
     }
 

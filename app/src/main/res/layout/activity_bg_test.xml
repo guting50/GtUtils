@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="#000000"
+    android:orientation="vertical"
+    android:padding="30dp">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -14,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="30dp"
             tools:context=".TestBgLayoutActivity">
 
             <TextView
@@ -22,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:text="TextView"
@@ -32,10 +34,10 @@
                 android:id="@+id/bgLayout"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 app:corners_radius="8dp"
                 app:solid_color="@color/colorPrimary"
-                app:solid_color_pressed="@color/colorAccent">
+                app:solid_color_checked="@color/colorAccent">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -56,7 +58,7 @@
                     android:id="@+id/bgLayout1"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_weight="1"
                     android:focusableInTouchMode="true"
                     app:corners_radius="8dp"
@@ -85,7 +87,7 @@
                     android:id="@+id/bgLayout1_1"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_weight="1.5"
                     app:corners_radius="8dp"
                     app:solid_color="@color/colorPrimary"
@@ -108,7 +110,7 @@
                 android:id="@+id/bgLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:focusableInTouchMode="true"
                 app:corners_radius="8dp"
                 app:solid_color="@color/colorPrimary"
@@ -133,7 +135,7 @@
                 android:id="@+id/bgLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:focusableInTouchMode="true"
                 app:corners_radius="8dp"
                 app:solid_color="@color/colorPrimary"
@@ -170,7 +172,7 @@
                 android:id="@+id/bgLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:focusableInTouchMode="true"
                 app:corners_radius="8dp"
                 app:solid_color="@color/colorPrimary"
@@ -196,4 +198,4 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-</FrameLayout>
+</LinearLayout>
