@@ -310,9 +310,7 @@ public class BgFrameLayout extends FrameLayout {
         super.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onClickListener != null) {
-                    onClickListener.onClick(v);
-                }
+                onBgClick(v);
             }
         });
     }
@@ -417,20 +415,20 @@ public class BgFrameLayout extends FrameLayout {
 
     public void setFocused(boolean focused) {
         if (isEnabled()) {
-            this.focused = focused;
-            if (this.focused) {
-                currentStyle = focusedStyle;
-                // 当设置允许获取焦点后，要点击两下才能执行onClick，所以当selected为true时，执行onClick
-                if (onClickListener != null) {
-                    onClickListener.onClick(this);
+            if (this.focused != focused) {
+                this.focused = focused;
+                if (this.focused) {
+                    currentStyle = focusedStyle;
+                    // 当设置允许获取焦点后，要点击两下才能执行onClick，所以当selected为true时，执行onClick
+                    onBgClick(this);
+                } else {
+                    if (this.checked) { //  当该View是选中状态时，失去焦点后设置成checkedStyle
+                        currentStyle = checkedStyle;
+                    } else
+                        currentStyle = defStyle;
                 }
-            } else {
-                if (this.checked) { //  当该View是选中状态时，失去焦点后设置成checkedStyle
-                    currentStyle = checkedStyle;
-                } else
-                    currentStyle = defStyle;
+                invalidate();
             }
-            invalidate();
         }
     }
 
@@ -442,11 +440,6 @@ public class BgFrameLayout extends FrameLayout {
                 setOnChildViewFocusChangeListener();
                 break;
             case MotionEvent.ACTION_UP:
-                SetPressed(false);
-                if (findTopChildUnder(ev.getRawX(), ev.getRawY())) {
-                    setChecked(!this.checked);
-                }
-                break;
             case MotionEvent.ACTION_CANCEL:
                 SetPressed(false);
                 break;
@@ -486,6 +479,13 @@ public class BgFrameLayout extends FrameLayout {
                     }
                 });
             }
+        }
+    }
+
+    private void onBgClick(View view) {
+        setChecked(!checked);
+        if (onClickListener != null) {
+            onClickListener.onClick(view);
         }
     }
 
