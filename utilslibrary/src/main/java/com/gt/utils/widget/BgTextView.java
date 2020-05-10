@@ -41,7 +41,6 @@ public class BgTextView extends TextView {
             Log.e("BgTextView", "attrName = " + attrName + " , attrVal = " + attrVal);
             if (TextUtils.equals("textColor", attrName)) {
                 defStyle.textColor = Color.parseColor(attrVal);
-                defStyle.textColor = attrs.getAttributeIntValue(i, 0);
             }
             if (TextUtils.equals("textSize", attrName)) {
                 float a = attrs.getAttributeFloatValue(i, 0);
