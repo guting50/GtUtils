@@ -511,7 +511,6 @@ public class BgFrameLayout extends FrameLayout {
         return false;
     }
 
-
     public void setCurrentStyle(Style style) {
         setCurrentStyle(style, defStyle);
     }
@@ -628,7 +627,7 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     /**
-     * 建议根据不同的状态去设置style
+     * 建议使用setCurrentStyle()
      */
     @Deprecated
     public void setSolidStartColor(@ColorInt int solid_start_color) {
@@ -637,7 +636,7 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     /**
-     * 建议根据不同的状态去设置style
+     * 建议使用setCurrentStyle()
      */
     @Deprecated
     public void setSolidEndColor(@ColorInt int solid_end_color) {
@@ -646,7 +645,7 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     /**
-     * 建议根据不同的状态去设置style
+     * 建议使用setCurrentStyle()
      */
     @Deprecated
     public void setStrokeColor(@ColorInt int stroke_color) {
@@ -657,7 +656,7 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     /**
-     * 建议根据不同的状态去设置style
+     * 建议使用setCurrentStyle()
      */
     @Deprecated
     public void setStrokeStartColor(@ColorInt int stroke_start_color) {
@@ -666,7 +665,7 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     /**
-     * 建议根据不同的状态去设置style
+     * 建议使用setCurrentStyle()
      */
     @Deprecated
     public void setStrokeEndColor(@ColorInt int stroke_end_color) {
@@ -675,7 +674,7 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     /**
-     * 建议根据不同的状态去设置style
+     * 建议使用setCurrentStyle()
      */
     @Deprecated
     public void setStrokeWidth(float stroke_width) {
@@ -684,7 +683,7 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     /**
-     * 建议根据不同的状态去设置style
+     * 建议使用setCurrentStyle()
      */
     @Deprecated
     public void setStrokeDashGap(float stroke_dashGap) {
@@ -693,7 +692,7 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     /**
-     * 建议根据不同的状态去设置style
+     * 建议使用setCurrentStyle()
      */
     @Deprecated
     public void setStrokeDashWidth(float stroke_dashWidth) {
@@ -702,7 +701,7 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     /**
-     * 建议根据不同的状态去设置style
+     * 建议使用setCurrentStyle()
      */
     @Deprecated
     public void setCornersRadius(float corners_radius) {
@@ -715,7 +714,7 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     /**
-     * 建议根据不同的状态去设置style
+     * 建议使用setCurrentStyle()
      */
     @Deprecated
     public void setCornersRadius(float corners_radius_left_top, float corners_radius_right_top, float corners_radius_right_bottom, float corners_radius_left_bottom) {

@@ -187,10 +187,10 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="BgTextView"
-                    android:textColor="#ffffff"
-                    android:textSize="16sp"
-                    app:textColor_no_enabled="#ffffff"
-                    app:textSize_no_enabled="20sp"
+                    android:textColor="#D81B60"
+                    android:textSize="16.1sp"
+                    app:textColor_no_enabled="#D81B60"
+                    app:textSize_no_enabled="16.1sp"
                     app:text_no_enabled="hahaha" />
 
             </com.gt.utils.widget.BgFrameLayout>

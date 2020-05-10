@@ -34,23 +34,10 @@ public class BgTextView extends TextView {
     public BgTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        int count = attrs.getAttributeCount();
-        for (int i = 0; i < count; i++) {
-            String attrName = attrs.getAttributeName(i);
-            String attrVal = attrs.getAttributeValue(i);
-            Log.e("BgTextView", "attrName = " + attrName + " , attrVal = " + attrVal);
-            if (TextUtils.equals("textColor", attrName)) {
-                defStyle.textColor = Color.parseColor(attrVal);
-            }
-            if (TextUtils.equals("textSize", attrName)) {
-                float a = attrs.getAttributeFloatValue(i, 0);
-//                defStyle.textSize = attrs.getAttributeIntValue(i, 0);
-                defStyle.textSize = attrs.getAttributeIntValue(i, 0);
-            }
-            if (TextUtils.equals("text", attrName)) {
-                defStyle.text = attrVal;
-            }
-        }
+        defStyle.textColor = getTextColors().getDefaultColor();
+        defStyle.textSize = (int) getTextSize();
+        defStyle.text = getText().toString();
+
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BgTextView);
         noEnabledStyle.textColor = typedArray.getColor(R.styleable.BgTextView_textColor_no_enabled, Color.TRANSPARENT);
         noEnabledStyle.textSize = typedArray.getDimensionPixelSize(R.styleable.BgTextView_textSize_no_enabled, defStyle.textSize);
