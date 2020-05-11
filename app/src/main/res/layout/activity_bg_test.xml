@@ -182,16 +182,19 @@
                 app:solid_color_pressed="@color/colorAccent">
 
                 <com.gt.utils.widget.BgTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="BgTextView"
-                    android:textColor="#D81B60"
-                    android:textSize="16.1sp"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
                     app:textColor_no_enabled="#D81B60"
-                    app:textSize_no_enabled="16.1sp"
-                    app:text_no_enabled="hahaha" />
+                    app:textColor_pressed="@color/main"
+                    app:textSize_no_enabled="16sp"
+                    app:textSize_pressed="16sp"
+                    app:text_no_enabled="hahaha"
+                    app:text_pressed="按下" />
 
             </com.gt.utils.widget.BgFrameLayout>
 

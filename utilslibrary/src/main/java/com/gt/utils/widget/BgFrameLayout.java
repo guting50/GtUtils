@@ -443,7 +443,7 @@ public class BgFrameLayout extends FrameLayout {
                 SetPressed(false);
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (!findTopChildUnder(ev.getRawX(), ev.getRawY())) {
+                if (!ViewUrils.findTopChildUnder(this, ev.getRawX(), ev.getRawY())) {
                     SetPressed(false);
                 }
                 break;
@@ -490,25 +490,6 @@ public class BgFrameLayout extends FrameLayout {
 
     public void setOnClickListener(@Nullable OnClickListener l) {
         this.onClickListener = l;
-    }
-
-    /*
-     * 判断点击位置是否位于该View内
-     * @param x x坐标
-     * @param y y坐标
-     * @return
-     */
-    public boolean findTopChildUnder(float x, float y) {
-        int[] position = new int[2];
-        this.getLocationOnScreen(position);
-        int left = position[0];
-        int top = position[1];
-        int right = left + this.getMeasuredWidth();
-        int bottom = top + this.getMeasuredHeight();
-        if (x >= left && x <= right && y >= top && y <= bottom) {
-            return true;
-        }
-        return false;
     }
 
     public void setCurrentStyle(Style style) {

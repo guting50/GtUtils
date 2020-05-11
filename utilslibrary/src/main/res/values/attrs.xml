@@ -144,6 +144,16 @@
         <attr name="textColor_checked" format="color" />
         <attr name="textSize_checked" format="dimension" />
         <attr name="text_checked" format="string" />
+
+        <!--pressed-->
+        <attr name="textColor_pressed" format="color" />
+        <attr name="textSize_pressed" format="dimension" />
+        <attr name="text_pressed" format="string" />
+
+        <!--focused-->
+        <attr name="textColor_focused" format="color" />
+        <attr name="textSize_focused" format="dimension" />
+        <attr name="text_focused" format="string" />
     </declare-styleable>
 
     <declare-styleable name="PaintView">
