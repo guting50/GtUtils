@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.gt.utils.GsonUtils;
 import com.gt.utils.R;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 
 @SuppressLint("AppCompatCustomView")
@@ -159,6 +158,7 @@ public class BgTextView extends TextView {
 
     public void setText(String text) {
         defStyle.text = text;
+        setCurrentStyle(defStyle);
     }
 
     public void setEnabled(boolean enabled) {
