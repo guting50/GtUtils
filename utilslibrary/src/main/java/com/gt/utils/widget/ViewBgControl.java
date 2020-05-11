@@ -8,26 +8,22 @@ import android.graphics.DashPathEffect;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gt.utils.GsonUtils;
 import com.gt.utils.R;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 
 /*
- * 自定义可设置背景的帧布局
+ *
  * 自定义属性
     <declare-styleable name="BgLayout">
         <!--default-->
@@ -185,11 +181,9 @@ import androidx.annotation.RequiresApi;
  */
 
 /**
- * 后期不在维护，建议使用BgLayout
+ * 绘制背景控制器
  */
-@Deprecated
-public class BgFrameLayout extends FrameLayout {
-
+public class ViewBgControl {
     private class Style {
         private int solid_color;
         private int solid_start_color;
@@ -211,14 +205,15 @@ public class BgFrameLayout extends FrameLayout {
 
     public Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), checkedStyle = new Style(), focusedStyle = new Style(), pressedStyle = new Style();
     public boolean checked, focused;
-    private OnClickListener onClickListener;
+    private View.OnClickListener onClickListener;
 
-    public BgFrameLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    private View view;
+
+    public ViewBgControl(View view) {
+        this.view = view;
     }
 
-    public BgFrameLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public void initBgStyle(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BgLayout);
         defStyle.solid_color = typedArray.getColor(R.styleable.BgLayout_solid_color, Color.TRANSPARENT);
         defStyle.solid_start_color = typedArray.getColor(R.styleable.BgLayout_solid_start_color, defStyle.solid_color);
@@ -307,20 +302,8 @@ public class BgFrameLayout extends FrameLayout {
         focusedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom_focused, focusedStyle.corners_radius);
 
         typedArray.recycle();//释放资源
-
-//        setFocusableInTouchMode(true);
-
-        //当设置在触摸模式下可以获取焦点时，如果不设置点击事件，onFocusChanged不回调
-        super.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBgClick(v);
-            }
-        });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @Override
     protected void dispatchDraw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
@@ -331,11 +314,11 @@ public class BgFrameLayout extends FrameLayout {
         {
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(currentStyle.stroke_width);
-            int startX = 0, startY = 0, endX = this.getWidth(), endY = this.getHeight();
+            int startX = 0, startY = 0, endX = view.getWidth(), endY = view.getHeight();
             if (currentStyle.stroke_gradual_orientation == 0) {
-                startY = endY = this.getHeight() / 2;
+                startY = endY = view.getHeight() / 2;
             } else if (currentStyle.stroke_gradual_orientation == 1) {
-                startX = endX = this.getWidth() / 2;
+                startX = endX = view.getWidth() / 2;
             }
             Shader mShader = new LinearGradient(startX, startY, endX, endY, new int[]{currentStyle.stroke_start_color, currentStyle.stroke_end_color}, null, Shader.TileMode.CLAMP);
             paint.setShader(mShader);
@@ -343,7 +326,7 @@ public class BgFrameLayout extends FrameLayout {
             if (currentStyle.stroke_dash_width > 0)
                 paint.setPathEffect(new DashPathEffect(new float[]{currentStyle.stroke_dash_width, currentStyle.stroke_dash_gap}, 0));
             path.addRoundRect(new RectF(currentStyle.stroke_width / 2, currentStyle.stroke_width / 2,
-                            this.getWidth() - currentStyle.stroke_width / 2, this.getHeight() - currentStyle.stroke_width / 2),
+                            view.getWidth() - currentStyle.stroke_width / 2, view.getHeight() - currentStyle.stroke_width / 2),
                     new float[]{currentStyle.corners_radius_left_top, currentStyle.corners_radius_left_top, currentStyle.corners_radius_right_top, currentStyle.corners_radius_right_top,
                             currentStyle.corners_radius_right_bottom, currentStyle.corners_radius_right_bottom, currentStyle.corners_radius_left_bottom, currentStyle.corners_radius_left_bottom},
                     Path.Direction.CW);
@@ -356,27 +339,44 @@ public class BgFrameLayout extends FrameLayout {
             //新建一个线性渐变，前两个参数是渐变开始的点坐标，第三四个参数是渐变结束的点的坐标。连接这2个点就拉出一条渐变线了，玩过PS的都懂。
             // 然后那个数组是渐变的颜色。
             // 下一个参数是渐变颜色的分布，如果为空，每个颜色就是均匀分布的。最后是模式，这里设置的是循环渐变
-            int startX = 0, startY = 0, endX = this.getWidth(), endY = this.getHeight();
+            int startX = 0, startY = 0, endX = view.getWidth(), endY = view.getHeight();
             if (currentStyle.solid_gradual_orientation == 0) {
-                startY = endY = this.getHeight() / 2;
+                startY = endY = view.getHeight() / 2;
             } else if (currentStyle.solid_gradual_orientation == 1) {
-                startX = endX = this.getWidth() / 2;
+                startX = endX = view.getWidth() / 2;
             }
             Shader mShader = new LinearGradient(startX, startY, endX, endY, new int[]{currentStyle.solid_start_color, currentStyle.solid_end_color}, null, Shader.TileMode.CLAMP);
             paint.setShader(mShader);
 
             path.addRoundRect(new RectF(currentStyle.stroke_width, currentStyle.stroke_width,
-                            this.getWidth() - currentStyle.stroke_width, this.getHeight() - currentStyle.stroke_width),
+                            view.getWidth() - currentStyle.stroke_width, view.getHeight() - currentStyle.stroke_width),
                     new float[]{currentStyle.corners_radius_left_top, currentStyle.corners_radius_left_top, currentStyle.corners_radius_right_top, currentStyle.corners_radius_right_top,
                             currentStyle.corners_radius_right_bottom, currentStyle.corners_radius_right_bottom, currentStyle.corners_radius_left_bottom, currentStyle.corners_radius_left_bottom},
                     Path.Direction.CW);
             canvas.drawPath(path, paint);
         }
-        super.dispatchDraw(canvas);
+    }
+
+    public void dispatchTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                SetPressed(true);
+                setOnChildViewFocusChangeListener();
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                SetPressed(false);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (!ViewUrils.findTopChildUnder(view, ev.getRawX(), ev.getRawY())) {
+                    SetPressed(false);
+                }
+                break;
+        }
     }
 
     public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
+        view.setEnabled(enabled);
         if (enabled) {
             setCurrentStyle(defStyle);
         } else {
@@ -385,7 +385,7 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     public void setChecked(boolean checked) {
-        if (isEnabled()) {
+        if (view.isEnabled()) {
             this.checked = checked;
             if (this.focused) {
                 //  当该View是获取到焦点状态时，设置成focusedStyle
@@ -402,7 +402,7 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     public void SetPressed(boolean pressed) {
-        if (isEnabled()) {
+        if (view.isEnabled()) {
             if (pressed) {
                 //当没有设置pressedStyle样式时，样式不变
                 setCurrentStyle(pressedStyle, currentStyle);
@@ -418,14 +418,14 @@ public class BgFrameLayout extends FrameLayout {
     }
 
     public void setFocused(boolean focused) {
-        if (isEnabled()) {
+        if (view.isEnabled()) {
             if (this.focused != focused) {
                 this.focused = focused;
                 if (this.focused) {
                     //当没有设置focusedStyle样式时，样式不变
                     setCurrentStyle(focusedStyle, currentStyle);
                     // 当设置允许获取焦点后，要点击两下才能执行onClick，所以当selected为true时，执行onClick
-                    onBgClick(this);
+                    onBgClick(view);
                 } else {
                     if (this.checked) { //  当该View是选中状态时，失去焦点后设置成checkedStyle
                         setCurrentStyle(checkedStyle);
@@ -436,64 +436,37 @@ public class BgFrameLayout extends FrameLayout {
         }
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                SetPressed(true);
-                setOnChildViewFocusChangeListener();
-                break;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                SetPressed(false);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (!ViewUrils.findTopChildUnder(this, ev.getRawX(), ev.getRawY())) {
-                    SetPressed(false);
-                }
-                break;
-        }
-        if (!hasOnClickListeners()) {
-            return !super.dispatchTouchEvent(ev) ? true : super.dispatchTouchEvent(ev);
-        } else {
-            return super.dispatchTouchEvent(ev);
-        }
-    }
-
-    @Override
-    protected void onFocusChanged(boolean gainFocus, int direction, @Nullable Rect previouslyFocusedRect) {
-        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
-        setFocused(gainFocus);
-    }
-
     //当该View被按下的时候，获取子EditText控件，先取出它的OnFocusChangeListener，然后重新设置监听，在回调里面
     //在调用原来OnFocusChangeListener的onFocusChange
     private void setOnChildViewFocusChangeListener() {
-        for (int i = 0; i < getChildCount(); i++) {
-            View view = getChildAt(i);
-            if (view instanceof TextView) {
-                final OnFocusChangeListener onFocusChangeListener = view.getOnFocusChangeListener();
-                view.setOnFocusChangeListener(new OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        setFocused(hasFocus);
-                        if (onFocusChangeListener != null) {
-                            onFocusChangeListener.onFocusChange(v, hasFocus);
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                View view = viewGroup.getChildAt(i);
+                if (view instanceof TextView) {
+                    final View.OnFocusChangeListener onFocusChangeListener = view.getOnFocusChangeListener();
+                    view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            setFocused(hasFocus);
+                            if (onFocusChangeListener != null) {
+                                onFocusChangeListener.onFocusChange(v, hasFocus);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         }
     }
 
-    private void onBgClick(View view) {
+    public void onBgClick(View view) {
         setChecked(!checked);
         if (onClickListener != null) {
             onClickListener.onClick(view);
         }
     }
 
-    public void setOnClickListener(@Nullable OnClickListener l) {
+    public void setOnClickListener(@Nullable View.OnClickListener l) {
         this.onClickListener = l;
     }
 
@@ -597,117 +570,6 @@ public class BgFrameLayout extends FrameLayout {
         else
             currentStyle.corners_radius_right_bottom = defStyle.corners_radius_right_bottom;
 
-
-        invalidate();
-    }
-
-    /**
-     * 建议使用setCurrentStyle()
-     */
-    @Deprecated
-    public void setSolidColor(@ColorInt int solid_color) {
-        currentStyle.solid_color = solid_color;
-        currentStyle.solid_start_color = solid_color;
-        currentStyle.solid_end_color = solid_color;
-        invalidate();
-    }
-
-    /**
-     * 建议使用setCurrentStyle()
-     */
-    @Deprecated
-    public void setSolidStartColor(@ColorInt int solid_start_color) {
-        currentStyle.solid_start_color = solid_start_color;
-        invalidate();
-    }
-
-    /**
-     * 建议使用setCurrentStyle()
-     */
-    @Deprecated
-    public void setSolidEndColor(@ColorInt int solid_end_color) {
-        currentStyle.solid_end_color = solid_end_color;
-        invalidate();
-    }
-
-    /**
-     * 建议使用setCurrentStyle()
-     */
-    @Deprecated
-    public void setStrokeColor(@ColorInt int stroke_color) {
-        currentStyle.stroke_color = stroke_color;
-        currentStyle.stroke_start_color = stroke_color;
-        currentStyle.stroke_end_color = stroke_color;
-        invalidate();
-    }
-
-    /**
-     * 建议使用setCurrentStyle()
-     */
-    @Deprecated
-    public void setStrokeStartColor(@ColorInt int stroke_start_color) {
-        currentStyle.stroke_start_color = stroke_start_color;
-        invalidate();
-    }
-
-    /**
-     * 建议使用setCurrentStyle()
-     */
-    @Deprecated
-    public void setStrokeEndColor(@ColorInt int stroke_end_color) {
-        currentStyle.stroke_end_color = stroke_end_color;
-        invalidate();
-    }
-
-    /**
-     * 建议使用setCurrentStyle()
-     */
-    @Deprecated
-    public void setStrokeWidth(float stroke_width) {
-        currentStyle.stroke_width = stroke_width;
-        invalidate();
-    }
-
-    /**
-     * 建议使用setCurrentStyle()
-     */
-    @Deprecated
-    public void setStrokeDashGap(float stroke_dashGap) {
-        currentStyle.stroke_dash_gap = stroke_dashGap;
-        invalidate();
-    }
-
-    /**
-     * 建议使用setCurrentStyle()
-     */
-    @Deprecated
-    public void setStrokeDashWidth(float stroke_dashWidth) {
-        currentStyle.stroke_dash_width = stroke_dashWidth;
-        invalidate();
-    }
-
-    /**
-     * 建议使用setCurrentStyle()
-     */
-    @Deprecated
-    public void setCornersRadius(float corners_radius) {
-        currentStyle.corners_radius = corners_radius;
-        currentStyle.corners_radius_left_top = corners_radius;
-        currentStyle.corners_radius_right_top = corners_radius;
-        currentStyle.corners_radius_left_bottom = corners_radius;
-        currentStyle.corners_radius_right_bottom = corners_radius;
-        invalidate();
-    }
-
-    /**
-     * 建议使用setCurrentStyle()
-     */
-    @Deprecated
-    public void setCornersRadius(float corners_radius_left_top, float corners_radius_right_top, float corners_radius_right_bottom, float corners_radius_left_bottom) {
-        currentStyle.corners_radius_left_top = corners_radius_left_top;
-        currentStyle.corners_radius_right_top = corners_radius_right_top;
-        currentStyle.corners_radius_right_bottom = corners_radius_right_bottom;
-        currentStyle.corners_radius_left_bottom = corners_radius_left_bottom;
-        invalidate();
+        view.invalidate();
     }
 }

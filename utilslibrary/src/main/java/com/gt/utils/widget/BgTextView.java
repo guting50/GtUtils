@@ -25,7 +25,7 @@ public class BgTextView extends TextView {
     }
 
     public Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), checkedStyle = new Style(), focusedStyle = new Style(), pressedStyle = new Style();
-    private boolean checked, focused;
+    public boolean checked, focused;
     private OnClickListener onClickListener;
 
     public BgTextView(Context context) {
@@ -62,6 +62,14 @@ public class BgTextView extends TextView {
         focusedStyle.text = typedArray.getString(R.styleable.BgTextView_text_focused);
 
         typedArray.recycle();//释放资源
+
+        //当设置在触摸模式下可以获取焦点时，如果不设置点击事件，onFocusChanged不回调
+        super.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBgClick(v);
+            }
+        });
     }
 
     public void setEnabled(boolean enabled) {
@@ -141,11 +149,8 @@ public class BgTextView extends TextView {
                 }
                 break;
         }
-        if (!hasOnClickListeners()) {
-            return !super.dispatchTouchEvent(ev) ? true : super.dispatchTouchEvent(ev);
-        } else {
-            return super.dispatchTouchEvent(ev);
-        }
+
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override

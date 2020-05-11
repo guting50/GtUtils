@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="BgFrameLayout">
+    <declare-styleable name="BgLayout">
         <!--default-->
         <attr name="solid_color" format="color" /><!--填充色-->
         <attr name="solid_start_color" format="color" /><!--填充渐变开始颜色-->

@@ -62,7 +62,7 @@ public class PaintView extends View {
     public PaintView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs);
         init();
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BgFrameLayout);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PaintView);
         mPaint.setColor(typedArray.getColor(R.styleable.PaintView_paint_color, Color.RED));
         mPaint.setStrokeWidth(typedArray.getFloat(R.styleable.PaintView_paint_stroke_width, 4f));
         type = typedArray.getInteger(R.styleable.PaintView_paint_type, 0);

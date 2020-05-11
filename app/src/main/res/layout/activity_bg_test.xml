@@ -30,14 +30,20 @@
                 android:textColor="#ffffffff"
                 android:textSize="16sp" />
 
-            <com.gt.utils.widget.BgFrameLayout
+            <com.gt.utils.widget.BgLayout
                 android:id="@+id/bgLayout"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginBottom="20dp"
+                android:focusableInTouchMode="true"
                 app:corners_radius="8dp"
                 app:solid_color="@color/colorPrimary"
-                app:solid_color_checked="@color/colorAccent">
+                app:solid_color_checked="@color/main"
+                app:solid_color_focused="#987987"
+                app:solid_color_no_enabled="#888888"
+                app:solid_color_pressed="@color/colorAccent"
+                app:stroke_color="@color/cardview_light_background"
+                app:stroke_width="5dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -48,13 +54,13 @@
                     android:textColor="#ffffffff"
                     android:textSize="16sp" />
 
-            </com.gt.utils.widget.BgFrameLayout>
+            </com.gt.utils.widget.BgLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.gt.utils.widget.BgFrameLayout
+                <com.gt.utils.widget.BgLayout
                     android:id="@+id/bgLayout1"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
@@ -77,13 +83,13 @@
                         android:textColor="#ffffffff"
                         android:textSize="16sp" />
 
-                </com.gt.utils.widget.BgFrameLayout>
+                </com.gt.utils.widget.BgLayout>
 
                 <View
                     android:layout_width="20dp"
                     android:layout_height="1dp" />
 
-                <com.gt.utils.widget.BgFrameLayout
+                <com.gt.utils.widget.BgLayout
                     android:id="@+id/bgLayout1_1"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
@@ -102,11 +108,11 @@
                         android:textColor="#ffffffff"
                         android:textSize="16sp" />
 
-                </com.gt.utils.widget.BgFrameLayout>
+                </com.gt.utils.widget.BgLayout>
 
             </LinearLayout>
 
-            <com.gt.utils.widget.BgFrameLayout
+            <com.gt.utils.widget.BgLayout
                 android:id="@+id/bgLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
@@ -129,9 +135,9 @@
                     android:textColor="#ffffffff"
                     android:textSize="16sp" />
 
-            </com.gt.utils.widget.BgFrameLayout>
+            </com.gt.utils.widget.BgLayout>
 
-            <com.gt.utils.widget.BgFrameLayout
+            <com.gt.utils.widget.BgLayout
                 android:id="@+id/bgLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -166,9 +172,9 @@
                     android:textColor="#ffffffff"
                     android:textSize="16sp" />
 
-            </com.gt.utils.widget.BgFrameLayout>
+            </com.gt.utils.widget.BgLayout>
 
-            <com.gt.utils.widget.BgFrameLayout
+            <com.gt.utils.widget.BgLayout
                 android:id="@+id/bgLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
@@ -182,21 +188,21 @@
                 app:solid_color_pressed="@color/colorAccent">
 
                 <com.gt.utils.widget.BgTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/bgTextView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:focusableInTouchMode="true"
                     android:gravity="center"
                     android:text="BgTextView"
                     android:textColor="#ffffff"
                     android:textSize="16sp"
-                    app:textColor_no_enabled="#D81B60"
-                    app:textColor_pressed="@color/main"
-                    app:textSize_no_enabled="16sp"
-                    app:textSize_pressed="16sp"
+                    app:text_checked="选中"
+                    app:text_focused="获取焦点"
                     app:text_no_enabled="hahaha"
                     app:text_pressed="按下" />
 
-            </com.gt.utils.widget.BgFrameLayout>
+            </com.gt.utils.widget.BgLayout>
 
         </LinearLayout>
 
