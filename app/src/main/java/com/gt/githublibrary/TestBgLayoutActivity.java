@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.gt.utils.widget.BgTextView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -57,7 +55,12 @@ public class TestBgLayoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(TestBgLayoutActivity.this, "bgTextView", Toast.LENGTH_LONG).show();
-//                ((BgTextView) findViewById(R.id.bgTextView1)).setChecked(!((BgTextView) findViewById(R.id.bgTextView1)).checked);
+            }
+        });
+        findViewById(R.id.bgTextView2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(TestBgLayoutActivity.this, "bgTextView2", Toast.LENGTH_LONG).show();
             }
         });
     }

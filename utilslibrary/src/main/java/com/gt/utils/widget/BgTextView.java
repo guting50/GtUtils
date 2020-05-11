@@ -3,7 +3,9 @@ package com.gt.utils.widget;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -15,6 +17,7 @@ import com.gt.utils.GsonUtils;
 import com.gt.utils.R;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 @SuppressLint("AppCompatCustomView")
 public class BgTextView extends TextView {
@@ -27,6 +30,7 @@ public class BgTextView extends TextView {
     public Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), checkedStyle = new Style(), focusedStyle = new Style(), pressedStyle = new Style();
     public boolean checked, focused;
     private OnClickListener onClickListener;
+    public ViewBgControl viewBgControl;
 
     public BgTextView(Context context) {
         this(context, null);
@@ -38,6 +42,8 @@ public class BgTextView extends TextView {
 
     public BgTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        viewBgControl = new ViewBgControl(this);
+        viewBgControl.initBgStyle(context, attrs);
 
         defStyle.textColor = getTextColors().getDefaultColor();
         defStyle.textSize = (int) getTextSize();
@@ -72,69 +78,16 @@ public class BgTextView extends TextView {
         });
     }
 
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-        if (enabled) {
-            setCurrentStyle(defStyle);
-        } else {
-            setCurrentStyle(noEnabledStyle);
-        }
-    }
-
-    public void setChecked(boolean checked) {
-        if (isEnabled()) {
-            this.checked = checked;
-            if (this.focused) {
-                //  当该View是获取到焦点状态时，设置成focusedStyle
-                //当没有设置focusedStyle样式时，显示checkedStyle样式
-                setCurrentStyle(focusedStyle, checkedStyle);
-            } else {
-                if (this.checked) {
-                    setCurrentStyle(checkedStyle);
-                } else {
-                    setCurrentStyle(defStyle);
-                }
-            }
-        }
-    }
-
-    public void SetPressed(boolean pressed) {
-        if (isEnabled()) {
-            if (pressed) {
-                //当没有设置pressedStyle样式时，样式不变
-                setCurrentStyle(pressedStyle, currentStyle);
-            } else {
-                if (this.focused) {//  当该View是获取到焦点状态时，抬起后设置成focusedStyle
-                    setCurrentStyle(focusedStyle);
-                } else if (this.checked) { //  当该View是选中状态时，抬起后设置成checkedStyle
-                    setCurrentStyle(checkedStyle);
-                } else
-                    setCurrentStyle(defStyle);
-            }
-        }
-    }
-
-    public void setFocused(boolean focused) {
-        if (isEnabled()) {
-            if (this.focused != focused) {
-                this.focused = focused;
-                if (this.focused) {
-                    //当没有设置focusedStyle样式时，样式不变
-                    setCurrentStyle(focusedStyle, currentStyle);
-                    // 当设置允许获取焦点后，要点击两下才能执行onClick，所以当selected为true时，执行onClick
-                    onBgClick(this);
-                } else {
-                    if (this.checked) { //  当该View是选中状态时，失去焦点后设置成checkedStyle
-                        setCurrentStyle(checkedStyle);
-                    } else
-                        setCurrentStyle(defStyle);
-                }
-            }
-        }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        viewBgControl.dispatchDraw(canvas);
+        super.dispatchDraw(canvas);
     }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+        viewBgControl.dispatchTouchEvent(ev);
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 SetPressed(true);
@@ -157,6 +110,7 @@ public class BgTextView extends TextView {
     protected void onFocusChanged(boolean gainFocus, int direction, @Nullable Rect previouslyFocusedRect) {
         super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
         setFocused(gainFocus);
+        viewBgControl.setFocused(gainFocus);
     }
 
     private void onBgClick(View view) {
@@ -203,5 +157,72 @@ public class BgTextView extends TextView {
 
     public void setOnClickListener(@Nullable OnClickListener l) {
         this.onClickListener = l;
+    }
+
+
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if (enabled) {
+            setCurrentStyle(defStyle);
+        } else {
+            setCurrentStyle(noEnabledStyle);
+        }
+        viewBgControl.setEnabled(enabled);
+    }
+
+    public void setChecked(boolean checked) {
+        if (isEnabled()) {
+            this.checked = checked;
+            if (this.focused) {
+                //  当该View是获取到焦点状态时，设置成focusedStyle
+                //当没有设置focusedStyle样式时，显示checkedStyle样式
+                setCurrentStyle(focusedStyle, checkedStyle);
+            } else {
+                if (this.checked) {
+                    setCurrentStyle(checkedStyle);
+                } else {
+                    setCurrentStyle(defStyle);
+                }
+            }
+        }
+        viewBgControl.setChecked(checked);
+    }
+
+    public void SetPressed(boolean pressed) {
+        if (isEnabled()) {
+            if (pressed) {
+                //当没有设置pressedStyle样式时，样式不变
+                setCurrentStyle(pressedStyle, currentStyle);
+            } else {
+                if (this.focused) {//  当该View是获取到焦点状态时，抬起后设置成focusedStyle
+                    setCurrentStyle(focusedStyle);
+                } else if (this.checked) { //  当该View是选中状态时，抬起后设置成checkedStyle
+                    setCurrentStyle(checkedStyle);
+                } else
+                    setCurrentStyle(defStyle);
+            }
+        }
+        viewBgControl.SetPressed(pressed);
+    }
+
+    public void setFocused(boolean focused) {
+        if (isEnabled()) {
+            if (this.focused != focused) {
+                this.focused = focused;
+                if (this.focused) {
+                    //当没有设置focusedStyle样式时，样式不变
+                    setCurrentStyle(focusedStyle, currentStyle);
+                    // 当设置允许获取焦点后，要点击两下才能执行onClick，所以当selected为true时，执行onClick
+                    // TextView 不存在这个问题，所以不需要调用onClick
+//                    onBgClick(this);
+                } else {
+                    if (this.checked) { //  当该View是选中状态时，失去焦点后设置成checkedStyle
+                        setCurrentStyle(checkedStyle);
+                    } else
+                        setCurrentStyle(defStyle);
+                }
+            }
+        }
+        viewBgControl.setFocused(focused);
     }
 }

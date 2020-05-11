@@ -14,7 +14,8 @@ import androidx.annotation.RequiresApi;
 
 public class BgLayout extends FrameLayout {
 
-    private ViewBgControl viewBgControl;
+    public ViewBgControl viewBgControl;
+    private OnClickListener onClickListener;
 
     public BgLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -29,7 +30,10 @@ public class BgLayout extends FrameLayout {
         super.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewBgControl.onBgClick(v);
+                viewBgControl.setChecked(!viewBgControl.checked);
+                if (onClickListener != null) {
+                    onClickListener.onClick(v);
+                }
             }
         });
     }
@@ -58,10 +62,11 @@ public class BgLayout extends FrameLayout {
     }
 
     public void setOnClickListener(@Nullable OnClickListener l) {
-        viewBgControl.setOnClickListener(l);
+        onClickListener = l;
     }
 
     public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
         viewBgControl.setEnabled(enabled);
     }
 

@@ -19,8 +19,6 @@ import android.widget.TextView;
 import com.gt.utils.GsonUtils;
 import com.gt.utils.R;
 
-import androidx.annotation.Nullable;
-
 
 /*
  *
@@ -205,7 +203,6 @@ public class ViewBgControl {
 
     public Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), checkedStyle = new Style(), focusedStyle = new Style(), pressedStyle = new Style();
     public boolean checked, focused;
-    private View.OnClickListener onClickListener;
 
     private View view;
 
@@ -376,7 +373,6 @@ public class ViewBgControl {
     }
 
     public void setEnabled(boolean enabled) {
-        view.setEnabled(enabled);
         if (enabled) {
             setCurrentStyle(defStyle);
         } else {
@@ -425,7 +421,7 @@ public class ViewBgControl {
                     //当没有设置focusedStyle样式时，样式不变
                     setCurrentStyle(focusedStyle, currentStyle);
                     // 当设置允许获取焦点后，要点击两下才能执行onClick，所以当selected为true时，执行onClick
-                    onBgClick(view);
+                    view.performClick();
                 } else {
                     if (this.checked) { //  当该View是选中状态时，失去焦点后设置成checkedStyle
                         setCurrentStyle(checkedStyle);
@@ -457,17 +453,6 @@ public class ViewBgControl {
                 }
             }
         }
-    }
-
-    public void onBgClick(View view) {
-        setChecked(!checked);
-        if (onClickListener != null) {
-            onClickListener.onClick(view);
-        }
-    }
-
-    public void setOnClickListener(@Nullable View.OnClickListener l) {
-        this.onClickListener = l;
     }
 
     public void setCurrentStyle(Style style) {

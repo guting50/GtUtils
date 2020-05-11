@@ -204,6 +204,28 @@
 
             </com.gt.utils.widget.BgLayout>
 
+            <com.gt.utils.widget.BgTextView
+                android:id="@+id/bgTextView2"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:text="BgTextView"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                app:corners_radius="8dp"
+                app:solid_color="@color/colorPrimary"
+                app:solid_color_checked="@color/main"
+                app:solid_color_focused="#987987"
+                app:solid_color_no_enabled="#888888"
+                app:solid_color_pressed="@color/colorAccent"
+                app:text_checked="选中"
+                app:text_focused="获取焦点"
+                app:text_no_enabled="hahaha"
+                app:text_pressed="按下" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
