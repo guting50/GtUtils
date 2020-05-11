@@ -183,22 +183,22 @@ import com.gt.utils.R;
  */
 public class ViewBgControl {
     private class Style {
-        private int solid_color;
-        private int solid_start_color;
-        private int solid_end_color;
-        private int solid_gradual_orientation;
-        private int stroke_color;
-        private int stroke_start_color;
-        private int stroke_end_color;
-        private int stroke_gradual_orientation;
-        private float stroke_width;
-        private float stroke_dash_gap;
-        private float stroke_dash_width;
-        private float corners_radius;
-        private float corners_radius_left_top;
-        private float corners_radius_right_top;
-        private float corners_radius_left_bottom;
-        private float corners_radius_right_bottom;
+        public int solid_color;
+        public int solid_start_color;
+        public int solid_end_color;
+        public int solid_gradual_orientation;
+        public int stroke_color;
+        public int stroke_start_color;
+        public int stroke_end_color;
+        public int stroke_gradual_orientation;
+        public float stroke_width;
+        public float stroke_dash_gap;
+        public float stroke_dash_width;
+        public float corners_radius;
+        public float corners_radius_left_top;
+        public float corners_radius_right_top;
+        public float corners_radius_left_bottom;
+        public float corners_radius_right_bottom;
     }
 
     public Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), checkedStyle = new Style(), focusedStyle = new Style(), pressedStyle = new Style();

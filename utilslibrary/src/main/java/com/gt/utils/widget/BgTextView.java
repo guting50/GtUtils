@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -16,15 +15,15 @@ import android.widget.TextView;
 import com.gt.utils.GsonUtils;
 import com.gt.utils.R;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 @SuppressLint("AppCompatCustomView")
 public class BgTextView extends TextView {
     private class Style {
-        private int textColor;
-        private int textSize;
-        private String text;
+        public int textColor;
+        public int textSize;
+        public String text;
     }
 
     public Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), checkedStyle = new Style(), focusedStyle = new Style(), pressedStyle = new Style();
@@ -149,15 +148,18 @@ public class BgTextView extends TextView {
         else
             currentStyle.text = defStyle.text;
 
-        setTextColor(currentStyle.textColor);
-        setTextSize(TypedValue.COMPLEX_UNIT_PX, currentStyle.textSize);
-        setText(currentStyle.text);
+        super.setTextColor(currentStyle.textColor);
+        super.setTextSize(TypedValue.COMPLEX_UNIT_PX, currentStyle.textSize);
+        super.setText(currentStyle.text);
     }
 
     public void setOnClickListener(@Nullable OnClickListener l) {
         this.onClickListener = l;
     }
 
+    public void setText(String text) {
+        defStyle.text = text;
+    }
 
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
