@@ -77,9 +77,12 @@ public class LoadingDialog {
      * http://blog.csdn.net/qq_21376985
      */
     public static void closeDialog() {
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
-            dialog = null;
+        try {
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
