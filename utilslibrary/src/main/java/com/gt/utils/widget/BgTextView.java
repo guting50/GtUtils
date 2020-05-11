@@ -78,11 +78,10 @@ public class BgTextView extends TextView {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void onDraw(Canvas canvas) {
         viewBgControl.dispatchDraw(canvas);
-        super.dispatchDraw(canvas);
+        super.onDraw(canvas);
     }
 
     @Override
