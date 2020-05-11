@@ -182,6 +182,8 @@ import com.gt.utils.R;
  * 绘制背景控制器
  */
 public class ViewBgControl {
+    public static int NULLColor = 1;
+
     private class Style {
         public int solid_color;
         public int solid_start_color;
@@ -230,11 +232,11 @@ public class ViewBgControl {
         defStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom, defStyle.corners_radius);
         currentStyle = GsonUtils.getGson().fromJson(GsonUtils.getGson().toJson(defStyle), Style.class);
 
-        noEnabledStyle.solid_color = typedArray.getColor(R.styleable.BgLayout_solid_color_no_enabled, -1);
+        noEnabledStyle.solid_color = typedArray.getColor(R.styleable.BgLayout_solid_color_no_enabled, NULLColor);
         noEnabledStyle.solid_start_color = typedArray.getColor(R.styleable.BgLayout_solid_start_color_no_enabled, noEnabledStyle.solid_color);
         noEnabledStyle.solid_end_color = typedArray.getColor(R.styleable.BgLayout_solid_end_color_no_enabled, noEnabledStyle.solid_color);
         noEnabledStyle.solid_gradual_orientation = typedArray.getInteger(R.styleable.BgLayout_solid_gradual_orientation_no_enabled, -1);
-        noEnabledStyle.stroke_color = typedArray.getColor(R.styleable.BgLayout_stroke_color_no_enabled, -1);
+        noEnabledStyle.stroke_color = typedArray.getColor(R.styleable.BgLayout_stroke_color_no_enabled, NULLColor);
         noEnabledStyle.stroke_start_color = typedArray.getColor(R.styleable.BgLayout_stroke_start_color_no_enabled, noEnabledStyle.stroke_color);
         noEnabledStyle.stroke_end_color = typedArray.getColor(R.styleable.BgLayout_stroke_end_color_no_enabled, noEnabledStyle.stroke_color);
         noEnabledStyle.stroke_gradual_orientation = typedArray.getInteger(R.styleable.BgLayout_stroke_gradual_orientation_no_enabled, -1);
@@ -247,11 +249,11 @@ public class ViewBgControl {
         noEnabledStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_bottom_no_enabled, noEnabledStyle.corners_radius);
         noEnabledStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom_no_enabled, noEnabledStyle.corners_radius);
 
-        checkedStyle.solid_color = typedArray.getColor(R.styleable.BgLayout_solid_color_checked, -1);
+        checkedStyle.solid_color = typedArray.getColor(R.styleable.BgLayout_solid_color_checked, NULLColor);
         checkedStyle.solid_start_color = typedArray.getColor(R.styleable.BgLayout_solid_start_color_checked, checkedStyle.solid_color);
         checkedStyle.solid_end_color = typedArray.getColor(R.styleable.BgLayout_solid_end_color_checked, checkedStyle.solid_color);
         checkedStyle.solid_gradual_orientation = typedArray.getInteger(R.styleable.BgLayout_solid_gradual_orientation_checked, -1);
-        checkedStyle.stroke_color = typedArray.getColor(R.styleable.BgLayout_stroke_color_checked, -1);
+        checkedStyle.stroke_color = typedArray.getColor(R.styleable.BgLayout_stroke_color_checked, NULLColor);
         checkedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgLayout_stroke_start_color_checked, checkedStyle.stroke_color);
         checkedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgLayout_stroke_end_color_checked, checkedStyle.stroke_color);
         checkedStyle.stroke_gradual_orientation = typedArray.getInteger(R.styleable.BgLayout_stroke_gradual_orientation_checked, -1);
@@ -264,11 +266,11 @@ public class ViewBgControl {
         checkedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_bottom_checked, checkedStyle.corners_radius);
         checkedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom_checked, checkedStyle.corners_radius);
 
-        pressedStyle.solid_color = typedArray.getColor(R.styleable.BgLayout_solid_color_pressed, -1);
+        pressedStyle.solid_color = typedArray.getColor(R.styleable.BgLayout_solid_color_pressed, NULLColor);
         pressedStyle.solid_start_color = typedArray.getColor(R.styleable.BgLayout_solid_start_color_pressed, pressedStyle.solid_color);
         pressedStyle.solid_end_color = typedArray.getColor(R.styleable.BgLayout_solid_end_color_pressed, pressedStyle.solid_color);
         pressedStyle.solid_gradual_orientation = typedArray.getInteger(R.styleable.BgLayout_solid_gradual_orientation_pressed, -1);
-        pressedStyle.stroke_color = typedArray.getColor(R.styleable.BgLayout_stroke_color_pressed, -1);
+        pressedStyle.stroke_color = typedArray.getColor(R.styleable.BgLayout_stroke_color_pressed, NULLColor);
         pressedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgLayout_stroke_start_color_pressed, pressedStyle.stroke_color);
         pressedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgLayout_stroke_end_color_pressed, pressedStyle.stroke_color);
         pressedStyle.stroke_gradual_orientation = typedArray.getInteger(R.styleable.BgLayout_stroke_gradual_orientation_pressed, -1);
@@ -281,11 +283,11 @@ public class ViewBgControl {
         pressedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_bottom_pressed, pressedStyle.corners_radius);
         pressedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom_pressed, pressedStyle.corners_radius);
 
-        focusedStyle.solid_color = typedArray.getColor(R.styleable.BgLayout_solid_color_focused, -1);
+        focusedStyle.solid_color = typedArray.getColor(R.styleable.BgLayout_solid_color_focused, NULLColor);
         focusedStyle.solid_start_color = typedArray.getColor(R.styleable.BgLayout_solid_start_color_focused, focusedStyle.solid_color);
         focusedStyle.solid_end_color = typedArray.getColor(R.styleable.BgLayout_solid_end_color_focused, focusedStyle.solid_color);
         focusedStyle.solid_gradual_orientation = typedArray.getInteger(R.styleable.BgLayout_solid_gradual_orientation_focused, -1);
-        focusedStyle.stroke_color = typedArray.getColor(R.styleable.BgLayout_stroke_color_focused, -1);
+        focusedStyle.stroke_color = typedArray.getColor(R.styleable.BgLayout_stroke_color_focused, NULLColor);
         focusedStyle.stroke_start_color = typedArray.getColor(R.styleable.BgLayout_stroke_start_color_focused, focusedStyle.stroke_color);
         focusedStyle.stroke_end_color = typedArray.getColor(R.styleable.BgLayout_stroke_end_color_focused, focusedStyle.stroke_color);
         focusedStyle.stroke_gradual_orientation = typedArray.getInteger(R.styleable.BgLayout_stroke_gradual_orientation_focused, -1);
@@ -464,16 +466,16 @@ public class ViewBgControl {
     }
 
     public void setCurrentStyle(Style style, Style assistStyle, Style defStyle) {
-        if (style.solid_start_color != -1)
+        if (style.solid_start_color != NULLColor)
             currentStyle.solid_start_color = style.solid_start_color;
-        else if (assistStyle.solid_start_color != -1)
+        else if (assistStyle.solid_start_color != NULLColor)
             currentStyle.solid_start_color = assistStyle.solid_start_color;
         else
             currentStyle.solid_start_color = defStyle.solid_start_color;
 
-        if (style.solid_end_color != -1)
+        if (style.solid_end_color != NULLColor)
             currentStyle.solid_end_color = style.solid_end_color;
-        else if (assistStyle.solid_end_color != -1)
+        else if (assistStyle.solid_end_color != NULLColor)
             currentStyle.solid_end_color = assistStyle.solid_end_color;
         else
             currentStyle.solid_end_color = defStyle.solid_end_color;
@@ -485,16 +487,16 @@ public class ViewBgControl {
         else
             currentStyle.solid_gradual_orientation = defStyle.solid_gradual_orientation;
 
-        if (style.stroke_start_color != -1)
+        if (style.stroke_start_color != NULLColor)
             currentStyle.stroke_start_color = style.stroke_start_color;
-        else if (assistStyle.stroke_start_color != -1)
+        else if (assistStyle.stroke_start_color != NULLColor)
             currentStyle.stroke_start_color = assistStyle.stroke_start_color;
         else
             currentStyle.stroke_start_color = defStyle.stroke_start_color;
 
-        if (style.stroke_end_color != -1)
+        if (style.stroke_end_color != NULLColor)
             currentStyle.stroke_end_color = style.stroke_end_color;
-        else if (assistStyle.stroke_end_color != -1)
+        else if (assistStyle.stroke_end_color != NULLColor)
             currentStyle.stroke_end_color = assistStyle.stroke_end_color;
         else
             currentStyle.stroke_end_color = defStyle.stroke_end_color;

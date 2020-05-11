@@ -49,19 +49,19 @@ public class BgTextView extends TextView {
         currentStyle = GsonUtils.getGson().fromJson(GsonUtils.getGson().toJson(defStyle), Style.class);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BgTextView);
-        noEnabledStyle.textColor = typedArray.getColor(R.styleable.BgTextView_textColor_no_enabled, -1);
+        noEnabledStyle.textColor = typedArray.getColor(R.styleable.BgTextView_textColor_no_enabled, ViewBgControl.NULLColor);
         noEnabledStyle.textSize = typedArray.getDimensionPixelSize(R.styleable.BgTextView_textSize_no_enabled, -1);
         noEnabledStyle.text = typedArray.getString(R.styleable.BgTextView_text_no_enabled);
 
-        checkedStyle.textColor = typedArray.getColor(R.styleable.BgTextView_textColor_checked, -1);
+        checkedStyle.textColor = typedArray.getColor(R.styleable.BgTextView_textColor_checked, ViewBgControl.NULLColor);
         checkedStyle.textSize = typedArray.getDimensionPixelSize(R.styleable.BgTextView_textSize_checked, -1);
         checkedStyle.text = typedArray.getString(R.styleable.BgTextView_text_checked);
 
-        pressedStyle.textColor = typedArray.getColor(R.styleable.BgTextView_textColor_pressed, -1);
+        pressedStyle.textColor = typedArray.getColor(R.styleable.BgTextView_textColor_pressed, ViewBgControl.NULLColor);
         pressedStyle.textSize = typedArray.getDimensionPixelSize(R.styleable.BgTextView_textSize_pressed, -1);
         pressedStyle.text = typedArray.getString(R.styleable.BgTextView_text_pressed);
 
-        focusedStyle.textColor = typedArray.getColor(R.styleable.BgTextView_textColor_focused, -1);
+        focusedStyle.textColor = typedArray.getColor(R.styleable.BgTextView_textColor_focused, ViewBgControl.NULLColor);
         focusedStyle.textSize = typedArray.getDimensionPixelSize(R.styleable.BgTextView_textSize_focused, -1);
         focusedStyle.text = typedArray.getString(R.styleable.BgTextView_text_focused);
 
@@ -126,9 +126,9 @@ public class BgTextView extends TextView {
     }
 
     public void setCurrentStyle(Style style, Style assistStyle, Style defStyle) {
-        if (style.textColor != -1)
+        if (style.textColor != ViewBgControl.NULLColor)
             currentStyle.textColor = style.textColor;
-        else if (assistStyle.textColor != -1)
+        else if (assistStyle.textColor != ViewBgControl.NULLColor)
             currentStyle.textColor = assistStyle.textColor;
         else
             currentStyle.textColor = defStyle.textColor;
