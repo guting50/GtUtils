@@ -20,9 +20,8 @@ import java.util.Map;
 public class GsonUtils {
 
     public static Gson getGson() {
-        Gson gson = new GsonBuilder().registerTypeAdapter(new TypeToken<Map<String, Object>>() {
+        return new GsonBuilder().registerTypeAdapter(new TypeToken<Map<String, Object>>() {
         }.getType(), new GsonTypeAdapter()).create();
-        return gson;
     }
 
     public static class GsonTypeAdapter extends TypeAdapter<Object> {
