@@ -3,18 +3,14 @@ package com.gt.utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.internal.LinkedTreeMap;
-import com.google.gson.internal.bind.ObjectTypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,53 +18,22 @@ import java.util.Map;
  * 解决int类型转换成double
  */
 public class GsonUtils {
+
     public static Gson getGson() {
-        Gson gson = new GsonBuilder().create();
-        try {
-            Field factories = Gson.class.getDeclaredField("factories");
-            factories.setAccessible(true);
-            Object o = factories.get(gson);
-            Class<?>[] declaredClasses = Collections.class.getDeclaredClasses();
-            for (Class c : declaredClasses) {
-                if ("java.util.Collections$UnmodifiableList".equals(c.getName())) {
-                    Field listField = c.getDeclaredField("list");
-                    listField.setAccessible(true);
-                    List<TypeAdapterFactory> list = (List<TypeAdapterFactory>) listField.get(o);
-                    int i = list.indexOf(ObjectTypeAdapter.FACTORY);
-                    list.set(i, DataTypeAdaptor.FACTORY);
-                    break;
-                }
-            }
-        } catch (Exception e) {
-        }
+        Gson gson = new GsonBuilder().registerTypeAdapter(new TypeToken<Map<String, Object>>() {
+        }.getType(), new GsonTypeAdapter()).create();
         return gson;
     }
 
-    static class DataTypeAdaptor extends TypeAdapter<Object> {
-        public static final TypeAdapterFactory FACTORY = new TypeAdapterFactory() {
-            @SuppressWarnings("unchecked")
-            @Override
-            public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-                if (type.getRawType() == Object.class) {
-                    return (TypeAdapter<T>) new DataTypeAdaptor(gson);
-                }
-                return null;
-            }
-        };
-
-        private final Gson gson;
-
-        private DataTypeAdaptor(Gson gson) {
-            this.gson = gson;
-        }
-
+    public static class GsonTypeAdapter extends TypeAdapter<Object> {
         @Override
         public Object read(JsonReader in) throws IOException {
+            // 反序列化
             JsonToken token = in.peek();
-            //判断字符串的实际类型
             switch (token) {
                 case BEGIN_ARRAY:
-                    List<Object> list = new ArrayList<>();
+
+                    List<Object> list = new ArrayList<Object>();
                     in.beginArray();
                     while (in.hasNext()) {
                         list.add(read(in));
@@ -77,31 +42,46 @@ public class GsonUtils {
                     return list;
 
                 case BEGIN_OBJECT:
-                    Map<String, Object> map = new LinkedTreeMap<>();
+
+                    Map<String, Object> map = new HashMap<String, Object>();
                     in.beginObject();
                     while (in.hasNext()) {
                         map.put(in.nextName(), read(in));
                     }
                     in.endObject();
                     return map;
+
                 case STRING:
+
                     return in.nextString();
+
                 case NUMBER:
-                    String s = in.nextString();
-                    if (s.contains(".")) {
-                        return Double.valueOf(s);
-                    } else {
-                        try {
-                            return Integer.valueOf(s);
-                        } catch (Exception e) {
-                            return Long.valueOf(s);
-                        }
+
+                    /**
+                     * 改写数字的处理逻辑，将数字值分为整型与浮点型。
+                     */
+                    double dbNum = in.nextDouble();
+
+                    // 数字超过long的最大值，返回浮点类型
+                    if (dbNum > Long.MAX_VALUE) {
+                        return dbNum;
                     }
+
+                    // 判断数字是否为整数值
+                    long lngNum = (long) dbNum;
+                    if (dbNum == lngNum) {
+                        return lngNum;
+                    } else {
+                        return dbNum;
+                    }
+
                 case BOOLEAN:
                     return in.nextBoolean();
+
                 case NULL:
                     in.nextNull();
                     return null;
+
                 default:
                     throw new IllegalStateException();
             }
@@ -109,18 +89,7 @@ public class GsonUtils {
 
         @Override
         public void write(JsonWriter out, Object value) throws IOException {
-            if (value == null) {
-                out.nullValue();
-                return;
-            }
-            //noinspection unchecked
-            TypeAdapter<Object> typeAdapter = (TypeAdapter<Object>) gson.getAdapter(value.getClass());
-            if (typeAdapter instanceof ObjectTypeAdapter) {
-                out.beginObject();
-                out.endObject();
-                return;
-            }
-            typeAdapter.write(out, value);
+            // 序列化不处理
         }
     }
 }
