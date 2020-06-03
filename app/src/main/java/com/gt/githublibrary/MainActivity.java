@@ -3,7 +3,6 @@ package com.gt.githublibrary;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.reflect.TypeToken;
-import com.gt.utils.GsonUtils;
 import com.gt.utils.PermissionUtils;
 import com.gt.utils.floatingeditor.DefaultEditorHolder;
 import com.gt.utils.floatingeditor.EditorCallback;
@@ -21,10 +18,9 @@ import com.gt.utils.floatingeditor.InputCheckRule;
 import com.gt.utils.http.RetrofitHelper;
 import com.gt.utils.widget.CircleButtonView;
 import com.gt.utils.widget.FlowLayout;
+import com.gt.utils.widget.OnNoDoubleClickListener;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.Nullable;
@@ -72,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.tv_3).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.tv_3).setOnClickListener(new OnNoDoubleClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onNoDoubleClick(View v) {
                 startActivity(new Intent(MainActivity.this, TestBgLayoutActivity.class));
             }
         });

@@ -11,13 +11,21 @@ import java.util.Calendar;
 
 public abstract class OnNoDoubleClickListener implements View.OnClickListener {
 
-    public static final int MIN_CLICK_DELAY_TIME = 2000;
+    private int time;
     private long lastClickTime = 0;
+
+    public OnNoDoubleClickListener() {
+        this(1000);
+    }
+
+    public OnNoDoubleClickListener(int time) {
+        this.time = time;
+    }
 
     @Override
     public void onClick(View v) {
         long currentTime = Calendar.getInstance().getTimeInMillis();
-        if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {
+        if (currentTime - lastClickTime > time) {
             lastClickTime = currentTime;
             onNoDoubleClick(v);
         }

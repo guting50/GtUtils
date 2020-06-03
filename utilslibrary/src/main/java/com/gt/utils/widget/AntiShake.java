@@ -10,7 +10,7 @@ import java.util.LinkedList;
 public class AntiShake {
 
     private static LimitQueue<OneClick> queue = new LimitQueue<>(20);
-    private static int CLICK_DELAY_TIME = 2000;
+    public static int CLICK_DELAY_TIME = 1000;
 
     public static boolean check(Object o) {
         String flag;
@@ -31,7 +31,7 @@ public class AntiShake {
 
     public static boolean check(Object o, int duration) {
         CLICK_DELAY_TIME = duration;
-        return check(0);
+        return check(o);
     }
 
     static class OneClick {
