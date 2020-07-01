@@ -19,142 +19,6 @@ import android.widget.TextView;
 import com.gt.utils.GsonUtils;
 import com.gt.utils.R;
 
-
-/*
- *
- * 自定义属性
-    <declare-styleable name="BgLayout">
-        <!--default-->
-        <attr name="solid_color" format="color" /><!--填充色-->
-        <attr name="solid_start_color" format="color" /><!--填充渐变开始颜色-->
-        <attr name="solid_end_color" format="color" /><!--填充渐变结束颜色-->
-        <attr name="solid_gradual_orientation" format="enum"><!--填充渐变方向，默认horizontal-->
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-            <enum name="diagonal" value="-1" />
-        </attr>
-        <attr name="stroke_color" format="color" /><!--边框颜色-->
-        <attr name="stroke_start_color" format="color" /><!--边框渐变开始颜色-->
-        <attr name="stroke_end_color" format="color" /><!--边框渐变结束颜色-->
-        <attr name="stroke_gradual_orientation" format="enum"><!--边框渐变方向，默认horizontal-->
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-            <enum name="diagonal" value="-1" />
-        </attr>
-        <attr name="stroke_width" format="dimension" /><!--边框宽度-->
-        <attr name="stroke_dash_gap" format="dimension" /><!--间隔-->
-        <attr name="stroke_dash_width" format="dimension" /><!--点的大小-->
-        <attr name="corners_radius" format="dimension" /><!--圆角弧度-->
-        <attr name="corners_radius_left_top" format="dimension" /><!--圆角弧度 左上角-->
-        <attr name="corners_radius_right_top" format="dimension" /><!--圆角弧度 右上角-->
-        <attr name="corners_radius_left_bottom" format="dimension" /><!--圆角弧度 左下角-->
-        <attr name="corners_radius_right_bottom" format="dimension" /><!--圆角弧度 右下角-->
-
-        <!--noEnabled-->
-        <attr name="solid_color_no_enabled" format="color" /><!--填充色-->
-        <attr name="solid_start_color_no_enabled" format="color" /><!--填充渐变开始颜色-->
-        <attr name="solid_end_color_no_enabled" format="color" /><!--填充渐变结束颜色-->
-        <attr name="solid_gradual_orientation_no_enabled" format="enum"><!--填充渐变方向，默认horizontal-->
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-            <enum name="diagonal" value="-1" />
-        </attr>
-        <attr name="stroke_color_no_enabled" format="color" /><!--边框颜色-->
-        <attr name="stroke_start_color_no_enabled" format="color" /><!--边框渐变开始颜色-->
-        <attr name="stroke_end_color_no_enabled" format="color" /><!--边框渐变结束颜色-->
-        <attr name="stroke_gradual_orientation_no_enabled" format="enum"><!--边框渐变方向，默认horizontal-->
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-            <enum name="diagonal" value="-1" />
-        </attr>
-        <attr name="stroke_width_no_enabled" format="dimension" /><!--边框宽度-->
-        <attr name="stroke_dash_gap_no_enabled" format="dimension" /><!--间隔-->
-        <attr name="stroke_dash_width_no_enabled" format="dimension" /><!--点的大小-->
-        <attr name="corners_radius_no_enabled" format="dimension" /><!--圆角弧度-->
-        <attr name="corners_radius_left_top_no_enabled" format="dimension" /><!--圆角弧度 左上角-->
-        <attr name="corners_radius_right_top_no_enabled" format="dimension" /><!--圆角弧度 右上角-->
-        <attr name="corners_radius_left_bottom_no_enabled" format="dimension" /><!--圆角弧度 左下角-->
-        <attr name="corners_radius_right_bottom_no_enabled" format="dimension" /><!--圆角弧度 右下角-->
-
-        <!--checked-->
-        <attr name="solid_color_checked" format="color" /><!--填充色-->
-        <attr name="solid_start_color_checked" format="color" /><!--填充渐变开始颜色-->
-        <attr name="solid_end_color_checked" format="color" /><!--填充渐变结束颜色-->
-        <attr name="solid_gradual_orientation_checked" format="enum"><!--填充渐变方向，默认horizontal-->
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-            <enum name="diagonal" value="-1" />
-        </attr>
-        <attr name="stroke_color_checked" format="color" /><!--边框颜色-->
-        <attr name="stroke_start_color_checked" format="color" /><!--边框渐变开始颜色-->
-        <attr name="stroke_end_color_checked" format="color" /><!--边框渐变结束颜色-->
-        <attr name="stroke_gradual_orientation_checked" format="enum"><!--边框渐变方向，默认horizontal-->
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-            <enum name="diagonal" value="-1" />
-        </attr>
-        <attr name="stroke_width_checked" format="dimension" /><!--边框宽度-->
-        <attr name="stroke_dash_gap_checked" format="dimension" /><!--间隔-->
-        <attr name="stroke_dash_width_checked" format="dimension" /><!--点的大小-->
-        <attr name="corners_radius_checked" format="dimension" /><!--圆角弧度-->
-        <attr name="corners_radius_left_top_checked" format="dimension" /><!--圆角弧度 左上角-->
-        <attr name="corners_radius_right_top_checked" format="dimension" /><!--圆角弧度 右上角-->
-        <attr name="corners_radius_left_bottom_checked" format="dimension" /><!--圆角弧度 左下角-->
-        <attr name="corners_radius_right_bottom_checked" format="dimension" /><!--圆角弧度 右下角-->
-
-        <!--pressed-->
-        <attr name="solid_color_pressed" format="color" /><!--填充色-->
-        <attr name="solid_start_color_pressed" format="color" /><!--填充渐变开始颜色-->
-        <attr name="solid_end_color_pressed" format="color" /><!--填充渐变结束颜色-->
-        <attr name="solid_gradual_orientation_pressed" format="enum"><!--填充渐变方向，默认horizontal-->
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-            <enum name="diagonal" value="-1" />
-        </attr>
-        <attr name="stroke_color_pressed" format="color" /><!--边框颜色-->
-        <attr name="stroke_start_color_pressed" format="color" /><!--边框渐变开始颜色-->
-        <attr name="stroke_end_color_pressed" format="color" /><!--边框渐变结束颜色-->
-        <attr name="stroke_gradual_orientation_pressed" format="enum"><!--边框渐变方向，默认horizontal-->
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-            <enum name="diagonal" value="-1" />
-        </attr>
-        <attr name="stroke_width_pressed" format="dimension" /><!--边框宽度-->
-        <attr name="stroke_dash_gap_pressed" format="dimension" /><!--间隔-->
-        <attr name="stroke_dash_width_pressed" format="dimension" /><!--点的大小-->
-        <attr name="corners_radius_pressed" format="dimension" /><!--圆角弧度-->
-        <attr name="corners_radius_left_top_pressed" format="dimension" /><!--圆角弧度 左上角-->
-        <attr name="corners_radius_right_top_pressed" format="dimension" /><!--圆角弧度 右上角-->
-        <attr name="corners_radius_left_bottom_pressed" format="dimension" /><!--圆角弧度 左下角-->
-        <attr name="corners_radius_right_bottom_pressed" format="dimension" /><!--圆角弧度 右下角-->
-
-        <!--focused-->
-        <attr name="solid_color_focused" format="color" /><!--填充色-->
-        <attr name="solid_start_color_focused" format="color" /><!--填充渐变开始颜色-->
-        <attr name="solid_end_color_focused" format="color" /><!--填充渐变结束颜色-->
-        <attr name="solid_gradual_orientation_focused" format="enum"><!--填充渐变方向，默认horizontal-->
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-            <enum name="diagonal" value="-1" />
-        </attr>
-        <attr name="stroke_color_focused" format="color" /><!--边框颜色-->
-        <attr name="stroke_start_color_focused" format="color" /><!--边框渐变开始颜色-->
-        <attr name="stroke_end_color_focused" format="color" /><!--边框渐变结束颜色-->
-        <attr name="stroke_gradual_orientation_focused" format="enum"><!--边框渐变方向，默认horizontal-->
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-            <enum name="diagonal" value="-1" />
-        </attr>
-        <attr name="stroke_width_focused" format="dimension" /><!--边框宽度-->
-        <attr name="stroke_dash_gap_focused" format="dimension" /><!--间隔-->
-        <attr name="stroke_dash_width_focused" format="dimension" /><!--点的大小-->
-        <attr name="corners_radius_focused" format="dimension" /><!--圆角弧度-->
-        <attr name="corners_radius_left_top_focused" format="dimension" /><!--圆角弧度 左上角-->
-        <attr name="corners_radius_right_top_focused" format="dimension" /><!--圆角弧度 右上角-->
-        <attr name="corners_radius_left_bottom_focused" format="dimension" /><!--圆角弧度 左下角-->
-        <attr name="corners_radius_right_bottom_focused" format="dimension" /><!--圆角弧度 右下角-->
- */
-
 /*
  * 获取焦点 需要设置android:focusableInTouchMode="true"
  * 不要用这个来模拟单选，它和单选的逻辑不一样，全局只能有一个view可以获取焦点
@@ -213,7 +77,10 @@ public class ViewBgControl {
     }
 
     public void initBgStyle(Context context, AttributeSet attrs) {
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BgLayout);
+        initBgStyle(context.obtainStyledAttributes(attrs, R.styleable.BgLayout));
+    }
+
+    public void initBgStyle(TypedArray typedArray) {
         defStyle.solid_color = typedArray.getColor(R.styleable.BgLayout_solid_color, Color.TRANSPARENT);
         defStyle.solid_start_color = typedArray.getColor(R.styleable.BgLayout_solid_start_color, defStyle.solid_color);
         defStyle.solid_end_color = typedArray.getColor(R.styleable.BgLayout_solid_end_color, defStyle.solid_color);

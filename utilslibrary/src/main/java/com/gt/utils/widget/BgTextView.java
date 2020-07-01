@@ -38,10 +38,10 @@ public class BgTextView extends TextView {
         this(context, attrs, 0);
     }
 
+    @SuppressLint("CustomViewStyleable")
     public BgTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         viewBgControl = new ViewBgControl(this);
-        viewBgControl.initBgStyle(context, attrs);
 
         defStyle.textColor = getTextColors().getDefaultColor();
         defStyle.textSize = (int) getTextSize();
@@ -49,6 +49,7 @@ public class BgTextView extends TextView {
         currentStyle = GsonUtils.getGson().fromJson(GsonUtils.getGson().toJson(defStyle), Style.class);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BgTextView);
+
         noEnabledStyle.textColor = typedArray.getColor(R.styleable.BgTextView_textColor_no_enabled, ViewBgControl.NULLColor);
         noEnabledStyle.textSize = typedArray.getDimensionPixelSize(R.styleable.BgTextView_textSize_no_enabled, -1);
         noEnabledStyle.text = typedArray.getString(R.styleable.BgTextView_text_no_enabled);
@@ -65,7 +66,9 @@ public class BgTextView extends TextView {
         focusedStyle.textSize = typedArray.getDimensionPixelSize(R.styleable.BgTextView_textSize_focused, -1);
         focusedStyle.text = typedArray.getString(R.styleable.BgTextView_text_focused);
 
-        typedArray.recycle();//释放资源
+        viewBgControl.initBgStyle(typedArray);
+
+//        typedArray.recycle();//释放资源
 
         //当设置在触摸模式下可以获取焦点时，如果不设置点击事件，onFocusChanged不回调
         super.setOnClickListener(new OnClickListener() {
