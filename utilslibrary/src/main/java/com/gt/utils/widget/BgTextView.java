@@ -19,7 +19,7 @@ import androidx.annotation.Nullable;
 
 @SuppressLint("AppCompatCustomView")
 public class BgTextView extends TextView {
-    private class Style {
+    public class Style {
         public int textColor;
         public int textSize;
         public String text;

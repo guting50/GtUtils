@@ -48,7 +48,7 @@ import com.gt.utils.R;
 public class ViewBgControl {
     public static int NULLColor = 1;
 
-    private class Style {
+    public class Style {
         public int solid_color;
         public int solid_start_color;
         public int solid_end_color;
