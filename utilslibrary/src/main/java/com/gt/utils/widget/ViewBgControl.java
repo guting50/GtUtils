@@ -61,10 +61,15 @@ public class ViewBgControl {
         public float stroke_dash_gap;
         public float stroke_dash_width;
         public float corners_radius;
-        public float corners_radius_left_top;
-        public float corners_radius_right_top;
-        public float corners_radius_left_bottom;
-        public float corners_radius_right_bottom;
+
+        public float corners_radius_left_top_x;
+        public float corners_radius_left_top_y;
+        public float corners_radius_left_bottom_x;
+        public float corners_radius_left_bottom_y;
+        public float corners_radius_right_top_x;
+        public float corners_radius_right_top_y;
+        public float corners_radius_right_bottom_x;
+        public float corners_radius_right_bottom_y;
     }
 
     public Style currentStyle, defStyle = new Style(), noEnabledStyle = new Style(), checkedStyle = new Style(), focusedStyle = new Style(), pressedStyle = new Style();
@@ -93,10 +98,10 @@ public class ViewBgControl {
         defStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgLayout_stroke_dash_gap, 0);
         defStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgLayout_stroke_dash_width, 0);
         defStyle.corners_radius = typedArray.getDimension(R.styleable.BgLayout_corners_radius, 0);
-        defStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_top, defStyle.corners_radius);
-        defStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_top, defStyle.corners_radius);
-        defStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_bottom, defStyle.corners_radius);
-        defStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom, defStyle.corners_radius);
+        defStyle.corners_radius_left_top_x = defStyle.corners_radius_left_top_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_top, defStyle.corners_radius);
+        defStyle.corners_radius_right_top_x = defStyle.corners_radius_right_top_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_top, defStyle.corners_radius);
+        defStyle.corners_radius_left_bottom_x = defStyle.corners_radius_left_bottom_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_bottom, defStyle.corners_radius);
+        defStyle.corners_radius_right_bottom_x = defStyle.corners_radius_right_bottom_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom, defStyle.corners_radius);
         currentStyle = GsonUtils.getGson().fromJson(GsonUtils.getGson().toJson(defStyle), Style.class);
 
         noEnabledStyle.solid_color = typedArray.getColor(R.styleable.BgLayout_solid_color_no_enabled, NULLColor);
@@ -111,10 +116,10 @@ public class ViewBgControl {
         noEnabledStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgLayout_stroke_dash_gap_no_enabled, -1);
         noEnabledStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgLayout_stroke_dash_width_no_enabled, -1);
         noEnabledStyle.corners_radius = typedArray.getDimension(R.styleable.BgLayout_corners_radius_no_enabled, -1);
-        noEnabledStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_top_no_enabled, noEnabledStyle.corners_radius);
-        noEnabledStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_top_no_enabled, noEnabledStyle.corners_radius);
-        noEnabledStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_bottom_no_enabled, noEnabledStyle.corners_radius);
-        noEnabledStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom_no_enabled, noEnabledStyle.corners_radius);
+        noEnabledStyle.corners_radius_left_top_x = noEnabledStyle.corners_radius_left_top_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_top_no_enabled, noEnabledStyle.corners_radius);
+        noEnabledStyle.corners_radius_right_top_x = noEnabledStyle.corners_radius_right_top_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_top_no_enabled, noEnabledStyle.corners_radius);
+        noEnabledStyle.corners_radius_left_bottom_x = noEnabledStyle.corners_radius_left_bottom_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_bottom_no_enabled, noEnabledStyle.corners_radius);
+        noEnabledStyle.corners_radius_right_bottom_x = noEnabledStyle.corners_radius_right_bottom_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom_no_enabled, noEnabledStyle.corners_radius);
 
         checkedStyle.solid_color = typedArray.getColor(R.styleable.BgLayout_solid_color_checked, NULLColor);
         checkedStyle.solid_start_color = typedArray.getColor(R.styleable.BgLayout_solid_start_color_checked, checkedStyle.solid_color);
@@ -128,10 +133,10 @@ public class ViewBgControl {
         checkedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgLayout_stroke_dash_gap_checked, -1);
         checkedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgLayout_stroke_dash_width_checked, -1);
         checkedStyle.corners_radius = typedArray.getDimension(R.styleable.BgLayout_corners_radius_checked, -1);
-        checkedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_top_checked, checkedStyle.corners_radius);
-        checkedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_top_checked, checkedStyle.corners_radius);
-        checkedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_bottom_checked, checkedStyle.corners_radius);
-        checkedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom_checked, checkedStyle.corners_radius);
+        checkedStyle.corners_radius_left_top_x = checkedStyle.corners_radius_left_top_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_top_checked, checkedStyle.corners_radius);
+        checkedStyle.corners_radius_right_top_x = checkedStyle.corners_radius_right_top_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_top_checked, checkedStyle.corners_radius);
+        checkedStyle.corners_radius_left_bottom_x = checkedStyle.corners_radius_left_bottom_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_bottom_checked, checkedStyle.corners_radius);
+        checkedStyle.corners_radius_right_bottom_x = checkedStyle.corners_radius_right_bottom_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom_checked, checkedStyle.corners_radius);
 
         pressedStyle.solid_color = typedArray.getColor(R.styleable.BgLayout_solid_color_pressed, NULLColor);
         pressedStyle.solid_start_color = typedArray.getColor(R.styleable.BgLayout_solid_start_color_pressed, pressedStyle.solid_color);
@@ -145,10 +150,10 @@ public class ViewBgControl {
         pressedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgLayout_stroke_dash_gap_pressed, -1);
         pressedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgLayout_stroke_dash_width_pressed, -1);
         pressedStyle.corners_radius = typedArray.getDimension(R.styleable.BgLayout_corners_radius_pressed, -1);
-        pressedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_top_pressed, pressedStyle.corners_radius);
-        pressedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_top_pressed, pressedStyle.corners_radius);
-        pressedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_bottom_pressed, pressedStyle.corners_radius);
-        pressedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom_pressed, pressedStyle.corners_radius);
+        pressedStyle.corners_radius_left_top_x = pressedStyle.corners_radius_left_top_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_top_pressed, pressedStyle.corners_radius);
+        pressedStyle.corners_radius_right_top_x = pressedStyle.corners_radius_right_top_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_top_pressed, pressedStyle.corners_radius);
+        pressedStyle.corners_radius_left_bottom_x = pressedStyle.corners_radius_left_bottom_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_bottom_pressed, pressedStyle.corners_radius);
+        pressedStyle.corners_radius_right_bottom_x = pressedStyle.corners_radius_right_bottom_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom_pressed, pressedStyle.corners_radius);
 
         focusedStyle.solid_color = typedArray.getColor(R.styleable.BgLayout_solid_color_focused, NULLColor);
         focusedStyle.solid_start_color = typedArray.getColor(R.styleable.BgLayout_solid_start_color_focused, focusedStyle.solid_color);
@@ -162,10 +167,10 @@ public class ViewBgControl {
         focusedStyle.stroke_dash_gap = typedArray.getDimension(R.styleable.BgLayout_stroke_dash_gap_focused, -1);
         focusedStyle.stroke_dash_width = typedArray.getDimension(R.styleable.BgLayout_stroke_dash_width_focused, -1);
         focusedStyle.corners_radius = typedArray.getDimension(R.styleable.BgLayout_corners_radius_focused, -1);
-        focusedStyle.corners_radius_left_top = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_top_focused, focusedStyle.corners_radius);
-        focusedStyle.corners_radius_right_top = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_top_focused, focusedStyle.corners_radius);
-        focusedStyle.corners_radius_left_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_bottom_focused, focusedStyle.corners_radius);
-        focusedStyle.corners_radius_right_bottom = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom_focused, focusedStyle.corners_radius);
+        focusedStyle.corners_radius_left_top_x = focusedStyle.corners_radius_left_top_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_top_focused, focusedStyle.corners_radius);
+        focusedStyle.corners_radius_right_top_x = focusedStyle.corners_radius_right_top_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_top_focused, focusedStyle.corners_radius);
+        focusedStyle.corners_radius_left_bottom_x = focusedStyle.corners_radius_left_bottom_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_left_bottom_focused, focusedStyle.corners_radius);
+        focusedStyle.corners_radius_right_bottom_x = focusedStyle.corners_radius_right_bottom_y = typedArray.getDimension(R.styleable.BgLayout_corners_radius_right_bottom_focused, focusedStyle.corners_radius);
 
         typedArray.recycle();//释放资源
     }
@@ -193,8 +198,8 @@ public class ViewBgControl {
                 paint.setPathEffect(new DashPathEffect(new float[]{currentStyle.stroke_dash_width, currentStyle.stroke_dash_gap}, 0));
             path.addRoundRect(new RectF(currentStyle.stroke_width / 2, currentStyle.stroke_width / 2,
                             view.getWidth() - currentStyle.stroke_width / 2, view.getHeight() - currentStyle.stroke_width / 2),
-                    new float[]{currentStyle.corners_radius_left_top, currentStyle.corners_radius_left_top, currentStyle.corners_radius_right_top, currentStyle.corners_radius_right_top,
-                            currentStyle.corners_radius_right_bottom, currentStyle.corners_radius_right_bottom, currentStyle.corners_radius_left_bottom, currentStyle.corners_radius_left_bottom},
+                    new float[]{currentStyle.corners_radius_left_top_x, currentStyle.corners_radius_left_top_y, currentStyle.corners_radius_right_top_x, currentStyle.corners_radius_right_top_y,
+                            currentStyle.corners_radius_right_bottom_x, currentStyle.corners_radius_right_bottom_y, currentStyle.corners_radius_left_bottom_x, currentStyle.corners_radius_left_bottom_y},
                     Path.Direction.CW);
             canvas.drawPath(path, paint);
         }
@@ -216,8 +221,8 @@ public class ViewBgControl {
 
             path.addRoundRect(new RectF(currentStyle.stroke_width, currentStyle.stroke_width,
                             view.getWidth() - currentStyle.stroke_width, view.getHeight() - currentStyle.stroke_width),
-                    new float[]{currentStyle.corners_radius_left_top, currentStyle.corners_radius_left_top, currentStyle.corners_radius_right_top, currentStyle.corners_radius_right_top,
-                            currentStyle.corners_radius_right_bottom, currentStyle.corners_radius_right_bottom, currentStyle.corners_radius_left_bottom, currentStyle.corners_radius_left_bottom},
+                    new float[]{currentStyle.corners_radius_left_top_x, currentStyle.corners_radius_left_top_y, currentStyle.corners_radius_right_top_x, currentStyle.corners_radius_right_top_y,
+                            currentStyle.corners_radius_right_bottom_x, currentStyle.corners_radius_right_bottom_y, currentStyle.corners_radius_left_bottom_x, currentStyle.corners_radius_left_bottom_y},
                     Path.Direction.CW);
             canvas.drawPath(path, paint);
         }
@@ -396,33 +401,61 @@ public class ViewBgControl {
         else
             currentStyle.stroke_dash_width = defStyle.stroke_dash_width;
 
-        if (style.corners_radius_left_top != -1)
-            currentStyle.corners_radius_left_top = style.corners_radius_left_top;
-        else if (assistStyle.corners_radius_left_top != -1)
-            currentStyle.corners_radius_left_top = assistStyle.corners_radius_left_top;
+        if (style.corners_radius_left_top_x != -1)
+            currentStyle.corners_radius_left_top_x = style.corners_radius_left_top_x;
+        else if (assistStyle.corners_radius_left_top_x != -1)
+            currentStyle.corners_radius_left_top_x = assistStyle.corners_radius_left_top_x;
         else
-            currentStyle.corners_radius_left_top = defStyle.corners_radius_left_top;
+            currentStyle.corners_radius_left_top_x = defStyle.corners_radius_left_top_x;
 
-        if (style.corners_radius_right_top != -1)
-            currentStyle.corners_radius_right_top = style.corners_radius_right_top;
-        else if (assistStyle.corners_radius_right_top != -1)
-            currentStyle.corners_radius_right_top = assistStyle.corners_radius_right_top;
+        if (style.corners_radius_left_top_y != -1)
+            currentStyle.corners_radius_left_top_y = style.corners_radius_left_top_y;
+        else if (assistStyle.corners_radius_left_top_y != -1)
+            currentStyle.corners_radius_left_top_y = assistStyle.corners_radius_left_top_y;
         else
-            currentStyle.corners_radius_right_top = defStyle.corners_radius_right_top;
+            currentStyle.corners_radius_left_top_y = defStyle.corners_radius_left_top_y;
 
-        if (style.corners_radius_left_bottom != -1)
-            currentStyle.corners_radius_left_bottom = style.corners_radius_left_bottom;
-        else if (assistStyle.corners_radius_left_bottom != -1)
-            currentStyle.corners_radius_left_bottom = assistStyle.corners_radius_left_bottom;
+        if (style.corners_radius_right_top_x != -1)
+            currentStyle.corners_radius_right_top_x = style.corners_radius_right_top_x;
+        else if (assistStyle.corners_radius_right_top_x != -1)
+            currentStyle.corners_radius_right_top_x = assistStyle.corners_radius_right_top_x;
         else
-            currentStyle.corners_radius_left_bottom = defStyle.corners_radius_left_bottom;
+            currentStyle.corners_radius_right_top_x = defStyle.corners_radius_right_top_x;
 
-        if (style.corners_radius_right_bottom != -1)
-            currentStyle.corners_radius_right_bottom = style.corners_radius_right_bottom;
-        else if (assistStyle.corners_radius_right_bottom != -1)
-            currentStyle.corners_radius_right_bottom = assistStyle.corners_radius_right_bottom;
+        if (style.corners_radius_right_top_y != -1)
+            currentStyle.corners_radius_right_top_y = style.corners_radius_right_top_y;
+        else if (assistStyle.corners_radius_right_top_y != -1)
+            currentStyle.corners_radius_right_top_y = assistStyle.corners_radius_right_top_y;
         else
-            currentStyle.corners_radius_right_bottom = defStyle.corners_radius_right_bottom;
+            currentStyle.corners_radius_right_top_y = defStyle.corners_radius_right_top_y;
+
+        if (style.corners_radius_left_bottom_x != -1)
+            currentStyle.corners_radius_left_bottom_x = style.corners_radius_left_bottom_x;
+        else if (assistStyle.corners_radius_left_bottom_x != -1)
+            currentStyle.corners_radius_left_bottom_x = assistStyle.corners_radius_left_bottom_x;
+        else
+            currentStyle.corners_radius_left_bottom_x = defStyle.corners_radius_left_bottom_x;
+
+        if (style.corners_radius_left_bottom_y != -1)
+            currentStyle.corners_radius_left_bottom_y = style.corners_radius_left_bottom_y;
+        else if (assistStyle.corners_radius_left_bottom_y != -1)
+            currentStyle.corners_radius_left_bottom_y = assistStyle.corners_radius_left_bottom_y;
+        else
+            currentStyle.corners_radius_left_bottom_y = defStyle.corners_radius_left_bottom_y;
+
+        if (style.corners_radius_right_bottom_x != -1)
+            currentStyle.corners_radius_right_bottom_x = style.corners_radius_right_bottom_x;
+        else if (assistStyle.corners_radius_right_bottom_x != -1)
+            currentStyle.corners_radius_right_bottom_x = assistStyle.corners_radius_right_bottom_x;
+        else
+            currentStyle.corners_radius_right_bottom_x = defStyle.corners_radius_right_bottom_x;
+
+        if (style.corners_radius_right_bottom_y != -1)
+            currentStyle.corners_radius_right_bottom_y = style.corners_radius_right_bottom_y;
+        else if (assistStyle.corners_radius_right_bottom_y != -1)
+            currentStyle.corners_radius_right_bottom_y = assistStyle.corners_radius_right_bottom_y;
+        else
+            currentStyle.corners_radius_right_bottom_y = defStyle.corners_radius_right_bottom_y;
 
         view.invalidate();
     }

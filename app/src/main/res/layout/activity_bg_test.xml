@@ -229,6 +229,14 @@
                 app:text_no_enabled="hahaha"
                 app:text_pressed="按下" />
 
+            <com.gt.utils.widget.BgLayout
+                android:id="@+id/bgLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginBottom="20dp"
+                android:focusableInTouchMode="true"
+                app:solid_color="@color/main" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

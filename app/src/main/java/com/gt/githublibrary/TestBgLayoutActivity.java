@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.gt.utils.widget.BgLayout;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -54,6 +56,7 @@ public class TestBgLayoutActivity extends AppCompatActivity {
         findViewById(R.id.bgLayout4).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Toast.makeText(TestBgLayoutActivity.this, "bgTextView", Toast.LENGTH_LONG).show();
             }
         });
@@ -62,6 +65,13 @@ public class TestBgLayoutActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(TestBgLayoutActivity.this, "bgTextView2", Toast.LENGTH_LONG).show();
             }
+        });
+        BgLayout bgLayout = findViewById(R.id.bgLayout5);
+        bgLayout.setOnClickListener(v -> {
+            bgLayout.viewBgControl.defStyle.corners_radius_left_bottom_x = 2000;
+            bgLayout.viewBgControl.defStyle.corners_radius_left_bottom_y = 300;
+            bgLayout.viewBgControl.setCurrentStyle(bgLayout.viewBgControl.currentStyle);
+            bgLayout.invalidate();
         });
     }
 }
