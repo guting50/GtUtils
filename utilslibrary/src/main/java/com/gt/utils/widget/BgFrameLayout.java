@@ -49,7 +49,7 @@ import androidx.annotation.RequiresApi;
  */
 
 /**
- * 后期不在维护，建议使用BgLayout
+ * 后期不在维护，建议使用BgFLayout,BgLLayout,BgCLayout
  */
 @Deprecated
 public class BgFrameLayout extends FrameLayout {

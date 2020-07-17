@@ -13,26 +13,23 @@ import com.gt.utils.R;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-/**
- * 后期不在维护，建议使用BgFLayout,BgLLayout,BgCLayout
- */
-@Deprecated
-public class BgLayout extends FrameLayout {
+
+public class BgFLayout extends FrameLayout {
 
     public ViewBgControl viewBgControl;
     private OnClickListener onClickListener;
 
-    public BgLayout(Context context, AttributeSet attrs) {
+    public BgFLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public BgLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BgFLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         viewBgControl = new ViewBgControl(this);
-        viewBgControl.initBgStyle(context.obtainStyledAttributes(attrs, R.styleable.BgLayout));
+        viewBgControl.initBgStyle(context.obtainStyledAttributes(attrs, R.styleable.BgFLayout));
 
         //当设置在触摸模式下可以获取焦点时，如果不设置点击事件，onFocusChanged不回调
-        super.setOnClickListener(new View.OnClickListener() {
+        super.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewBgControl.setChecked(!viewBgControl.checked);
@@ -45,7 +42,7 @@ public class BgLayout extends FrameLayout {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    public void dispatchDraw(Canvas canvas) {
         viewBgControl.dispatchDraw(canvas);
         super.dispatchDraw(canvas);
     }

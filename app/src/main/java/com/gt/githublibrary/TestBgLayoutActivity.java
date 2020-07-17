@@ -66,12 +66,5 @@ public class TestBgLayoutActivity extends AppCompatActivity {
                 Toast.makeText(TestBgLayoutActivity.this, "bgTextView2", Toast.LENGTH_LONG).show();
             }
         });
-        BgLayout bgLayout = findViewById(R.id.bgLayout5);
-        bgLayout.setOnClickListener(v -> {
-            bgLayout.viewBgControl.defStyle.corners_radius_left_bottom_x = 2000;
-            bgLayout.viewBgControl.defStyle.corners_radius_left_bottom_y = 300;
-            bgLayout.viewBgControl.setCurrentStyle(bgLayout.viewBgControl.currentStyle);
-            bgLayout.invalidate();
-        });
     }
 }

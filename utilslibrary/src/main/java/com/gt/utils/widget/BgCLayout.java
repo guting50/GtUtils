@@ -8,6 +8,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.gt.utils.R;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -24,7 +26,7 @@ public class BgCLayout extends ConstraintLayout {
     public BgCLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         viewBgControl = new ViewBgControl(this);
-        viewBgControl.initBgStyle(context, attrs);
+        viewBgControl.initBgStyle(context.obtainStyledAttributes(attrs, R.styleable.BgCLayout));
 
         //当设置在触摸模式下可以获取焦点时，如果不设置点击事件，onFocusChanged不回调
         super.setOnClickListener(new View.OnClickListener() {

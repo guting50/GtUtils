@@ -1,6 +1,5 @@
 package com.gt.utils.widget;
 
-import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,7 +9,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Shader;
-import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,10 +77,6 @@ public class ViewBgControl {
 
     public ViewBgControl(View view) {
         this.view = view;
-    }
-
-    public void initBgStyle(Context context, AttributeSet attrs) {
-        initBgStyle(context.obtainStyledAttributes(attrs, R.styleable.BgLayout));
     }
 
     public void initBgStyle(TypedArray typedArray) {

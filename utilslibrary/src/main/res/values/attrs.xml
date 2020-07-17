@@ -1,5 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="PaintView">
+        <attr name="paint_color" format="color" /><!--画笔的颜色-->
+        <attr name="paint_stroke_width" format="float" /><!--画笔的宽度-->
+        <attr name="paint_type" format="enum"> <!--画笔的类型-->
+            <enum name="curve" value="0" /><!--曲线-->
+            <enum name="line" value="1" /><!--直线-->
+            <enum name="rect" value="2" /><!--矩形-->
+            <enum name="circle" value="3" /><!--圆形-->
+            <enum name="oval" value="4" /><!--椭圆形-->
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="GtSeekBar">
+        <attr name="seek_progress" format="integer" /><!--滑块的位置（默认区间0-100）-->
+        <attr name="seek_max_count" format="integer" /><!--最小值（默认0）-->
+        <attr name="seek_min_count" format="integer" /><!--最大值（默认100）-->
+        <attr name="progress_color" format="color" /><!--滑竿的颜色-->
+        <attr name="progress_past_color" format="color" /><!--滑竿已滑过的颜色-->
+        <attr name="progress_future_color" format="color" /><!--滑竿未滑过的颜色-->
+        <attr name="progress_size" format="dimension" /><!--滑竿的大小（宽度或者高度）-->
+        <attr name="thumb_color" format="color" /><!--滑块的颜色-->
+        <attr name="thumb_image" format="reference" /><!--滑块的图片-->
+        <attr name="drag_able" format="boolean" /><!--可拖动的-->
+        <attr name="seek_orientation" format="enum"> <!--方向 默认横屏-->
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="FlowLayout">
+        <attr name="flFlow" format="boolean" /> <!--是否设置为流式布局，默认为true-->
+        <attr name="flChildSpacing" format="enum|dimension"><!--设置子视图之间的水平间距-->
+            <enum name="auto" value="-65536" /><!--为间隔自动（均匀排列）-->
+        </attr>
+        <attr name="flMinChildSpacing" format="dimension" /><!--最小子间距-->
+        <attr name="flChildSpacingForLastRow" format="enum|dimension"><!--设置最后一行的子视图之间的水平间距-->
+            <enum name="auto" value="-65536" /><!--为间隔自动（均匀排列）-->
+            <enum name="align" value="-65537" /><!--为间隔对齐-->
+        </attr>
+        <attr name="flRowSpacing" format="enum|dimension"><!--行间距-->
+            <enum name="auto" value="-65536" /><!--为间隔自动（均匀排列）-->
+        </attr>
+        <attr name="flRtl" format="boolean" /><!--设置是否右对齐，默认false-->
+        <attr name="flMaxRows" format="integer" /><!--最大行数-->
+        <attr name="android:gravity" /><!--layout_gravity-->
+    </declare-styleable>
+
+    <declare-styleable name="CircleButtonView">
+        <attr name="minTime" format="integer" />
+        <attr name="maxTime" format="integer" />
+        <attr name="progressColor" format="color" />
+        <attr name="progressWidth" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="MaxHeightRecyclerView">
+        <attr name="maxHeight" format="dimension" />
+    </declare-styleable>
+
     <!--default-->
     <attr name="solid_color" format="color" /><!--填充色-->
     <attr name="solid_start_color" format="color" /><!--填充渐变开始颜色-->
@@ -221,7 +279,279 @@
         <attr name="corners_radius_left_bottom_focused" /><!--圆角弧度 左下角-->
         <attr name="corners_radius_right_bottom_focused" /><!--圆角弧度 右下角-->
     </declare-styleable>
+    <declare-styleable name="BgFLayout">
+        <!--default-->
+        <attr name="solid_color" /><!--填充色-->
+        <attr name="solid_start_color" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation" />
+        <attr name="stroke_color" /><!--边框颜色-->
+        <attr name="stroke_start_color" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation" />
+        <attr name="stroke_width" /><!--边框宽度-->
+        <attr name="stroke_dash_gap" /><!--间隔-->
+        <attr name="stroke_dash_width" /><!--点的大小-->
+        <attr name="corners_radius" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom" /><!--圆角弧度 右下角-->
 
+        <!--noEnabled-->
+        <attr name="solid_color_no_enabled" /><!--填充色-->
+        <attr name="solid_start_color_no_enabled" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_no_enabled" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation_no_enabled" />
+        <attr name="stroke_color_no_enabled" /><!--边框颜色-->
+        <attr name="stroke_start_color_no_enabled" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_no_enabled" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation_no_enabled" />
+        <attr name="stroke_width_no_enabled" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_no_enabled" /><!--间隔-->
+        <attr name="stroke_dash_width_no_enabled" /><!--点的大小-->
+        <attr name="corners_radius_no_enabled" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_no_enabled" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_no_enabled" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_no_enabled" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_no_enabled" /><!--圆角弧度 右下角-->
+
+        <!--checked-->
+        <attr name="solid_color_checked" /><!--填充色-->
+        <attr name="solid_start_color_checked" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_checked" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation_checked" />
+        <attr name="stroke_color_checked" /><!--边框颜色-->
+        <attr name="stroke_start_color_checked" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_checked" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation_checked" />
+        <attr name="stroke_width_checked" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_checked" /><!--间隔-->
+        <attr name="stroke_dash_width_checked" /><!--点的大小-->
+        <attr name="corners_radius_checked" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_checked" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_checked" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_checked" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_checked" /><!--圆角弧度 右下角-->
+
+        <!--pressed-->
+        <attr name="solid_color_pressed" /><!--填充色-->
+        <attr name="solid_start_color_pressed" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_pressed" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation_pressed" />
+        <attr name="stroke_color_pressed" /><!--边框颜色-->
+        <attr name="stroke_start_color_pressed" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_pressed" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation_pressed" />
+        <attr name="stroke_width_pressed" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_pressed" /><!--间隔-->
+        <attr name="stroke_dash_width_pressed" /><!--点的大小-->
+        <attr name="corners_radius_pressed" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_pressed" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_pressed" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_pressed" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_pressed" /><!--圆角弧度 右下角-->
+
+        <!--focused-->
+        <attr name="solid_color_focused" /><!--填充色-->
+        <attr name="solid_start_color_focused" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_focused" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation_focused" />
+        <attr name="stroke_color_focused" /><!--边框颜色-->
+        <attr name="stroke_start_color_focused" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_focused" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation_focused" />
+        <attr name="stroke_width_focused" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_focused" /><!--间隔-->
+        <attr name="stroke_dash_width_focused" /><!--点的大小-->
+        <attr name="corners_radius_focused" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_focused" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_focused" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_focused" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_focused" /><!--圆角弧度 右下角-->
+    </declare-styleable>
+    <declare-styleable name="BgLLayout">
+        <!--default-->
+        <attr name="solid_color" /><!--填充色-->
+        <attr name="solid_start_color" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation" />
+        <attr name="stroke_color" /><!--边框颜色-->
+        <attr name="stroke_start_color" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation" />
+        <attr name="stroke_width" /><!--边框宽度-->
+        <attr name="stroke_dash_gap" /><!--间隔-->
+        <attr name="stroke_dash_width" /><!--点的大小-->
+        <attr name="corners_radius" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom" /><!--圆角弧度 右下角-->
+
+        <!--noEnabled-->
+        <attr name="solid_color_no_enabled" /><!--填充色-->
+        <attr name="solid_start_color_no_enabled" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_no_enabled" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation_no_enabled" />
+        <attr name="stroke_color_no_enabled" /><!--边框颜色-->
+        <attr name="stroke_start_color_no_enabled" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_no_enabled" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation_no_enabled" />
+        <attr name="stroke_width_no_enabled" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_no_enabled" /><!--间隔-->
+        <attr name="stroke_dash_width_no_enabled" /><!--点的大小-->
+        <attr name="corners_radius_no_enabled" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_no_enabled" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_no_enabled" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_no_enabled" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_no_enabled" /><!--圆角弧度 右下角-->
+
+        <!--checked-->
+        <attr name="solid_color_checked" /><!--填充色-->
+        <attr name="solid_start_color_checked" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_checked" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation_checked" />
+        <attr name="stroke_color_checked" /><!--边框颜色-->
+        <attr name="stroke_start_color_checked" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_checked" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation_checked" />
+        <attr name="stroke_width_checked" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_checked" /><!--间隔-->
+        <attr name="stroke_dash_width_checked" /><!--点的大小-->
+        <attr name="corners_radius_checked" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_checked" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_checked" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_checked" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_checked" /><!--圆角弧度 右下角-->
+
+        <!--pressed-->
+        <attr name="solid_color_pressed" /><!--填充色-->
+        <attr name="solid_start_color_pressed" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_pressed" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation_pressed" />
+        <attr name="stroke_color_pressed" /><!--边框颜色-->
+        <attr name="stroke_start_color_pressed" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_pressed" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation_pressed" />
+        <attr name="stroke_width_pressed" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_pressed" /><!--间隔-->
+        <attr name="stroke_dash_width_pressed" /><!--点的大小-->
+        <attr name="corners_radius_pressed" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_pressed" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_pressed" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_pressed" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_pressed" /><!--圆角弧度 右下角-->
+
+        <!--focused-->
+        <attr name="solid_color_focused" /><!--填充色-->
+        <attr name="solid_start_color_focused" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_focused" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation_focused" />
+        <attr name="stroke_color_focused" /><!--边框颜色-->
+        <attr name="stroke_start_color_focused" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_focused" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation_focused" />
+        <attr name="stroke_width_focused" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_focused" /><!--间隔-->
+        <attr name="stroke_dash_width_focused" /><!--点的大小-->
+        <attr name="corners_radius_focused" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_focused" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_focused" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_focused" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_focused" /><!--圆角弧度 右下角-->
+    </declare-styleable>
+    <declare-styleable name="BgCLayout">
+        <!--default-->
+        <attr name="solid_color" /><!--填充色-->
+        <attr name="solid_start_color" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation" />
+        <attr name="stroke_color" /><!--边框颜色-->
+        <attr name="stroke_start_color" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation" />
+        <attr name="stroke_width" /><!--边框宽度-->
+        <attr name="stroke_dash_gap" /><!--间隔-->
+        <attr name="stroke_dash_width" /><!--点的大小-->
+        <attr name="corners_radius" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom" /><!--圆角弧度 右下角-->
+
+        <!--noEnabled-->
+        <attr name="solid_color_no_enabled" /><!--填充色-->
+        <attr name="solid_start_color_no_enabled" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_no_enabled" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation_no_enabled" />
+        <attr name="stroke_color_no_enabled" /><!--边框颜色-->
+        <attr name="stroke_start_color_no_enabled" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_no_enabled" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation_no_enabled" />
+        <attr name="stroke_width_no_enabled" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_no_enabled" /><!--间隔-->
+        <attr name="stroke_dash_width_no_enabled" /><!--点的大小-->
+        <attr name="corners_radius_no_enabled" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_no_enabled" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_no_enabled" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_no_enabled" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_no_enabled" /><!--圆角弧度 右下角-->
+
+        <!--checked-->
+        <attr name="solid_color_checked" /><!--填充色-->
+        <attr name="solid_start_color_checked" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_checked" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation_checked" />
+        <attr name="stroke_color_checked" /><!--边框颜色-->
+        <attr name="stroke_start_color_checked" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_checked" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation_checked" />
+        <attr name="stroke_width_checked" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_checked" /><!--间隔-->
+        <attr name="stroke_dash_width_checked" /><!--点的大小-->
+        <attr name="corners_radius_checked" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_checked" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_checked" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_checked" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_checked" /><!--圆角弧度 右下角-->
+
+        <!--pressed-->
+        <attr name="solid_color_pressed" /><!--填充色-->
+        <attr name="solid_start_color_pressed" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_pressed" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation_pressed" />
+        <attr name="stroke_color_pressed" /><!--边框颜色-->
+        <attr name="stroke_start_color_pressed" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_pressed" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation_pressed" />
+        <attr name="stroke_width_pressed" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_pressed" /><!--间隔-->
+        <attr name="stroke_dash_width_pressed" /><!--点的大小-->
+        <attr name="corners_radius_pressed" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_pressed" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_pressed" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_pressed" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_pressed" /><!--圆角弧度 右下角-->
+
+        <!--focused-->
+        <attr name="solid_color_focused" /><!--填充色-->
+        <attr name="solid_start_color_focused" /><!--填充渐变开始颜色-->
+        <attr name="solid_end_color_focused" /><!--填充渐变结束颜色-->
+        <attr name="solid_gradual_orientation_focused" />
+        <attr name="stroke_color_focused" /><!--边框颜色-->
+        <attr name="stroke_start_color_focused" /><!--边框渐变开始颜色-->
+        <attr name="stroke_end_color_focused" /><!--边框渐变结束颜色-->
+        <attr name="stroke_gradual_orientation_focused" />
+        <attr name="stroke_width_focused" /><!--边框宽度-->
+        <attr name="stroke_dash_gap_focused" /><!--间隔-->
+        <attr name="stroke_dash_width_focused" /><!--点的大小-->
+        <attr name="corners_radius_focused" /><!--圆角弧度-->
+        <attr name="corners_radius_left_top_focused" /><!--圆角弧度 左上角-->
+        <attr name="corners_radius_right_top_focused" /><!--圆角弧度 右上角-->
+        <attr name="corners_radius_left_bottom_focused" /><!--圆角弧度 左下角-->
+        <attr name="corners_radius_right_bottom_focused" /><!--圆角弧度 右下角-->
+    </declare-styleable>
     <declare-styleable name="BgTextView">
         <!--default-->
         <attr name="solid_color" /><!--填充色-->
@@ -332,63 +662,5 @@
         <attr name="textColor_focused" format="color" />
         <attr name="textSize_focused" format="dimension" />
         <attr name="text_focused" format="string" />
-    </declare-styleable>
-
-    <declare-styleable name="PaintView">
-        <attr name="paint_color" format="color" /><!--画笔的颜色-->
-        <attr name="paint_stroke_width" format="float" /><!--画笔的宽度-->
-        <attr name="paint_type" format="enum"> <!--画笔的类型-->
-            <enum name="curve" value="0" /><!--曲线-->
-            <enum name="line" value="1" /><!--直线-->
-            <enum name="rect" value="2" /><!--矩形-->
-            <enum name="circle" value="3" /><!--圆形-->
-            <enum name="oval" value="4" /><!--椭圆形-->
-        </attr>
-    </declare-styleable>
-
-    <declare-styleable name="GtSeekBar">
-        <attr name="seek_progress" format="integer" /><!--滑块的位置（默认区间0-100）-->
-        <attr name="seek_max_count" format="integer" /><!--最小值（默认0）-->
-        <attr name="seek_min_count" format="integer" /><!--最大值（默认100）-->
-        <attr name="progress_color" format="color" /><!--滑竿的颜色-->
-        <attr name="progress_past_color" format="color" /><!--滑竿已滑过的颜色-->
-        <attr name="progress_future_color" format="color" /><!--滑竿未滑过的颜色-->
-        <attr name="progress_size" format="dimension" /><!--滑竿的大小（宽度或者高度）-->
-        <attr name="thumb_color" format="color" /><!--滑块的颜色-->
-        <attr name="thumb_image" format="reference" /><!--滑块的图片-->
-        <attr name="drag_able" format="boolean" /><!--可拖动的-->
-        <attr name="seek_orientation" format="enum"> <!--方向 默认横屏-->
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-        </attr>
-    </declare-styleable>
-
-    <declare-styleable name="FlowLayout">
-        <attr name="flFlow" format="boolean" /> <!--是否设置为流式布局，默认为true-->
-        <attr name="flChildSpacing" format="enum|dimension"><!--设置子视图之间的水平间距-->
-            <enum name="auto" value="-65536" /><!--为间隔自动（均匀排列）-->
-        </attr>
-        <attr name="flMinChildSpacing" format="dimension" /><!--最小子间距-->
-        <attr name="flChildSpacingForLastRow" format="enum|dimension"><!--设置最后一行的子视图之间的水平间距-->
-            <enum name="auto" value="-65536" /><!--为间隔自动（均匀排列）-->
-            <enum name="align" value="-65537" /><!--为间隔对齐-->
-        </attr>
-        <attr name="flRowSpacing" format="enum|dimension"><!--行间距-->
-            <enum name="auto" value="-65536" /><!--为间隔自动（均匀排列）-->
-        </attr>
-        <attr name="flRtl" format="boolean" /><!--设置是否右对齐，默认false-->
-        <attr name="flMaxRows" format="integer" /><!--最大行数-->
-        <attr name="android:gravity" /><!--layout_gravity-->
-    </declare-styleable>
-
-    <declare-styleable name="CircleButtonView">
-        <attr name="minTime" format="integer" />
-        <attr name="maxTime" format="integer" />
-        <attr name="progressColor" format="color" />
-        <attr name="progressWidth" format="dimension" />
-    </declare-styleable>
-
-    <declare-styleable name="MaxHeightRecyclerView">
-        <attr name="maxHeight" format="dimension" />
     </declare-styleable>
 </resources>
