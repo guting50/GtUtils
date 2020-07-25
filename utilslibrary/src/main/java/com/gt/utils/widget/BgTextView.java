@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.gt.utils.GsonUtils;
 import com.gt.utils.R;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 
 @SuppressLint("AppCompatCustomView")
@@ -228,5 +229,22 @@ public class BgTextView extends TextView {
             }
         }
         viewBgControl.setFocused(focused);
+    }
+
+    public void setCurrentStyle(ViewBgControl.Style style) {
+        viewBgControl.setCurrentStyle(style);
+    }
+
+    public void setBackgroundColor(@ColorInt int... resId) {
+        if (resId != null) {
+            if (resId.length == 1) {
+                viewBgControl.currentStyle.solid_start_color = resId[0];
+                viewBgControl.currentStyle.solid_end_color = resId[0];
+            } else if (resId.length == 2) {
+                viewBgControl.currentStyle.solid_start_color = resId[0];
+                viewBgControl.currentStyle.solid_end_color = resId[1];
+            }
+            invalidate();
+        }
     }
 }
