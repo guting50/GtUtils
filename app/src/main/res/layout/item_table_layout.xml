@@ -5,11 +5,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.gt.utils.widget.BgFrameLayout
+    <com.gt.utils.widget.BgTextView
         android:id="@+id/bgFrameLayout"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:text="测试"
+        android:textColor="#ffffff"
         app:corners_radius="30dp"
         app:corners_radius_checked="5dp"
         app:corners_radius_pressed="10dp"
@@ -24,18 +27,9 @@
         app:solid_start_color="#ff5380F5"
         app:solid_start_color_checked="#ff8B74E4"
         app:solid_start_color_no_enabled="#ff000000"
-        app:solid_start_color_pressed="#ff87b4E4">
+        app:solid_start_color_pressed="#ff87b4E4" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="测试"
-            android:textColor="#ffffff" />
-
-    </com.gt.utils.widget.BgFrameLayout>
-
-    <com.gt.utils.widget.BgFrameLayout
+    <com.gt.utils.widget.BgFLayout
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:focusableInTouchMode="true"

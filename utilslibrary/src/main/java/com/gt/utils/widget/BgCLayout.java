@@ -89,15 +89,20 @@ public class BgCLayout extends ConstraintLayout {
         viewBgControl.setCurrentStyle(style);
     }
 
+    public void setBackgroundColor(@ColorInt int resId) {
+        setBackgroundColors(resId);
+    }
+
     public void setBackgroundColors(@ColorInt int... resId) {
         if (resId != null) {
             if (resId.length == 1) {
-                viewBgControl.currentStyle.solid_start_color = resId[0];
-                viewBgControl.currentStyle.solid_end_color = resId[0];
+                viewBgControl.defStyle.solid_start_color = resId[0];
+                viewBgControl.defStyle.solid_end_color = resId[0];
             } else if (resId.length == 2) {
-                viewBgControl.currentStyle.solid_start_color = resId[0];
-                viewBgControl.currentStyle.solid_end_color = resId[1];
+                viewBgControl.defStyle.solid_start_color = resId[0];
+                viewBgControl.defStyle.solid_end_color = resId[1];
             }
+            viewBgControl.setCurrentStyle(viewBgControl.defStyle);
             invalidate();
         }
     }
