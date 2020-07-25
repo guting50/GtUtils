@@ -235,7 +235,7 @@ public class BgTextView extends TextView {
         viewBgControl.setCurrentStyle(style);
     }
 
-    public void setBackgroundColor(@ColorInt int... resId) {
+    public void setBackgroundColors(@ColorInt int... resId) {
         if (resId != null) {
             if (resId.length == 1) {
                 viewBgControl.currentStyle.solid_start_color = resId[0];
