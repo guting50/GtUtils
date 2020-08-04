@@ -3,7 +3,7 @@
 [![作者](https://img.shields.io/badge/%E4%BD%9C%E8%80%85-guting50-brightgreen.svg)](https://github.com/guting50)
 
 ## 自定义工具库
-[PermissionUtils 的使用](link1)  
+* [PermissionUtils 的使用](#PermissionUtils)  
 DataCleanManager：本应用数据清除管理器  
 MuchThreadDown：多线程下载，支持断点续传  
 FileUtils：文件处理工具类  
@@ -34,7 +34,7 @@ LogsUtils：保存日志
         implementation 'com.github.guting50:GtUtils:Tag'
     }
 ```
-## PermissionUtils 的使用 
+## PermissionUtils 
 ```Java
   PermissionUtils.requestPermission(this, PermissionUtils.CODE_CAMERA, new PermissionUtils.PermissionGrant() {
       @Override
