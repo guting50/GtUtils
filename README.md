@@ -8,7 +8,7 @@
 * [MuchThreadDown：多线程下载，支持断点续传](#MuchThreadDown)  
 * [FileUtils：文件处理工具类](#FileUtils)  
 * [AntiShake、OnNoDoubleClickListener：防止点击事件重复调用](#antishakeonnodoubleclicklistener)  
-* [BgFLayout：自定义可设置背景的帧布局](#BgFLayoutbgTextView)  
+* [BgFLayout、BgTextView：自定义可设置背景的布局](#BgFLayoutbgTextView)  
 * [GtSeekBar：自定义SeekBar](#GtSeekBar)  
 * [PaintView：自定义手写板控件](#PaintView)  
 * [TryLightStatus：修改状态栏背景色](#PaintView)  
@@ -17,6 +17,12 @@
 * [floatingeditor：浮动编辑器，在键盘上面方显示](#floatingeditor)  
 * [GsonUtils：解决int类型转换成double](#GsonUtils)  
 * [LogsUtils：保存日志](#LogsUtils)  
+* [DateSelectDialog：日期选择器](#DateSelectDialog)  
+* [ImagePagerActivity：查看大图](#ImagePagerActivity)  
+* [MultiGridView：九宫格图片显示控件，支持添加图片](#MultiGridView)  
+* [SimpleAdapter：RecyclerView通用适配器](#SimpleAdapter)  
+* [SpanUtil：一个TextView实现多种样式](#SpanUtil)  
+
 
 #### 依赖
 将其添加到根build.gradle文件（而不是模块build.gradle文件）中：
@@ -106,7 +112,8 @@ static void clearAllCache(Context context);
   
 ````
 
-## BgFLayout、BgTextView
+## BgFLayout、BgTextView  
+#### 同类型的有 BgFLayout（帧布局）、BgLLayout（线性布局）、BgCLayout（约束布局）
 ```Xml
   <com.gt.utils.widget.BgFrameLayout
       android:layout_width="200dp"
@@ -244,9 +251,7 @@ static void clearAllCache(Context context);
     <attr name="corners_radius_left_top_focused" format="dimension" /><!--圆角弧度 左上角-->
     <attr name="corners_radius_right_top_focused" format="dimension" /><!--圆角弧度 右上角-->
     <attr name="corners_radius_left_bottom_focused" format="dimension" /><!--圆角弧度 左下角-->
-    <attr name="corners_radius_right_bottom_focused" format="dimension" /><!--圆角弧度 右下角-->
-      
-      
+    <attr name="corners_radius_right_bottom_focused" format="dimension" /><!--圆角弧度 右下角-->      
 
     <!--noEnabled-->
     <attr name="textColor_no_enabled" format="color" />
@@ -465,3 +470,67 @@ adapter继承CustomizeRVBaseAdapter
      */
     public static void openEditor(Context context, EditorCallback editorCallback, EditorHolder holder, InputCheckRule checkRule, float dimAmount, boolean isFinishOnTouchOutside);
 ```
+
+## DateSelectDialog
+```java
+    new DateSelectDialog(activity).setOnSelectedListener(data -> {
+        //选择后
+    }).setDefauleDate(date).setDatePattern(pattern).show();
+```
+
+## ImagePagerActivity
+```java
+     public static void startImagePagerActivity(Activity context, List<String> imgUrls, int position);
+
+    public static void startImagePagerActivity(Activity context, List<String> imgUrls, int position, ImageSize imageSize);
+    
+    public static void startImagePagerActivity(Activity context, List<String> imgUrls, int position, ImageSize imageSize, int showBn);
+    
+    public static void startImagePagerActivity(Activity context, List<String> imgUrls,int position, ImageSize imageSize, int showBn, int requestCode);
+```
+
+## MultiGridView
+```xml
+    <com.gt.utils.widget.multigridview.MultiGridView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+```
+```xml
+    <declare-styleable name="MultiGridView">
+        <attr name="android:numColumns"/>
+        <attr name="android:horizontalSpacing"/>
+        <attr name="android:verticalSpacing"/>
+        <attr format="integer" name="maxItems"/>
+        <attr format="boolean" name="showEdit"/>
+        <attr format="reference" name="addImg"/>
+        <attr format="reference" name="delImg"/>
+        <attr format="reference" name="defImg"/>
+        <attr format="dimension" name="cornersRadius"/>
+    </declare-styleable>
+```
+
+## SimpleAdapter
+```java
+    public SimpleAdapter(@NonNull Class<? extends VHolder> holder);
+
+    public SimpleAdapter(List data, @NonNull Class<? extends VHolder> holder);
+
+    public SimpleAdapter(Object obj, @NonNull Class<? extends VHolder> holder);
+    
+    public SimpleAdapter(Object obj, List data, @NonNull Class<? extends VHolder> holder);
+    
+```
+
+## SpanUtil
+```java
+    SpanUtil.create()
+        .addSection("仅再邀请1名好友，即可获得1张20元助力专享券")
+        .setStyle("1名", Typeface.BOLD)
+        .setForeColor("1名", 0xffEA3A0B)
+        .setStyle("20元", Typeface.BOLD)
+        .setForeColor("20元", 0xffEA3A0B)
+        .showIn(textView);
+```
+更多样式，请查看源码
+
+
