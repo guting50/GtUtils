@@ -54,7 +54,7 @@ LogsUtils：保存日志
   PermissionUtils.permissionsHintHead = "没有此权限，无法开启这个功能，请开启权限：";
 ````
 
-## DataCleanManager：本应用数据清除管理器
+#### DataCleanManager：本应用数据清除管理器
 ##### 获取缓存大小
 ````Java
 static String getTotalCacheSize(Context context) throws Exception;
