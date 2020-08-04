@@ -4,8 +4,7 @@
 
 ## 自定义工具库
 [PermissionUtils 的使用](link1)
-[PermissionUtils 的使用](#PermissionUtils 的使用)  
-DataCleanManager：本应用数据清除管理器  
+[DataCleanManager：本应用数据清除管理器](link1)  
 MuchThreadDown：多线程下载，支持断点续传  
 FileUtils：文件处理工具类  
 AntiShake、OnNoDoubleClickListener：防止点击事件重复调用  
@@ -35,7 +34,7 @@ LogsUtils：保存日志
         implementation 'com.github.guting50:GtUtils:Tag'
     }
 ```
-## link1 
+## PermissionUtils 的使用 
 ```Java
   PermissionUtils.requestPermission(this, PermissionUtils.CODE_CAMERA, new PermissionUtils.PermissionGrant() {
       @Override
@@ -55,7 +54,7 @@ LogsUtils：保存日志
   PermissionUtils.permissionsHintHead = "没有此权限，无法开启这个功能，请开启权限：";
 ````
 
-#### DataCleanManager 的api
+## DataCleanManager：本应用数据清除管理器
 ##### 获取缓存大小
 ````Java
 static String getTotalCacheSize(Context context) throws Exception;
