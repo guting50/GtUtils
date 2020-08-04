@@ -3,20 +3,20 @@
 [![作者](https://img.shields.io/badge/%E4%BD%9C%E8%80%85-guting50-brightgreen.svg)](https://github.com/guting50)
 
 ## 自定义工具库
-* [PermissionUtils 的使用](#PermissionUtils)  
-* [DataCleanManager：本应用数据清除管理器](#DataCleanManager)    
-MuchThreadDown：多线程下载，支持断点续传  
-FileUtils：文件处理工具类  
-AntiShake、OnNoDoubleClickListener：防止点击事件重复调用  
-BgFrameLayout：自定义可设置背景的帧布局  
-GtSeekBar：自定义SeekBar  
-PaintView：自定义手写板控件  
-TryLightStatus：修改状态栏背景色  
-NestedRecyclerView、FlowLayout：流式布局，当一行显示不下自动跳转到第二行  
-HaveHeaderRecyclerView：仿美团联动ListView  
-floatingeditor：浮动编辑器，在键盘上面方显示  
-GsonUtils：解决int类型转换成double  
-LogsUtils：保存日志
+* [PermissionUtils：请求权限](#PermissionUtils)  
+* [DataCleanManager：本应用数据清除管理器](#DataCleanManager)  
+* [MuchThreadDown：多线程下载，支持断点续传](#MuchThreadDown)  
+* [FileUtils：文件处理工具类](#FileUtils)  
+* [AntiShake、OnNoDoubleClickListener：防止点击事件重复调用](#AntiShake、OnNoDoubleClickListener)  
+* [BgFLayout：自定义可设置背景的帧布局](#BgFLayout)  
+* [GtSeekBar：自定义SeekBar](#GtSeekBar)  
+* [PaintView：自定义手写板控件](#PaintView)  
+* [TryLightStatus：修改状态栏背景色](#PaintView)  
+* [NestedRecyclerView、FlowLayout：流式布局，当一行显示不下自动跳转到第二行](#NestedRecyclerView、FlowLayout)  
+* [HaveHeaderRecyclerView：仿美团联动ListView](#HaveHeaderRecyclerView)  
+* [floatingeditor：浮动编辑器，在键盘上面方显示](#floatingeditor)  
+* [GsonUtils：解决int类型转换成double](#GsonUtils)  
+* [LogsUtils：保存日志](#LogsUtils)  
 
 #### 依赖
 将其添加到根build.gradle文件（而不是模块build.gradle文件）中：
@@ -64,7 +64,7 @@ static String getTotalCacheSize(Context context) throws Exception;
 static void clearAllCache(Context context);
 ````
 
-#### MuchThreadDown 的使用
+## MuchThreadDown
 ###### 线程的数量根据文件的大小自动分配，每个线程下载的数据量最多3M;
 ````Java
   new MuchThreadDown("http://img1.kuaimashi.com/69_1526641455014.mp4", "D:/video/").download(new OnDownloadListener() {
@@ -91,7 +91,7 @@ static void clearAllCache(Context context);
   public MuchThreadDown isCover(boolean cover);
 ````
 
-#### AntiShake、OnNoDoubleClickListener
+## AntiShake、OnNoDoubleClickListener
 ````Java
   if(!AntiShake.check(view.getId())){
       //处理点击事件后的逻辑
@@ -106,7 +106,7 @@ static void clearAllCache(Context context);
   
 ````
 
-#### BgFrameLayout 的使用
+## BgFLayout
 ```Xml
   <com.gt.utils.widget.BgFrameLayout
       android:layout_width="200dp"
@@ -144,7 +144,7 @@ static void clearAllCache(Context context);
   </declare-styleable>
 ```
 
-#### GtSeekBar 的使用
+## GtSeekBar
 ```Xml
   <com.gt.utils.widget.GtSeekBar
       android:layout_width="30dp"
@@ -188,7 +188,7 @@ static void clearAllCache(Context context);
   </declare-styleable>
 ```
 
-#### PaintView 的使用
+## PaintView
 ```Xml
   <com.gt.utils.widget.PaintView
       android:layout_width="match_parent"
@@ -221,12 +221,12 @@ static void clearAllCache(Context context);
   </declare-styleable>
 ```
 
-#### TryLightStatus  
+## TryLightStatus  
 ```Java
   static void setStatusBarColor(Activity activity, @ColorInt int color)
 ```
 
-#### NestedRecyclerView、FlowLayout的使用
+## NestedRecyclerView、FlowLayout
 NestedRecyclerView是RecyclerView的子类，用法与RecyclerView一样，区别是：
 ```java
     recyclerView.setLayoutManager(new FlowLayoutManager());
@@ -278,7 +278,7 @@ FlowLayout是ViewGroup的子类
 
 #####  子布局比较复杂的可以使用NestedRecyclerView，便于扩展，简单的可以用FlowLayout，使用起来方便。
 
-#### HaveHeaderRecyclerView的使用  
+## HaveHeaderRecyclerView
 单独使用与RecyclerView一样  
 adapter继承CustomizeRVBaseAdapter  
 注意：adapter数据刷新要调用notifyChanged（），不要调用notifyDataSetChanged（）（坑：RecyclerView.Adapter的notifyDataSetChanged（）不允许继承）  
@@ -316,7 +316,7 @@ adapter继承CustomizeRVBaseAdapter
 ```
 当左边列表点击选中某一项时，调用setSelectionTitle(int position);  
 
-#### floatingeditor
+## floatingeditor
 ```Java
  /**
      *
