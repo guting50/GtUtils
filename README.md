@@ -7,7 +7,7 @@
 * [DataCleanManager：本应用数据清除管理器](#DataCleanManager)  
 * [MuchThreadDown：多线程下载，支持断点续传](#MuchThreadDown)  
 * [FileUtils：文件处理工具类](#FileUtils)  
-* [AntiShake、OnNoDoubleClickListener：防止点击事件重复调用](#AntiShake OnNoDoubleClickListener)  
+* [AntiShake、OnNoDoubleClickListener：防止点击事件重复调用](#AntiShake-OnNoDoubleClickListener)  
 * [BgFLayout：自定义可设置背景的帧布局](#BgFLayout)  
 * [GtSeekBar：自定义SeekBar](#GtSeekBar)  
 * [PaintView：自定义手写板控件](#PaintView)  
