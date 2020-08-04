@@ -58,6 +58,18 @@
         <attr name="maxHeight" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="MultiGridView">
+        <attr name="android:numColumns" />
+        <attr name="android:horizontalSpacing" />
+        <attr name="android:verticalSpacing" />
+        <attr name="maxItems" format="integer" />
+        <attr name="showEdit" format="boolean" />
+        <attr name="addImg" format="reference" />
+        <attr name="delImg" format="reference" />
+        <attr name="defImg" format="reference" />
+        <attr name="cornersRadius" format="dimension" />
+    </declare-styleable>
+
     <!--default-->
     <attr name="solid_color" format="color" /><!--填充色-->
     <attr name="solid_start_color" format="color" /><!--填充渐变开始颜色-->

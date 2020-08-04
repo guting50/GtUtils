@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.gt.utils.widget.BgLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="#00000000"
+    app:corners_radius_left_top="8dp"
+    app:corners_radius_right_top="8dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:solid_color="#ffffff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_cancle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:text="取消"
+                    android:textColor="#FF999999"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_sure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:text="确定"
+                    android:textColor="#FF108EE9"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#FFEEEEEE" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <com.contrarywind.view.WheelView
+                android:id="@+id/loop_year"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:wheelview_lineSpacingMultiplier="1.8" />
+
+            <com.contrarywind.view.WheelView
+                android:id="@+id/loop_month"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:wheelview_lineSpacingMultiplier="1.8" />
+
+            <com.contrarywind.view.WheelView
+                android:id="@+id/loop_day"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:wheelview_lineSpacingMultiplier="1.8" />
+
+            <com.contrarywind.view.WheelView
+                android:id="@+id/loop_hour"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:wheelview_lineSpacingMultiplier="1.8" />
+
+            <com.contrarywind.view.WheelView
+                android:id="@+id/loop_minute"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:wheelview_lineSpacingMultiplier="1.8" />
+        </LinearLayout>
+    </LinearLayout>
+
+</com.gt.utils.widget.BgLayout>

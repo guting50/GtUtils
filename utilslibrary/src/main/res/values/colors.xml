@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="text_process_image_view">#D81B60</color><!--带进度条图片上的文字颜色-->
+</resources>

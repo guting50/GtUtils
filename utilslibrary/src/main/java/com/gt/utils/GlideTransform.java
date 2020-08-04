@@ -11,7 +11,18 @@ import android.util.TypedValue;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
-
+/**
+ * Glide4.x 有自带的方法
+ * <p>
+ * Glide.with(context).load(url)
+ * .transform(new CircleCrop())
+ * .into(imageView);
+ * <p>
+ * Glide.with(context).load(url)
+ * .transform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(20)))
+ * .into(imageView);
+ */
+@Deprecated
 public class GlideTransform {
     /**
      * 下载的图片转圆角的方法
@@ -21,7 +32,7 @@ public class GlideTransform {
      * .into(imageView);
      * Created by Administrator on 2016/12/28.
      */
-    public static class GlideCornersTransform extends BitmapTransformation {
+    /*public static class GlideCornersTransform extends BitmapTransformation {
 
         private float radius;
 
@@ -62,14 +73,14 @@ public class GlideTransform {
         }
     }
 
-    /**
+    *//**
      * 下载的图片转圆形的方法
      * Glide.with(context)
      * .load("https://www.baidu.com/img/bdlogo.png")
      * .transform(new GlideCircleTransform(context))
      * .into(imageView);
      * Created by Administrator on 2016/12/28.
-     */
+     *//*
     public static class GlideCircleTransform extends BitmapTransformation {
 
         public GlideCircleTransform(Context context) {
@@ -110,5 +121,5 @@ public class GlideTransform {
             return getClass().getName();
         }
     }
-
+*/
 }
