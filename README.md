@@ -4,7 +4,7 @@
 
 ## 自定义工具库
 [PermissionUtils 的使用](link1)  
-[DataCleanManager：本应用数据清除管理器](link1)  
+[DataCleanManager：本应用数据清除管理器](link2)  
 MuchThreadDown：多线程下载，支持断点续传  
 FileUtils：文件处理工具类  
 AntiShake、OnNoDoubleClickListener：防止点击事件重复调用  
