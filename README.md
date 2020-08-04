@@ -22,6 +22,8 @@
 * [MultiGridView：九宫格图片显示控件，支持添加图片](#MultiGridView)  
 * [SimpleAdapter：RecyclerView通用适配器](#SimpleAdapter)  
 * [SpanUtil：一个TextView实现多种样式](#SpanUtil)  
+* [TabLayoutUtils：设置TabLayout标签下指示器的宽度](#TabLayoutUtils)  
+* [TextWatcherUtils：检查页面中的输入框是否都有值](#TextWatcherUtils)  
 
 
 #### 依赖
@@ -508,6 +510,25 @@ adapter继承CustomizeRVBaseAdapter
         <attr format="dimension" name="cornersRadius"/>
     </declare-styleable>
 ```
+```java
+    //设置初始数据
+    public void setFilenamesData(List<String> initData) ;
+
+    // 设置添加回调（点击添加的时候调用自己的媒体选择库，如果不设置会使用默认的媒体库 com.github.guting50:PhotoPicker）
+    public void setOnAddListenerr(OnRemoveListener onRemoveListener);
+
+    // 设置添加结束后回调
+    public void setOnAddedListener(OnRemoveListener onRemoveListener);
+    
+    // 获取图片结果
+    public List<String> getPaths();
+    
+    // 更新图片上传进度
+    public void updateProgress(final String localPath, final int progress);
+    
+    //更新完成后设置新的网络图片地址
+    public void updateSuccess(String localPath, String url);
+```
 
 ## SimpleAdapter
 ```java
@@ -520,6 +541,7 @@ adapter继承CustomizeRVBaseAdapter
     public SimpleAdapter(Object obj, List data, @NonNull Class<? extends VHolder> holder);
     
 ```
+需要实现抽象类VHolder
 
 ## SpanUtil
 ```java
@@ -532,5 +554,23 @@ adapter继承CustomizeRVBaseAdapter
         .showIn(textView);
 ```
 更多样式，请查看源码
+
+## TabLayoutUtils
+```java
+    public static void reflex(final TabLayout tabLayout, final int mW, final int mH, @ColorInt final int color);
+```
+
+## TextWatcherUtils
+```java
+    //当所有的TextView都有值的时候 bnView的enabled = true
+    public TextWatcherUtils(View bnView, TextView... textViews);
+
+    //设置检测回调，调用check后的回调方法
+    public void setOnCheckedListener(OnCheckedListener onCheckedListener);
+    public void check();
+    
+    public void addView(TextView... textViews);
+    public void removeView(TextView... textViews);
+```
 
 
