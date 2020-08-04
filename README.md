@@ -35,7 +35,7 @@ LogsUtils：保存日志
         implementation 'com.github.guting50:GtUtils:Tag'
     }
 ```
-## link1 PermissionUtils 的使用
+## link1 #### PermissionUtils 的使用
 ```Java
   PermissionUtils.requestPermission(this, PermissionUtils.CODE_CAMERA, new PermissionUtils.PermissionGrant() {
       @Override
