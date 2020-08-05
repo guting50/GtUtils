@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
@@ -123,6 +124,25 @@ public class FileUtils {
                 }
             }
         }).start();
+    }
+
+    /**
+     * @return
+     */
+    public static byte[] readerFilefromSD(String pathname) {
+        byte[] result = null;
+        try {
+//            File file = new File(Environment.getExternalStorageDirectory(), "test.txt");
+            File file = new File(pathname);
+            FileInputStream is = new FileInputStream(file);
+            byte[] b = new byte[is.available()];
+            is.read(b);
+            result = b;
+            System.out.println("读取成功：" + new String(result));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     /**
