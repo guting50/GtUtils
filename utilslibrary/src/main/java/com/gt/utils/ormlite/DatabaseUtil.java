@@ -33,7 +33,6 @@ public class DatabaseUtil {
                 db.execSQL(sql);
                 Log.i(TAG, sql);
             } catch (Exception e) {
-                e.printStackTrace();
             }
 
             //Create table
@@ -57,7 +56,6 @@ public class DatabaseUtil {
                 db.execSQL(sql);
                 Log.i(TAG, sql);
             } catch (Exception e) {
-                e.printStackTrace();
             }
 
             db.setTransactionSuccessful();

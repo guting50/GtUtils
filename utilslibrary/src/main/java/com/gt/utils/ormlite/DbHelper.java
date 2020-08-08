@@ -35,7 +35,6 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
 
     // 存储APP中所有的DAO对象的Map集合
     private Map<String, Dao> daos = new HashMap<>();
-    private static List<Class> tables = new ArrayList<>();
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -50,21 +49,11 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
         return helper;
     }
 
-    private static void addTable(Class table) {
-        if (!tables.contains(table)) {
-            tables.add(table);
-        }
-    }
-
     public static void updateDB(int databaseVersion) {
         updateDB(DATABASE_NAME, databaseVersion);
     }
 
     public static void updateDB(String databaseName, int databaseVersion) {
-        List<Class<?>> reader = ClassesReader.reader(AppUtils.getAppPath());
-        reader = ClassesReader.deleteNotAnnotationClass(reader, DatabaseTable.class);
-        for (Class<?> c : reader) addTable(c);
-
         DATABASE_NAME = databaseName;
         DATABASE_VERSION = databaseVersion;
     }
@@ -79,7 +68,7 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
         try {
             Log.i(TAG, "onCreate");
-            for (Class obj : tables) {
+            for (Class obj : getTables()) {
                 TableUtils.createTable(connectionSource, obj);
                 Log.i(TAG, TableUtils.getCreateTableStatements(connectionSource, obj).get(0).toString());
             }
@@ -102,7 +91,7 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
                           int oldVersion, int newVersion) {
         try {
             Log.i(TAG, "onUpgrade");
-            for (Class obj : tables) {
+            for (Class obj : getTables()) {
                 DatabaseUtil.upgradeTable(db, connectionSource, obj);
             }
             // after we drop the old databases, we create the new ones
@@ -111,6 +100,18 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
             Log.e(TAG, "Can't drop databases", e);
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Class> getTables() {
+        List<Class> tables = new ArrayList<>();
+        List<Class<?>> reader = ClassesReader.reader(AppUtils.getAppPath());
+        reader = ClassesReader.deleteNotAnnotationClass(reader, DatabaseTable.class);
+        for (Class<?> c : reader) {
+            if (!tables.contains(c)) {
+                tables.add(c);
+            }
+        }
+        return tables;
     }
 
     // 根据传入的DAO的路径获取到这个DAO的单例对象（要么从daos这个Map中获取，要么新创建一个并存入daos）
