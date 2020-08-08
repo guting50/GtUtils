@@ -61,10 +61,7 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
     }
 
     public static void updateDB(String databaseName, int databaseVersion) {
-        List<Class<?>> reader = ClassesReader.reader(AppUtils.getAppPackageName(), AppUtils.getAppPath());
-        reader = ClassesReader.deleteNotAnnotationClass(reader, DatabaseTable.class);
-        for (Class<?> c : reader) addTable(c);
-        reader = ClassesReader.reader("com.gt.utils", AppUtils.getAppPath());
+        List<Class<?>> reader = ClassesReader.reader(AppUtils.getAppPath());
         reader = ClassesReader.deleteNotAnnotationClass(reader, DatabaseTable.class);
         for (Class<?> c : reader) addTable(c);
 

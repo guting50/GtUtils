@@ -107,6 +107,35 @@ public class ClassesReader {
     }
 
     /**
+     * 读取类路径下的所有类
+     *
+     * @param packageCodePath 包路径
+     * @return List<Class>
+     */
+    public static List<Class<?>> reader(String packageCodePath) {
+        List<Class<?>> classes = new ArrayList<>();
+        Set<DexFile> dexFiles = applicationDexFile(packageCodePath);
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        for (DexFile dexFile : dexFiles) {
+            if (dexFile == null) continue;
+            Enumeration<String> entries = dexFile.entries();
+            while (entries.hasMoreElements()) {
+                try {
+                    String currentClassPath = entries.nextElement();
+                    if (currentClassPath == null || currentClassPath.isEmpty())
+                        continue;
+                    Class<?> entryClass = Class.forName(currentClassPath, true, classLoader);
+                    if (entryClass == null) continue;
+                    classes.add(entryClass);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return classes;
+    }
+
+    /**
      * 删除集合中没有指定注解的类
      *
      * @param classes
