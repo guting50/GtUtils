@@ -23,7 +23,13 @@
 * [SimpleAdapter：RecyclerView通用适配器](#SimpleAdapter)  
 * [SpanUtil：一个TextView实现多种样式](#SpanUtil)  
 * [TabLayoutUtils：设置TabLayout标签下指示器的宽度](#TabLayoutUtils)  
+* [ComputeUtils：计算工具类](#ComputeUtils)  
 * [TextWatcherUtils：检查页面中的输入框是否都有值](#TextWatcherUtils)  
+* [ClassesReader：类读取器，可以获取所有的类](#ClassesReader)   
+* [CacheUtils：缓存工具类](#CacheUtils)     
+* [DbHelper、DBClient：数据库工具类](#DbHelperdBClient)  
+
+
 
 
 #### 依赖
@@ -560,6 +566,9 @@ adapter继承CustomizeRVBaseAdapter
     public static void reflex(final TabLayout tabLayout, final int mW, final int mH, @ColorInt final int color);
 ```
 
+## ComputeUtils
+#### api详见源码
+
 ## TextWatcherUtils
 ```java
     //当所有的TextView都有值的时候 bnView的enabled = true
@@ -572,5 +581,65 @@ adapter继承CustomizeRVBaseAdapter
     public void addView(TextView... textViews);
     public void removeView(TextView... textViews);
 ```
+
+## ClassesReader  
+#### 类读取器，可以获取所有的类，用于实现获取某一个接口或者类的所有子类，或者获取指定注解的类
+```java
+**
+     * 获取应用程序下的所有Dex文件
+     *
+     * @param context 上下文
+     * @return Set<DexFile>
+     */
+    public static Set<DexFile> applicationDexFile(Context context);  
+    public static Set<DexFile> applicationDexFile(String packageCodePath);  
+    public static List<Class<?>> reader(Context context);
+    
+    /**
+     * 读取类路径下的所有类
+     *
+     * @param packageName     包名
+     * @param packageCodePath 包路径
+     * @return List<Class>
+     */
+    public static List<Class<?>> reader(String packageName, String packageCodePath);
+    
+    /**
+     * 删除集合中没有指定注解的类
+     *
+     * @param classes
+     * @param annotationType
+     */
+    public static List<Class<?>> deleteNotAnnotationClass(List<Class<?>> classes, Class<? extends Annotation> annotationType)
+
+```
+
+## CacheUtils
+#### 数据缓存到sqltile数据库中，直接缓存到内容中，容易在内存紧张的时候，自动删除数据，所以把数据放在数据库中
+```java
+public static int put(String key, Object obj);
+public static String getVal(String key);
+public static <T> T getObj(String key, Class<T> clazz);
+public static int delete(String key);
+public static int clear();
+//其他api详见源码
+```
+
+## DbHelper、DBClient
+#### 数据库工具类，对ormlite的封装，使用方法与ormlite一样，便捷之处在于数据库、表的创建，更新，和对数据简单的操作
+```java
+    /**
+    * DbHelper 对OrmLiteSqliteOpenHelper（SQLiteOpenHelper）的封装，
+    * 当我们创建好数据实体类后，只需要加上ormlite的注解后，调用此方法就会自动去创建数据库和表（创建类名上有DatabaseTable注解的类）
+    * 数据库的更新只支持表字段的新增和删除，不支持表字段名的更改，表结构更新后，数据不会丢失
+    */
+     public static void updateDB(String databaseName, int databaseVersion);
+     
+    /**
+    * DBClient 数据操作的工具类（增、删、查、改）api详见源码
+    */
+```
+
+
 
 
