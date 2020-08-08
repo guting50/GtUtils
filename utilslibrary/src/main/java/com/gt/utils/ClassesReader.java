@@ -99,7 +99,6 @@ public class ClassesReader {
                     if (entryClass == null) continue;
                     classes.add(entryClass);
                 } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         }
@@ -107,7 +106,7 @@ public class ClassesReader {
     }
 
     /**
-     * 读取类路径下的所有类
+     * 读取包路径下的所有类
      *
      * @param packageCodePath 包路径
      * @return List<Class>
@@ -128,7 +127,6 @@ public class ClassesReader {
                     if (entryClass == null) continue;
                     classes.add(entryClass);
                 } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         }

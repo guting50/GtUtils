@@ -26,12 +26,15 @@ public class DatabaseUtil {
 
         db.beginTransaction();
         try {
-
             //Rename table
             String tempTableName = tableName + "_temp";
             String sql = "ALTER TABLE " + tableName + " RENAME TO " + tempTableName;
-            db.execSQL(sql);
-            Log.i(TAG, sql);
+            try {
+                db.execSQL(sql);
+                Log.i(TAG, sql);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             //Create table
             try {
@@ -48,10 +51,14 @@ public class DatabaseUtil {
                 loadData(db, tableName, tempTableName, tempTableName);
             }
 
-            //Drop temp table
-            sql = "DROP TABLE IF EXISTS " + tempTableName;
-            db.execSQL(sql);
-            Log.i(TAG, sql);
+            try {
+                //Drop temp table
+                sql = "DROP TABLE IF EXISTS " + tempTableName;
+                db.execSQL(sql);
+                Log.i(TAG, sql);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             db.setTransactionSuccessful();
         } catch (Exception e) {
