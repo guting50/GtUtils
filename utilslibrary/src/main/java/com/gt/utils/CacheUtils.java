@@ -19,6 +19,7 @@ public class CacheUtils {
     }
 
     public static int put(Context context, CacheBean cacheBean) {
+        delete(context, cacheBean.key);
         return DBClient.insert(context, cacheBean);
     }
 
@@ -42,6 +43,10 @@ public class CacheUtils {
         return getObj(ActivityUtils.getTopActivity(), key);
     }
 
+    public static List<CacheBean> getObjs(String key) {
+        return DBClient.select(ActivityUtils.getTopActivity(), CacheBean.class, "key", key);
+    }
+
     public static List<CacheBean> getObjs(Context context, String key) {
         return DBClient.select(context, CacheBean.class, "key", key);
     }
@@ -52,5 +57,26 @@ public class CacheUtils {
             return list.get(0);
         }
         return null;
+    }
+
+    public static int delete(String key) {
+        return delete(ActivityUtils.getTopActivity(), key);
+    }
+
+    public static int delete(Context context, String key) {
+        int count = 0;
+        List<CacheBean> list = DBClient.select(context, CacheBean.class, "key", key);
+        for (CacheBean cacheBean : list) {
+            count += DBClient.delete(context, cacheBean);
+        }
+        return count;
+    }
+
+    public static int clear() {
+        return DBClient.clear(ActivityUtils.getTopActivity(), CacheBean.class);
+    }
+
+    public static int clear(Context context) {
+        return DBClient.clear(context, CacheBean.class);
     }
 }

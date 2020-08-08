@@ -25,7 +25,7 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
     /**
      * data base name
      */
-    private static final String DATABASE_NAME = "gt_data.db";
+    private static String DATABASE_NAME = "gt_data.db";
     /**
      * increase the database version
      */
@@ -57,6 +57,10 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
     }
 
     public static void updateDB(int databaseVersion) {
+        updateDB(DATABASE_NAME, databaseVersion);
+    }
+
+    public static void updateDB(String databaseName, int databaseVersion) {
         List<Class<?>> reader = ClassesReader.reader(AppUtils.getAppPackageName(), AppUtils.getAppPath());
         reader = ClassesReader.deleteNotAnnotationClass(reader, DatabaseTable.class);
         for (Class<?> c : reader) addTable(c);
@@ -64,6 +68,7 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
         reader = ClassesReader.deleteNotAnnotationClass(reader, DatabaseTable.class);
         for (Class<?> c : reader) addTable(c);
 
+        DATABASE_NAME = databaseName;
         DATABASE_VERSION = databaseVersion;
     }
 
