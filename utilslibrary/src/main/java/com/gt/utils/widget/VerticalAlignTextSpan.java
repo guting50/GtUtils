@@ -10,12 +10,13 @@ import androidx.annotation.Nullable;
 
 public class VerticalAlignTextSpan extends ReplacementSpan {
     private int fontSizeSp = -1;//单位:sp
+    private int fontColor = -1;
 
     public VerticalAlignTextSpan() {
     }
 
-    public VerticalAlignTextSpan(int fontSizeSp) {
-        this.fontSizeSp = fontSizeSp;
+    public VerticalAlignTextSpan(int fontSizeSp, int fontColor) {
+        this.fontColor = fontColor;
     }
 
     @Override
@@ -37,6 +38,9 @@ public class VerticalAlignTextSpan extends ReplacementSpan {
         TextPaint textPaint = new TextPaint(srcPaint);
         if (fontSizeSp != -1) {//-1没有重设fontSize
             textPaint.setTextSize(fontSizeSp * textPaint.density);//sp转px
+        }
+        if (fontColor != -1) {
+            textPaint.setColor(fontColor);
         }
         return textPaint;
     }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.MaskFilter;
 import android.graphics.drawable.Drawable;
 import android.text.Layout;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -653,11 +652,16 @@ public final class SpanUtil {
             return this;
         }
 
+
         public SpanBuilder setCenter(String section) {
+            return setCenter(section, -1, -1);
+        }
+
+        public SpanBuilder setCenter(String section, int fontSizeSp, int fontColor) {
             return onDecor(section, false, Which.LAST, new DecorCallback() {
                 @Override
                 public void decor(int start, int end) {
-                    spanStrBuilder.setSpan(new VerticalAlignTextSpan(), start, end, SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
+                    spanStrBuilder.setSpan(new VerticalAlignTextSpan(fontSizeSp, fontColor), start, end, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
                 }
             });
         }
