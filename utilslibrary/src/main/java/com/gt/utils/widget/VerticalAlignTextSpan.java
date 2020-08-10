@@ -16,6 +16,7 @@ public class VerticalAlignTextSpan extends ReplacementSpan {
     }
 
     public VerticalAlignTextSpan(int fontSizeSp, int fontColor) {
+        this.fontSizeSp = fontSizeSp;
         this.fontColor = fontColor;
     }
 
