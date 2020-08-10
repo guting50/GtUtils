@@ -2,7 +2,9 @@ package com.gt.utils.widget;
 
 import android.content.Context;
 import android.graphics.MaskFilter;
+import android.graphics.drawable.Drawable;
 import android.text.Layout;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -12,7 +14,6 @@ import android.text.style.AlignmentSpan;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.ImageSpan;
 import android.text.style.MaskFilterSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StrikethroughSpan;
@@ -22,6 +23,7 @@ import android.text.style.SuperscriptSpan;
 import android.text.style.TypefaceSpan;
 import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
@@ -651,6 +653,15 @@ public final class SpanUtil {
             return this;
         }
 
+        public SpanBuilder setCenter(String section) {
+            return onDecor(section, false, Which.LAST, new DecorCallback() {
+                @Override
+                public void decor(int start, int end) {
+                    spanStrBuilder.setSpan(new VerticalAlignTextSpan(), start, end, SpannableString.SPAN_INCLUSIVE_EXCLUSIVE);
+                }
+            });
+        }
+
         /**
          * 设置对齐方式
          *
@@ -672,7 +683,12 @@ public final class SpanUtil {
          * @return
          */
         public SpanBuilder addImage(Context context, int resId) {
-            insertImage(context, resId, spanStrBuilder.length());
+            addImage(context, resId, -1, -1);
+            return this;
+        }
+
+        public SpanBuilder addImage(Context context, int resId, int width, int height) {
+            insertImage(context, resId, width, height, spanStrBuilder.length());
             return this;
         }
 
@@ -683,9 +699,16 @@ public final class SpanUtil {
          * @param where 插入位置：占一个字的位置，整体索引增加一个
          * @return
          */
-        public SpanBuilder insertImage(Context context, int resId, int where) {
+        public SpanBuilder insertImage(Context context, int resId, int width, int height, int where) {
             spanStrBuilder.insert(where, " ");
-            spanStrBuilder.setSpan(new ImageSpan(context, resId), where, where + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            Drawable drawable = context.getResources().getDrawable(resId);
+            if (width == -1 || height == -1)
+                drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            else
+                drawable.setBounds(0, 0,
+                        (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, context.getResources().getDisplayMetrics()),
+                        (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, context.getResources().getDisplayMetrics()));
+            spanStrBuilder.setSpan(new CenterSpaceImageSpan(drawable), where, where + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             return this;
         }
 

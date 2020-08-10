@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,50 +14,61 @@
         tools:context=".MainActivity">
 
         <Button
+            android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="bnOnRpClick"
-            android:text="requestPermission" />
+            android:text="requestPermission"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
+            android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:onClick="bnOnHttpRClick"
-            android:text="httpRequest" />
+            android:text="httpRequest"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button2" />
 
         <TextView
             android:id="@+id/tv_3"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="100dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="toBgLayout_test"
-            android:textColor="#ffffffff"
-            android:textSize="16sp" />
-
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="160dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="toBgLayout_test"
+            android:textColor="#ffffffff"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:onClick="bnOnSeClick"
-            android:text="shosEdit" />
+            android:text="shosEdit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_3" />
 
         <com.gt.utils.widget.FlowLayout
             android:id="@+id/fl_flow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="300dp"
+            android:layout_height="0dp"
             android:background="#FFFFFF"
             app:flChildSpacing="auto"
             app:flChildSpacingForLastRow="align"
-            app:flRowSpacing="10dp" />
+            app:flRowSpacing="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button3" />
 
         <com.gt.utils.widget.GtSeekBar
             android:layout_width="50dp"
             android:layout_height="200dp"
-            android:layout_marginLeft="300dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:progress_size="1dp"
             app:seek_orientation="vertical" />
 
@@ -64,11 +76,13 @@
             android:id="@+id/circle_button"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="500dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:maxTime="3"
             app:minTime="2" />
 
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>
