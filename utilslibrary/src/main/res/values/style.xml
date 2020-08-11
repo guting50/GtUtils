@@ -62,4 +62,9 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="ImageTranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+    </style>
+
 </resources>

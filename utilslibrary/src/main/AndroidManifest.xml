@@ -22,7 +22,7 @@
             android:name=".widget.ImagePagerActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/InvisibleTheme" />
+            android:theme="@style/ImageTranslucentTheme" />
 
         <provider
             android:name=".MyGtUtilsFileProvider"
