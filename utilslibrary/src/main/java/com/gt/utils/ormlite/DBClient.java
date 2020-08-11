@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +47,7 @@ public class DBClient {
         DbHelper helper = DbHelper.getHelper(context);
         try {
             return helper.getDao(obj.getClass()).create(obj);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -65,7 +64,7 @@ public class DBClient {
         DbHelper helper = DbHelper.getHelper(context);
         try {
             return helper.getDao(obj.getClass()).delete(obj);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -82,7 +81,7 @@ public class DBClient {
         DbHelper helper = DbHelper.getHelper(context);
         try {
             return helper.getDao(obj.getClass()).update(obj);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -98,7 +97,7 @@ public class DBClient {
         DbHelper helper = DbHelper.getHelper(context);
         try {
             return helper.getDao(clazz).deleteBuilder().delete();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -151,7 +150,7 @@ public class DBClient {
             }
             System.out.println(queryBuilder.prepareStatementString());
             return queryBuilder.query();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -183,7 +182,7 @@ public class DBClient {
             }
             System.out.println(queryBuilder.prepareStatementString());
             return queryBuilder.query();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
