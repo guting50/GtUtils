@@ -1,6 +1,7 @@
 package com.gt.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -127,6 +128,8 @@ public class ClassesReader {
                     if (entryClass == null) continue;
                     classes.add(entryClass);
                 } catch (Exception e) {
+                } catch (Error e) {
+
                 }
             }
         }

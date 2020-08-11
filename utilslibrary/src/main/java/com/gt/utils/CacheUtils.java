@@ -71,9 +71,10 @@ public class CacheUtils {
     public static int delete(Context context, String key) {
         int count = 0;
         List<CacheBean> list = DBClient.select(context, CacheBean.class, "key", key);
-        for (CacheBean cacheBean : list) {
-            count += DBClient.delete(context, cacheBean);
-        }
+        if (list != null)
+            for (CacheBean cacheBean : list) {
+                count += DBClient.delete(context, cacheBean);
+            }
         return count;
     }
 

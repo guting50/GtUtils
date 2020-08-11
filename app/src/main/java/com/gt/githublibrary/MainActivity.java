@@ -3,6 +3,7 @@ package com.gt.githublibrary;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gt.utils.CacheUtils;
 import com.gt.utils.PermissionUtils;
 import com.gt.utils.floatingeditor.DefaultEditorHolder;
 import com.gt.utils.floatingeditor.EditorCallback;
 import com.gt.utils.floatingeditor.FloatEditorActivity;
 import com.gt.utils.floatingeditor.InputCheckRule;
 import com.gt.utils.http.RetrofitHelper;
+import com.gt.utils.ormlite.DbHelper;
 import com.gt.utils.widget.CircleButtonView;
 import com.gt.utils.widget.FlowLayout;
 import com.gt.utils.widget.OnNoDoubleClickListener;
@@ -44,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
             tv.setText("测试" + i);
             fl_flow.addView(tv);
         }
+        DbHelper.updateDB(27);
+        CacheUtils.put("aaa", "bbb");
+        Log.e("aaa", CacheUtils.getVal("aaa"));
         circleButton = findViewById(R.id.circle_button);
         circleButton.setOnClickListener(new CircleButtonView.OnClickListener() {
             @Override

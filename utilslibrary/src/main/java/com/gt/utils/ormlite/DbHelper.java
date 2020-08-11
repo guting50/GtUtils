@@ -38,11 +38,7 @@ public class DbHelper extends OrmLiteSqliteOpenHelper {
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        try {
-            Log.e(TAG + "--oldVersion-->", getReadableDatabase().getVersion() + "");
-        } catch (Exception e) {
-
-        }
+        Log.e(TAG + "--oldVersion-->", getReadableDatabase().getVersion() + "");
         Log.e(TAG + "--newVersion-->", DATABASE_VERSION + "");
     }
 
