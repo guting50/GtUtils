@@ -1,6 +1,7 @@
 package com.gt.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.GsonUtils;
@@ -28,7 +29,11 @@ public class CacheUtils {
     }
 
     public static <T> T getObj(Context context, String key, Class<T> clazz) {
-        return GsonUtils.getGson().fromJson(getVal(context, key), clazz);
+        String val = getVal(context, key);
+        if (TextUtils.isEmpty(val)) {
+            return null;
+        }
+        return GsonUtils.getGson().fromJson(val, clazz);
     }
 
     public static String getVal(String key) {
@@ -56,7 +61,7 @@ public class CacheUtils {
         if (list != null && list.size() > 0) {
             return list.get(0);
         }
-        return null;
+        return new CacheBean();
     }
 
     public static int delete(String key) {
