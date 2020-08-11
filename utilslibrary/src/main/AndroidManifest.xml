@@ -18,6 +18,12 @@
             android:theme="@style/NoTitleDialogTheme"
             android:windowSoftInputMode="stateAlwaysVisible" />
 
+        <activity
+            android:name=".widget.ImagePagerActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/InvisibleTheme" />
+
         <provider
             android:name=".MyGtUtilsFileProvider"
             android:authorities="${applicationId}.gt_utils.fileprovider"
