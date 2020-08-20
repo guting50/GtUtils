@@ -23,7 +23,8 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ImageUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.DrawableImageViewTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.gt.utils.R;
 import com.gt.utils.widget.multigridview.MultiGridView;
 
@@ -36,6 +37,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -356,15 +359,23 @@ public class ImagePagerActivity extends AppCompatActivity {
                     .thumbnail(0.1f)//先显示缩略图  缩略图为原图的1/10
                     //.placeholder(R.drawable.ic_img_waiting)//部分机型第一次显示图片变形的问题*/
                     .error(R.drawable.ic_user_defultimg)
-                    .into(new DrawableImageViewTarget(imageView) {
+                    .into(new SimpleTarget<Drawable>() {
                         @Override
-                        public void onLoadStarted(Drawable placeholder) {
-                            super.onLoadStarted(placeholder);
-                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                            imageView.setImageDrawable(resource);
                             if (loading != null)
                                 loading.setVisibility(View.GONE);
                         }
                     });
+//                    .into(new DrawableImageViewTarget(imageView) {
+//                        @Override
+//                        public void onLoadStarted(Drawable placeholder) {
+//                            super.onLoadStarted(placeholder);
+//                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//                            if (loading != null)
+//                                loading.setVisibility(View.GONE);
+//                        }
+//                    });
         }
 
         @Override

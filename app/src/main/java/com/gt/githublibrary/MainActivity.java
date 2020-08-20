@@ -22,8 +22,11 @@ import com.gt.utils.ormlite.DbHelper;
 import com.gt.utils.widget.CircleButtonView;
 import com.gt.utils.widget.FlowLayout;
 import com.gt.utils.widget.OnNoDoubleClickListener;
+import com.gt.utils.widget.multigridview.MultiGridView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.Nullable;
@@ -37,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_layout);
+
+        MultiGridView multiGridView = findViewById(R.id.multiGridView);
+        List<String> datas = new ArrayList<>();
+        datas.add("https://vrimg.kuaimashi.com/qiniu_1597807617179.png");
+        multiGridView.setFilenamesData(datas);
         fl_flow = findViewById(R.id.fl_flow);
         for (int i = 0; i < 50; i++) {
             TextView tv = new TextView(this);

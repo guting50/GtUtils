@@ -53,17 +53,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_3" />
 
-        <com.gt.utils.widget.FlowLayout
-            android:id="@+id/fl_flow"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="#FFFFFF"
-            app:flChildSpacing="auto"
-            app:flChildSpacingForLastRow="align"
-            app:flRowSpacing="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button3" />
-
         <com.gt.utils.widget.GtSeekBar
             android:layout_width="50dp"
             android:layout_height="200dp"
@@ -76,12 +65,27 @@
             android:id="@+id/circle_button"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button3"
             app:maxTime="3"
             app:minTime="2" />
+
+        <com.gt.utils.widget.multigridview.MultiGridView
+            android:id="@+id/multiGridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/circle_button" />
+
+        <com.gt.utils.widget.FlowLayout
+            android:id="@+id/fl_flow"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#FFFFFF"
+            app:flChildSpacing="auto"
+            app:flChildSpacingForLastRow="align"
+            app:flRowSpacing="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/multiGridView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
