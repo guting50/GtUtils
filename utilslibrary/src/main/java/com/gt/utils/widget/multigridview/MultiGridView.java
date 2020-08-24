@@ -38,11 +38,11 @@ public class MultiGridView extends GridView {
 
     private Context context;
     private DisplayImgAdapter displayImgAdapter;
-    private int maxItems, numColumns;
-    private float horizontalSpacing, verticalSpacing, cornersRadius;
-    private int addImg, delImg, defImg;
-    private static float horizontalSpacing_s = -1, verticalSpacing_s = -1, cornersRadius_s = -1;
-    private static int maxItems_s = 9, numColumns_s = 3,
+    public int maxItems, numColumns;
+    public float horizontalSpacing, verticalSpacing, cornersRadius;
+    public int addImg, delImg, defImg;
+    public static float horizontalSpacing_s = -1, verticalSpacing_s = -1, cornersRadius_s = -1;
+    public static int maxItems_s = 9, numColumns_s = 3,
             addImg_s = R.drawable.ic_addpic, delImg_s = R.drawable.ic_video_cancel, defImg_s = R.drawable.ic_user_defultimg;
     private boolean showEdit;
     public final static String normalPath = "/sdcard/addImage.jpg";//一个添加图片的标识，作为判断，没有实际意义
