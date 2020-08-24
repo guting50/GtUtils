@@ -575,7 +575,9 @@ adapter继承CustomizeRVBaseAdapter
     public TextWatcherUtils(View bnView, TextView... textViews);
 
     //设置检测回调，调用check后的回调方法
-    public void setOnCheckedListener(OnCheckedListener onCheckedListener);
+    public void addOnCheckedListener(OnCheckedListener onCheckedListener);
+    public void removeOnCheckedListener(OnCheckedListener onCheckedListener);
+    public void removeOnCheckedListener();
     public void check();
     
     public void addView(TextView... textViews);
