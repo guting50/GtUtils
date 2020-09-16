@@ -1,10 +1,13 @@
 package com.gt.utils;
 
+
 /**
  * Created by Administrator on 2018/4/2 0002.
  */
 
 import android.util.Log;
+
+import com.gt.utils.FileUtils;
 
 import java.io.File;
 import java.io.InputStream;
@@ -117,6 +120,7 @@ public class MuchThreadDown {
                     connection.setRequestMethod("GET");
                     connection.setConnectTimeout(100000);
                     connection.setReadTimeout(100000);
+                    connection.setRequestProperty("Accept-Encoding", "identity");
 
                     int code = connection.getResponseCode();
                     if (code == 200) {
@@ -211,12 +215,13 @@ public class MuchThreadDown {
         public void run() {
             try {
                 //分段请求网络连接,分段将文件保存到本地.
-                URL url = new URL(MuchThreadDown.this.fileUrl);
+                URL url = new URL(fileUrl);
                 Log("======" + getFileName(url) + "======" + "线程" + threadId + "开始下载");
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setConnectTimeout(100000);
+                connection.setRequestProperty("Accept-Encoding", "identity");
 
                 //设置分段下载的头信息。  Range:做分段数据请求用的。格式: Range bytes=0-1024  或者 bytes:0-1024
                 connection.setRequestProperty("Range", "bytes=" + (startIndex + completed) + "-" + endIndex);
@@ -271,6 +276,9 @@ public class MuchThreadDown {
                 } else {
                     completeNum++;
                     Log("======" + getFileName(url) + "======" + "线程" + threadId + "响应码是" + connection.getResponseCode() + ". 服务器不支持多线程下载");
+                    if (downloadListener != null) {
+                        downloadListener.onDownloadError("线程" + threadId + "==" + fileUrl, new Exception("响应码是" + connection.getResponseCode() + ". 服务器不支持多线程下载"));
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -357,7 +365,8 @@ public class MuchThreadDown {
 
     public static void main(String[] args) {
         try {
-            new MuchThreadDown("https://dldir1.qq.com/weixin/android/weixin7010android1580.apk", "D:/video/").isCover(true).isShowLog(true).download(new OnDownloadListener() {
+            new MuchThreadDown("https://vrimg.kuaimashi.com/_0c1cbe3b-84ca-4c23-abeb-f81e9c7f5aa6_.txt", "D:/video/")
+                    .isAlone(true).isCover(true).isShowLog(true).download(new OnDownloadListener() {
                 @Override
                 protected void onDownloadComplete(String name, String url, String filePath) {
                     System.out.println("下载成功==" + "url:" + url);
@@ -402,3 +411,4 @@ public class MuchThreadDown {
         }
     }
 }
+
