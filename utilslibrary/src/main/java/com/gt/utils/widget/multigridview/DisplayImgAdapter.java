@@ -163,6 +163,7 @@ public class DisplayImgAdapter extends BaseAdapter {
     private static RequestBuilder<Drawable> loadTransform(Context context, @DrawableRes int placeholderId, float radius) {
         return Glide.with(context)
                 .load(placeholderId)
+                .thumbnail(0.2f)
                 .apply(new RequestOptions().centerCrop()
                         .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners((int) radius))));
     }
