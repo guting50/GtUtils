@@ -3,6 +3,7 @@ package com.gt.githublibrary;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -20,11 +21,14 @@ import com.gt.utils.floatingeditor.InputCheckRule;
 import com.gt.utils.http.RetrofitHelper;
 import com.gt.utils.ormlite.DbHelper;
 import com.gt.utils.widget.CircleButtonView;
+import com.gt.utils.widget.DateSelectDialog;
 import com.gt.utils.widget.FlowLayout;
 import com.gt.utils.widget.OnNoDoubleClickListener;
 import com.gt.utils.widget.multigridview.MultiGridView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,6 +91,21 @@ public class MainActivity extends AppCompatActivity {
             public void onNoDoubleClick(View v) {
                 startActivity(new Intent(MainActivity.this, TestBgLayoutActivity.class));
             }
+        });
+
+        findViewById(R.id.textView).setOnClickListener(v -> {
+            String pattern = "yyyy-MM-dd HH:mm";
+            TextView tv = findViewById(R.id.textView);
+            Date date = new Date();
+            try {
+                if (!TextUtils.isEmpty(tv.getText().toString()))
+                    date = new SimpleDateFormat(pattern).parse(tv.getText().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            new DateSelectDialog(this).setOnSelectedListener(data -> {
+                tv.setText(data);
+            }).setDefauleDate(date).setDatePattern(pattern).show();
         });
     }
 
