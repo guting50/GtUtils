@@ -23,6 +23,7 @@ import com.gt.utils.ormlite.DbHelper;
 import com.gt.utils.widget.CircleButtonView;
 import com.gt.utils.widget.DateSelectDialog;
 import com.gt.utils.widget.FlowLayout;
+import com.gt.utils.widget.ImagePagerActivity;
 import com.gt.utils.widget.OnNoDoubleClickListener;
 import com.gt.utils.widget.multigridview.MultiGridView;
 
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             tv.setText("测试" + i);
             fl_flow.addView(tv);
         }
+        ImagePagerActivity.watermark = "?watermark/1/image/aHR0cHM6Ly92cmltZy5rdWFpbWFzaGkuY29tL3Fpbml1XzE2MDA1MDg3Njc3NjkucG5n/dissolve/100/gravity/Center/ws/0/wst/0";
         DbHelper.updateDB(27);
         CacheUtils.put("aaa", "bbb");
         Log.e("aaa", CacheUtils.getVal("aaa"));

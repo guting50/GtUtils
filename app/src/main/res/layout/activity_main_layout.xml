@@ -83,7 +83,9 @@
             android:id="@+id/multiGridView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/circle_button" />
+            app:layout_constraintTop_toBottomOf="@+id/circle_button"
+            app:showBn="save"
+            app:showEdit="true" />
 
         <com.gt.utils.widget.FlowLayout
             android:id="@+id/fl_flow"

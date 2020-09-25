@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -21,10 +23,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ImageUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.gt.utils.MuchThreadDown;
 import com.gt.utils.R;
 import com.gt.utils.widget.multigridview.MultiGridView;
 
@@ -71,6 +75,7 @@ public class ImagePagerActivity extends AppCompatActivity {
     private int showBn; // 1显示删除，2显示保存
     private ViewPager mViewPager;
     private ImageAdapter mAdapter;
+    public static String watermark = "";//水印
 
     public static void startImagePagerActivity(Activity context, List<String> imgUrls, int position) {
         startImagePagerActivity(context, imgUrls, position, null, 0);
@@ -136,10 +141,9 @@ public class ImagePagerActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 //滑动后初始化 "前一张" 图片
                 ImageAdapter adapter = (ImageAdapter) mViewPager.getAdapter();
-                String imgurl = adapter.getDatas().get(currentPosition);
                 ImageView imageView = adapter.getImageViews().get(currentPosition);
                 if (imageView != null)
-                    adapter.loadImg(imgurl, imageView, null);
+                    adapter.loadImg(adapter.getDatas().get(currentPosition), imageView, null);
 
                 currentPosition = position;
                 tvCountShow.setText((position + 1) + "/" + imgUrls.size());
@@ -155,44 +159,57 @@ public class ImagePagerActivity extends AppCompatActivity {
 
 //        addGuideView(guideGroup, startPos, imgUrls);
 
-        mBn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (showBn) {
-                    case SHOWREMOVEBN:
-                        if ("back".equals(view.getTag())) {
-                            onBackPressed();
-                            return;
-                        }
+        mBn.setOnClickListener(view -> {
+            switch (showBn) {
+                case SHOWREMOVEBN:
+                    if ("back".equals(view.getTag())) {
+                        onBackPressed();
+                        return;
+                    }
 //                        guideGroup.removeAllViews();
-                        if (mAdapter.getCount() > 0) {
-                            imgUrls.remove(currentPosition);
-                            if (currentPosition > 0)
-                                currentPosition--;
-                            if (mAdapter.getCount() == 1) { // 防止只有一张图片的时候还能滑动
-                                mViewPager.setAdapter(mAdapter);
-                                tvCountShow.setText("1/" + imgUrls.size());
-                            } else if (mAdapter.getCount() == 0) {
-                                mViewPager.setAdapter(null);
-                                guideGroup.removeAllViews();
-                                mHint.setVisibility(View.VISIBLE);
-                                mBn.setText("返回");
-                                mBn.setTag("back");
-                            } else {
-                                mAdapter.setDatas(imgUrls).notifyDataSetChanged();
-                                mViewPager.setCurrentItem(currentPosition);
-                                tvCountShow.setText((currentPosition + 1) + "/" + imgUrls.size());
+                    if (mAdapter.getCount() > 0) {
+                        imgUrls.remove(currentPosition);
+                        if (currentPosition > 0)
+                            currentPosition--;
+                        if (mAdapter.getCount() == 1) { // 防止只有一张图片的时候还能滑动
+                            mViewPager.setAdapter(mAdapter);
+                            tvCountShow.setText("1/" + imgUrls.size());
+                        } else if (mAdapter.getCount() == 0) {
+                            mViewPager.setAdapter(null);
+                            guideGroup.removeAllViews();
+                            mHint.setVisibility(View.VISIBLE);
+                            mBn.setText("返回");
+                            mBn.setTag("back");
+                        } else {
+                            mAdapter.setDatas(imgUrls).notifyDataSetChanged();
+                            mViewPager.setCurrentItem(currentPosition);
+                            tvCountShow.setText((currentPosition + 1) + "/" + imgUrls.size());
 //                                addGuideView(guideGroup, currentPosition, imgUrls);
-                            }
                         }
-                        break;
-                    case SHOWSAVEBN:
-                        String KMS_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath() + File.separator + "kms";
-                        String PHOTO_DIR = KMS_DIR + File.separator + "images";
-                        String name = PHOTO_DIR + File.separator + "exhibition_" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date()) + ".jpg";
-                        ImageUtils.save(ImageUtils.getBitmap(imgUrls.get(currentPosition)), name, Bitmap.CompressFormat.JPEG);
-                        break;
-                }
+                    }
+                    break;
+                case SHOWSAVEBN:
+                    String GT_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath() + File.separator + "gt";
+                    String name = GT_DIR + File.separator + "gt_" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date()) + ".jpg";
+                    boolean result = ImageUtils.save(ImageUtils.getBitmap(addWatermark(imgUrls.get(currentPosition))), name, Bitmap.CompressFormat.JPEG);
+                    if (result) {
+                        ToastUtils.showLong("保存成功");
+                        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(name))));
+                    } else {
+                        new MuchThreadDown(addWatermark(imgUrls.get(currentPosition)), GT_DIR)
+                                .isAlone(true).isCover(true).isShowLog(true).download(new MuchThreadDown.OnDownloadListener() {
+                            @Override
+                            protected void onDownloadComplete(String name, String url, String filePath) {
+                                ToastUtils.showLong("保存成功");
+                                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(name))));
+                            }
+
+                            protected void onDownloads(String url, int completed, int endIndex) {
+                                Log.e("--h onDownloads", url + ":（" + completed + "||" + endIndex + "）");
+                            }
+                        });
+                    }
+                    break;
             }
         });
     }
@@ -328,8 +345,7 @@ public class ImagePagerActivity extends AppCompatActivity {
                 loading.setLayoutParams(loadingLayoutParams);
                 ((FrameLayout) view).addView(loading);
 
-                String imgurl = datas.get(position);
-                loadImg(imgurl, imageView, loading);
+                loadImg(datas.get(position), imageView, loading);
                 // 单击退出图片浏览
                /* ((PhotoView) imageView).setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
                     public void onPhotoTap(View view, float x, float y) {
@@ -354,7 +370,7 @@ public class ImagePagerActivity extends AppCompatActivity {
         public void loadImg(String imgurl, final ImageView imageView, final ProgressBar loading) {
             //ImagesUtil.displayImage(imgurl, imageView, R.drawable.ic_img_waiting, R.drawable.ic_user_defultimg);
             Glide.with(context)
-                    .load(imgurl)
+                    .load(addWatermark(imgurl))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)//缓存多个尺寸
                     .thumbnail(0.1f)//先显示缩略图  缩略图为原图的1/10
                     //.placeholder(R.drawable.ic_img_waiting)//部分机型第一次显示图片变形的问题*/
@@ -419,6 +435,10 @@ public class ImagePagerActivity extends AppCompatActivity {
     protected void onDestroy() {
         guideViewList.clear();
         super.onDestroy();
+    }
+
+    private String addWatermark(String url) {
+        return url.contains("http://") || url.contains("https://") ? url + watermark : url;
     }
 
     public static class ImageSize implements Serializable {
