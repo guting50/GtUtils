@@ -513,6 +513,10 @@ adapter继承CustomizeRVBaseAdapter
         <attr format="reference" name="addImg"/>
         <attr format="reference" name="delImg"/>
         <attr format="reference" name="defImg"/>
+        <attr name="showBn" format="enum">
+            <enum name="remove" value="1" />
+            <enum name="save" value="2" />
+        </attr>
         <attr format="dimension" name="cornersRadius"/>
     </declare-styleable>
 ```
