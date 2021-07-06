@@ -123,7 +123,7 @@ static void clearAllCache(Context context);
 ## BgFLayout、BgTextView  
 #### 同类型的有 BgFLayout（帧布局）、BgLLayout（线性布局）、BgCLayout（约束布局）
 ```Xml
-  <com.gt.utils.widget.BgFrameLayout
+  <com.gt.utils.widget.BgFLayout
       android:layout_width="200dp"
       android:layout_height="100dp"
       app:corners_radius="10dp"
