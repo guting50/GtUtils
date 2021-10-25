@@ -67,6 +67,10 @@
         <attr name="addImg" format="reference" />
         <attr name="delImg" format="reference" />
         <attr name="defImg" format="reference" />
+        <attr name="showBn" format="enum">
+            <enum name="remove" value="1" />
+            <enum name="save" value="2" />
+        </attr>
         <attr name="cornersRadius" format="dimension" />
     </declare-styleable>
 

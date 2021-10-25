@@ -11,10 +11,10 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.contrarywind.adapter.WheelAdapter;
-import com.contrarywind.listener.OnItemSelectedListener;
 import com.contrarywind.view.WheelView;
 import com.gt.utils.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,21 +27,22 @@ import androidx.annotation.NonNull;
 
 public class DateSelectDialog extends Dialog {
     /*初始显示的年份*/
+    private int defaultYear;
+    private int defaultMonth;
+    private int defaultDay;
+    private int defaultHour;
+    private int defaultMinute;
+
     private int currentYear;
     private int currentMonth;
     private int currentDay;
     private int currentHour;
     private int currentMinute;
 
-    private int defaultYear;
-    private int defaultMonth;
-    private int defaultDay;
-    private int defaultHour;
-    private int defaultMinute;
     /*结束的年份*/
     private int endYear;
 
-    TextView tv_cancle;
+    TextView tv_cancel;
     TextView tv_sure;
     WheelView loop_year;
     WheelView loop_month;
@@ -49,16 +50,17 @@ public class DateSelectDialog extends Dialog {
     WheelView loop_hour;
     WheelView loop_minute;
 
-    private ArrayList<String> yearList;
-    private ArrayList<String> monthList;
-    private ArrayList<String> dayList;
-    private ArrayList<String> hourList;
-    private ArrayList<String> minuteList;
+    private ArrayWheelAdapter yearAdapter;
+    private ArrayWheelAdapter monthAdapter;
+    private ArrayWheelAdapter dayAdapter;
+    private ArrayWheelAdapter hourAdapter;
+    private ArrayWheelAdapter minuteAdapter;
 
     private OnSelectedListener onSelectedListener;
 
     private String datePattern = "yyyy-MM-dd HH:mm";
-    private Date defauleDate;
+    private Date defaultDate;
+    private boolean showGoOver = false;
 
     public DateSelectDialog(@NonNull Context context) {
         super(context, R.style.DateSelectDialog);
@@ -68,7 +70,7 @@ public class DateSelectDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.activity_date_select, null);
         setContentView(view);
-        tv_cancle = findViewById(R.id.tv_cancle);
+        tv_cancel = findViewById(R.id.tv_cancel);
         tv_sure = findViewById(R.id.tv_sure);
         loop_year = findViewById(R.id.loop_year);
         loop_month = findViewById(R.id.loop_month);
@@ -86,6 +88,31 @@ public class DateSelectDialog extends Dialog {
         initTimeData();
         initYmdPop();
         setView();
+    }
+
+    public void show() {
+        super.show();
+
+        if (defaultDate != null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(defaultDate);
+            defaultYear = calendar.get(Calendar.YEAR);
+            defaultMonth = calendar.get(Calendar.MONTH);
+            defaultDay = calendar.get(Calendar.DAY_OF_MONTH);
+            defaultHour = calendar.get(Calendar.HOUR_OF_DAY);
+            defaultMinute = calendar.get(Calendar.MINUTE);
+
+            yearAdapter.setItems(getYearList());
+            loop_year.setCurrentItem(yearAdapter.indexOf(defaultYear + "年"));
+            monthAdapter.setItems(getMonthList());
+            loop_month.setCurrentItem(monthAdapter.indexOf(defaultMonth + 1 + "月"));
+            dayAdapter.setItems(getDayList());
+            loop_day.setCurrentItem(dayAdapter.indexOf(defaultDay + "日"));
+            hourAdapter.setItems(getHourList());
+            loop_hour.setCurrentItem(hourAdapter.indexOf(defaultHour + "时"));
+            minuteAdapter.setItems(getMinuteList());
+            loop_minute.setCurrentItem(minuteAdapter.indexOf(defaultMinute + "分"));
+        }
     }
 
     public void setView() {
@@ -117,190 +144,182 @@ public class DateSelectDialog extends Dialog {
     }
 
     public DateSelectDialog setDefauleDate(Date date) {
-        defauleDate = date;
+        defaultDate = date;
         return this;
     }
 
     private void initTimeData() {
         Calendar calendar = Calendar.getInstance();
-        if (defauleDate != null) {
-            calendar.setTime(defauleDate);
+        if (showGoOver) {
+            SimpleDateFormat formatter = new SimpleDateFormat(datePattern);
+            try {
+                calendar.setTime(formatter.parse("1970-01-01 00:00"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         defaultYear = currentYear = calendar.get(Calendar.YEAR);
-        endYear = currentYear + 4;
         defaultMonth = currentMonth = calendar.get(Calendar.MONTH);
         defaultDay = currentDay = calendar.get(Calendar.DAY_OF_MONTH);
         defaultHour = currentHour = calendar.get(Calendar.HOUR_OF_DAY);
         defaultMinute = currentMinute = calendar.get(Calendar.MINUTE);
+        endYear = defaultYear + 4;
     }
 
     private void initYmdPop() {
-        yearList = new ArrayList<>();
-        monthList = new ArrayList<>();
-        dayList = new ArrayList<>();
-        hourList = new ArrayList<>();
-        minuteList = new ArrayList<>();
-        //设置年份数据
-        for (int i = defaultYear; i <= endYear; i++) {
-            yearList.add(i + "年");
-        }
-        loop_year.setAdapter(new ArrayWheelAdapter(yearList));
-        loop_year.setCurrentItem(0);
-        updateMonthList(0);
+        loop_year.setAdapter(yearAdapter = new ArrayWheelAdapter());
+        loop_month.setAdapter(monthAdapter = new ArrayWheelAdapter());
+        loop_day.setAdapter(dayAdapter = new ArrayWheelAdapter());
+        loop_hour.setAdapter(hourAdapter = new ArrayWheelAdapter());
+        loop_minute.setAdapter(minuteAdapter = new ArrayWheelAdapter());
 
-        loop_year.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                updateMonthList(index);
-                updateWheel();
-            }
+        updateYearList(0);
+
+        loop_year.setOnItemSelectedListener(index -> {
+            updateMonthList(index);
+            updateWheel();
         });
-        loop_month.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                updateDaysList(index);
-                updateWheel();
-            }
+        loop_month.setOnItemSelectedListener(index -> {
+            updateDaysList(index);
+            updateWheel();
         });
-        loop_day.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                updateHourList(index);
-                updateWheel();
-            }
+        loop_day.setOnItemSelectedListener(index -> {
+            updateHourList(index);
+            updateWheel();
         });
-        loop_hour.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int index) {
-                updateMinuteList(index);
-                updateWheel();
-            }
+        loop_hour.setOnItemSelectedListener(index -> {
+            updateMinuteList(index);
+            updateWheel();
         });
 
-        tv_sure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    String date = yearList.get(loop_year.getCurrentItem()) + monthList.get(loop_month.getCurrentItem()) + dayList.get(loop_day.getCurrentItem())
-                            + hourList.get(loop_hour.getCurrentItem()) + minuteList.get(loop_minute.getCurrentItem());
-                    String selectYMD = new SimpleDateFormat(datePattern).format(new SimpleDateFormat("yyyy年MM月dd日HH时mm分").parse(date));
-                    if (onSelectedListener != null) {
-                        onSelectedListener.onSelected(selectYMD);
-                    }
-                    dismiss();
-                } catch (Exception e) {
-                    e.printStackTrace();
+        tv_sure.setOnClickListener(v -> {
+            try {
+                String date = yearAdapter.getData(loop_year.getCurrentItem())
+                        + monthAdapter.getData(loop_month.getCurrentItem())
+                        + dayAdapter.getData(loop_day.getCurrentItem())
+                        + hourAdapter.getData(loop_hour.getCurrentItem())
+                        + minuteAdapter.getData(loop_minute.getCurrentItem());
+                String selectYMD = new SimpleDateFormat(datePattern).format(new SimpleDateFormat("yyyy年MM月dd日HH时mm分").parse(date));
+                if (onSelectedListener != null) {
+                    onSelectedListener.onSelected(selectYMD);
                 }
-            }
-        });
-        tv_cancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 dismiss();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
+        tv_cancel.setOnClickListener(v -> dismiss());
     }
 
-    private void updateMonthList(int index) {
-        currentYear = defaultYear + index;
+    private void updateYearList(int index) {
+        yearAdapter.setItems(getYearList());
+        loop_year.setCurrentItem(index);
+        updateMonthList(0);
+    }
 
-        monthList.clear();
-        if (currentYear == defaultYear) {
-            for (int i = defaultMonth; i <= 11; i++) {
-                monthList.add(i + 1 + "月");
-            }
-        } else {
-            for (int i = 1; i <= 12; i++) {
-                monthList.add(i + "月");
-            }
-        }
-        if (loop_month.getAdapter() == null)
-            loop_month.setAdapter(new ArrayWheelAdapter(monthList));
+    private void updateMonthList(int yearIndex) {
+        defaultYear = currentYear + yearIndex;
+        monthAdapter.setItems(getMonthList());
         loop_month.setCurrentItem(0);
-
         updateDaysList(0);
     }
 
-    private void updateDaysList(int index) {
-        if (currentYear == defaultYear) {
-            currentMonth = defaultMonth + index;
+    private void updateDaysList(int monthIndex) {
+        if (defaultYear == currentYear) {
+            defaultMonth = currentMonth + monthIndex;
         } else {
-            currentMonth = index;
+            defaultMonth = monthIndex;
         }
-
-        dayList.clear();
-        int totalDays = getDays(isLeapYear(currentYear), currentMonth);
-        if (currentYear == defaultYear && currentMonth == defaultMonth) {
-            for (int i = defaultDay; i <= totalDays; i++) {
-                dayList.add(i + "日");
-            }
-        } else {
-            for (int i = 1; i <= totalDays; i++) {
-                dayList.add(i + "日");
-            }
-        }
-        if (loop_day.getAdapter() == null)
-            loop_day.setAdapter(new ArrayWheelAdapter(dayList));
+        dayAdapter.setItems(getDayList());
         loop_day.setCurrentItem(0);
-
         updateHourList(0);
     }
 
     private void updateHourList(int index) {
-        if (currentMonth == defaultMonth) {
-            currentDay = defaultDay + index;
+        if (defaultMonth == currentMonth) {
+            defaultDay = currentDay + index;
         } else {
-            currentDay = index;
+            defaultDay = index;
         }
-
-        hourList.clear();
-        if (currentYear == defaultYear && currentMonth == defaultMonth && currentDay == defaultDay) {
-            for (int i = defaultHour; i <= 23; i++) {
-                hourList.add(i + "时");
-            }
-        } else {
-            for (int i = 0; i <= 23; i++) {
-                hourList.add(i + "时");
-            }
-        }
-        if (loop_hour.getAdapter() == null)
-            loop_hour.setAdapter(new ArrayWheelAdapter(hourList));
+        hourAdapter.setItems(getHourList());
         loop_hour.setCurrentItem(0);
-
         updateMinuteList(0);
     }
 
-    private boolean aaa = false;
-
     private void updateMinuteList(int index) {
-        if (currentDay == defaultDay) {
-            currentHour = defaultHour + index;
+        if (defaultDay == currentDay) {
+            defaultHour = currentHour + index;
         } else {
-            currentHour = index;
+            defaultHour = index;
         }
-
-        minuteList.clear();
-        if (aaa) {
-            for (int i = 0; i <= 45; i += 15) {
-                minuteList.add(i + "分");
-            }
-        } else {
-            if (currentYear == defaultYear && currentMonth == defaultMonth && currentDay == defaultDay && currentHour == defaultHour) {
-                for (int i = defaultMinute; i <= 59; i++) {
-                    minuteList.add(i + "分");
-                }
-            } else {
-                for (int i = 0; i <= 59; i++) {
-                    minuteList.add(i + "分");
-                }
-            }
-        }
-        if (loop_minute.getAdapter() == null)
-            loop_minute.setAdapter(new ArrayWheelAdapter(minuteList));
+        minuteAdapter.setItems(getMinuteList());
         loop_minute.setCurrentItem(0);
     }
 
-    long delay = 300;
+    private ArrayList<String> getYearList() {
+        ArrayList<String> yearList = new ArrayList<>();
+        for (int i = currentYear; i <= endYear; i++) {
+            yearList.add(i + "年");
+        }
+        return yearList;
+    }
+
+    private ArrayList<String> getMonthList() {
+        ArrayList<String> monthList = new ArrayList<>();
+        int i = 0;
+        if (defaultYear == currentYear) {
+            i = currentMonth;
+        }
+        for (; i <= 11; i++) {
+            monthList.add(i + 1 + "月");
+        }
+        return monthList;
+    }
+
+    private ArrayList<String> getDayList() {
+        ArrayList<String> dayList = new ArrayList<>();
+        int i = 1;
+        int totalDays = getDays(isLeapYear(defaultYear), defaultMonth);
+        if (defaultYear == currentYear
+                && defaultMonth == currentMonth) {
+            i = currentDay;
+        }
+        for (; i <= totalDays; i++) {
+            dayList.add(i + "日");
+        }
+        return dayList;
+    }
+
+    private ArrayList<String> getHourList() {
+        ArrayList<String> hourList = new ArrayList<>();
+        int i = 0;
+        if (defaultYear == currentYear
+                && defaultMonth == currentMonth
+                && defaultDay == currentDay) {
+            i = currentHour;
+        }
+        for (; i <= 23; i++) {
+            hourList.add(i + "时");
+        }
+        return hourList;
+    }
+
+    private ArrayList<String> getMinuteList() {
+        ArrayList<String> minuteList = new ArrayList<>();
+        int i = 0;
+        if (defaultYear == currentYear
+                && defaultMonth == currentMonth
+                && defaultDay == currentDay
+                && defaultHour == currentHour) {
+            i = currentMinute;
+        }
+        for (; i <= 59; i++) {
+            minuteList.add(i + "分");
+        }
+        return minuteList;
+    }
+
+    long delay = 500;
     Timer timer;
 
     //    private void updateWheel(final WheelView wheelView) {
@@ -386,19 +405,9 @@ public class DateSelectDialog extends Dialog {
         return days;
     }
 
-    class ArrayWheelAdapter<T> implements WheelAdapter {
+    class ArrayWheelAdapter implements WheelAdapter {
         // items
-        private List<T> items;
-
-        /**
-         * Constructor
-         *
-         * @param items the items
-         */
-        public ArrayWheelAdapter(List<T> items) {
-            this.items = items;
-
-        }
+        private List<String> items = new ArrayList<>();
 
         @Override
         public Object getItem(int index) {
@@ -418,6 +427,17 @@ public class DateSelectDialog extends Dialog {
             return items.indexOf(o);
         }
 
+        public List<String> getItems() {
+            return items;
+        }
+
+        public void setItems(List<String> items) {
+            this.items = items;
+        }
+
+        public String getData(int position) {
+            return items.get(position);
+        }
     }
 
     public DateSelectDialog setOnSelectedListener(OnSelectedListener onSelectedListener) {

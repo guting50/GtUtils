@@ -19,8 +19,8 @@ public class TextWatcherUtils {
 
     private View bnView;
     private Map<View, Boolean> checkList;
-    private OnCheckedListener onCheckedListener;
     private List<TextView> views;
+    private List<OnCheckedListener> onCheckedListeners = new ArrayList<>();
 
     public TextWatcherUtils(View bnView, TextView... textViews) {
         this.bnView = bnView;
@@ -92,12 +92,21 @@ public class TextWatcherUtils {
         } else {
             bnView.setEnabled(true);
         }
-        if (onCheckedListener != null)
+        for (OnCheckedListener onCheckedListener : onCheckedListeners) {
             onCheckedListener.onChecked(bnView);
+        }
     }
 
-    public void setOnCheckedListener(OnCheckedListener onCheckedListener) {
-        this.onCheckedListener = onCheckedListener;
+    public void addOnCheckedListener(OnCheckedListener onCheckedListener) {
+        onCheckedListeners.add(onCheckedListener);
+    }
+
+    public void removeOnCheckedListener(OnCheckedListener onCheckedListener) {
+        onCheckedListeners.remove(onCheckedListener);
+    }
+
+    public void removeOnCheckedListener() {
+        onCheckedListeners.clear();
     }
 
     public void addView(TextView... textViews) {

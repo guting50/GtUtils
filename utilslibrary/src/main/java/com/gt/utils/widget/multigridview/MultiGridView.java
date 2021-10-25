@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.gt.photopicker.PhotoPickerActivity;
 import com.gt.photopicker.SelectModel;
 import com.gt.photopicker.intent.PhotoPickerIntent;
 import com.gt.utils.PermissionUtils;
@@ -38,12 +37,14 @@ public class MultiGridView extends GridView {
 
     private Context context;
     private DisplayImgAdapter displayImgAdapter;
-    private int maxItems, numColumns;
-    private float horizontalSpacing, verticalSpacing, cornersRadius;
-    private int addImg, delImg, defImg;
-    private static float horizontalSpacing_s = -1, verticalSpacing_s = -1, cornersRadius_s = -1;
-    private static int maxItems_s = 9, numColumns_s = 3,
-            addImg_s = R.drawable.ic_addpic, delImg_s = R.drawable.ic_video_cancel, defImg_s = R.drawable.ic_user_defultimg;
+    public int maxItems, numColumns;
+    public float horizontalSpacing, verticalSpacing, cornersRadius;
+    public int addImg, delImg, defImg;
+    public int showBn;//ImagePagerActivity.SHOWREMOVEBN显示删除按钮，0-不显示;
+    public static float horizontalSpacing_s = -1, verticalSpacing_s = -1, cornersRadius_s = -1;
+    public static int maxItems_s = 9, numColumns_s = 3,
+            addImg_s = R.drawable.ic_addpic, delImg_s = R.drawable.ic_video_cancel, defImg_s = R.drawable.ic_user_defultimg,
+            showBn_s = 0;
     private boolean showEdit;
     public final static String normalPath = "/sdcard/addImage.jpg";//一个添加图片的标识，作为判断，没有实际意义
     public Map<String, String> localPaths = new LinkedHashMap<>();//所有图片本地地址与网络地址对应关系集合
@@ -51,13 +52,16 @@ public class MultiGridView extends GridView {
     private OnAddListener onAddListener;//添加图片按钮触发接口
     private OnAddedListener onAddedListener;//图片添加后的回调接口
 
-    public static void init(@IntRange(from = 1) int maxItems, @IntRange(from = 1) int numColumns, @DrawableRes int addImg, @DrawableRes int delImg, @DrawableRes int defImg,
-                            @FloatRange(from = 1) float horizontalSpacing, @FloatRange(from = 1) float verticalSpacing, @FloatRange(from = 1) float cornersRadius) {
+    public static void init(@IntRange(from = 1) int maxItems, @IntRange(from = 1) int numColumns,
+                            @DrawableRes int addImg, @DrawableRes int delImg, @DrawableRes int defImg,
+                            @IntRange(from = 0) int showBn, @FloatRange(from = 1) float horizontalSpacing,
+                            @FloatRange(from = 1) float verticalSpacing, @FloatRange(from = 1) float cornersRadius) {
         maxItems_s = maxItems;
         maxItems_s = numColumns;
         addImg_s = addImg;
         delImg_s = delImg;
         defImg_s = defImg;
+        showBn_s = showBn;
         horizontalSpacing_s = horizontalSpacing;
         verticalSpacing_s = verticalSpacing;
         cornersRadius_s = cornersRadius;
@@ -119,6 +123,7 @@ public class MultiGridView extends GridView {
         addImg = a.getResourceId(R.styleable.MultiGridView_addImg, addImg_s);
         delImg = a.getResourceId(R.styleable.MultiGridView_delImg, delImg_s);
         defImg = a.getResourceId(R.styleable.MultiGridView_defImg, defImg_s);
+        showBn = a.getInteger(R.styleable.MultiGridView_showBn, showBn_s);
         a.recycle();
 
         init(context);
@@ -188,13 +193,10 @@ public class MultiGridView extends GridView {
                                         intent.showCarema(true);
                                         intent.setMaxTotal(getMaxItems());
                                         intent.setSelectedPaths((ArrayList<String>) getLocalPaths());
-                                        intent.gotoPhotoPickerActivity(getContext(), new PhotoPickerActivity.OnSelectedCallbackListener() {
-                                            @Override
-                                            public void onSelectedCallback(ArrayList<String> resultList) {
-                                                setFilenamesData(resultList);
-                                                if (onAddedListener != null)
-                                                    onAddedListener.onAdded();
-                                            }
+                                        intent.gotoPhotoPickerActivity(getContext(), resultList -> {
+                                            setFilenamesData(resultList);
+                                            if (onAddedListener != null)
+                                                onAddedListener.onAdded();
                                         });
                                     }
                                 });
@@ -216,7 +218,7 @@ public class MultiGridView extends GridView {
             //点击的是已选择的图片，查看大图，删除图片
             ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(this.getMeasuredWidth(), this.getMeasuredHeight());
             ImagePagerActivity.startImagePagerActivity(activity, getLocalPaths(), position,
-                    imageSize, 0);//ImagePagerActivity.SHOWREMOVEBN显示删除按钮，0-不显示
+                    imageSize, showBn);
             ((Activity) context).overridePendingTransition(R.anim.large_in, 0);
             return false;
         }

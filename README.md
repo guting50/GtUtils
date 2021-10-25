@@ -123,7 +123,7 @@ static void clearAllCache(Context context);
 ## BgFLayout、BgTextView  
 #### 同类型的有 BgFLayout（帧布局）、BgLLayout（线性布局）、BgCLayout（约束布局）
 ```Xml
-  <com.gt.utils.widget.BgFrameLayout
+  <com.gt.utils.widget.BgFLayout
       android:layout_width="200dp"
       android:layout_height="100dp"
       app:corners_radius="10dp"
@@ -513,6 +513,10 @@ adapter继承CustomizeRVBaseAdapter
         <attr format="reference" name="addImg"/>
         <attr format="reference" name="delImg"/>
         <attr format="reference" name="defImg"/>
+        <attr name="showBn" format="enum">
+            <enum name="remove" value="1" />
+            <enum name="save" value="2" />
+        </attr>
         <attr format="dimension" name="cornersRadius"/>
     </declare-styleable>
 ```
@@ -575,7 +579,9 @@ adapter继承CustomizeRVBaseAdapter
     public TextWatcherUtils(View bnView, TextView... textViews);
 
     //设置检测回调，调用check后的回调方法
-    public void setOnCheckedListener(OnCheckedListener onCheckedListener);
+    public void addOnCheckedListener(OnCheckedListener onCheckedListener);
+    public void removeOnCheckedListener(OnCheckedListener onCheckedListener);
+    public void removeOnCheckedListener();
     public void check();
     
     public void addView(TextView... textViews);

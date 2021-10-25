@@ -3,6 +3,7 @@ package com.gt.githublibrary;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -20,14 +21,22 @@ import com.gt.utils.floatingeditor.InputCheckRule;
 import com.gt.utils.http.RetrofitHelper;
 import com.gt.utils.ormlite.DbHelper;
 import com.gt.utils.widget.CircleButtonView;
+import com.gt.utils.widget.DateSelectDialog;
 import com.gt.utils.widget.FlowLayout;
+import com.gt.utils.widget.ImagePagerActivity;
 import com.gt.utils.widget.OnNoDoubleClickListener;
+import com.gt.utils.widget.multigridview.MultiGridView;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 public class MainActivity extends AppCompatActivity {
     FlowLayout fl_flow;
@@ -37,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_layout);
+
+        MultiGridView multiGridView = findViewById(R.id.multiGridView);
+        List<String> datas = new ArrayList<>();
+        datas.add("https://vrimg.kuaimashi.com/qiniu_1597807617179.png");
+        multiGridView.setFilenamesData(datas);
         fl_flow = findViewById(R.id.fl_flow);
         for (int i = 0; i < 50; i++) {
             TextView tv = new TextView(this);
@@ -47,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
             tv.setText("测试" + i);
             fl_flow.addView(tv);
         }
+        ImagePagerActivity.watermark = "?watermark/1/image/aHR0cHM6Ly92cmltZy5rdWFpbWFzaGkuY29tL3Fpbml1XzE2MDA1MDg3Njc3NjkucG5n/dissolve/100/gravity/Center/ws/0/wst/0";
         DbHelper.updateDB(27);
         CacheUtils.put("aaa", "bbb");
         Log.e("aaa", CacheUtils.getVal("aaa"));
@@ -79,6 +94,21 @@ public class MainActivity extends AppCompatActivity {
             public void onNoDoubleClick(View v) {
                 startActivity(new Intent(MainActivity.this, TestBgLayoutActivity.class));
             }
+        });
+
+        findViewById(R.id.textView).setOnClickListener(v -> {
+            String pattern = "yyyy-MM-dd HH:mm";
+            TextView tv = findViewById(R.id.textView);
+            Date date = new Date();
+            try {
+                if (!TextUtils.isEmpty(tv.getText().toString()))
+                    date = new SimpleDateFormat(pattern).parse(tv.getText().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            new DateSelectDialog(this).setOnSelectedListener(data -> {
+                tv.setText(data);
+            }).setDefauleDate(date).setDatePattern(pattern).show();
         });
     }
 
