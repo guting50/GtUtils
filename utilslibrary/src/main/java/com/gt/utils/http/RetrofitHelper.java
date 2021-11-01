@@ -63,14 +63,11 @@ public class RetrofitHelper {
     }
 
     private static OkHttpClient.Builder getOkHttpClientBuilder() {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-            @Override
-            public void log(String message) {
-                try {
-                    Log.e("ღღღ______", URLDecoder.decode(message, "utf-8"));
-                } catch (Exception e) {
-                    Log.e("ღღღ______", message);
-                }
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message -> {
+            try {
+                Log.e("ღღღ______", URLDecoder.decode(message, "utf-8"));
+            } catch (Exception e) {
+                Log.e("ღღღ______", message);
             }
         });
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
