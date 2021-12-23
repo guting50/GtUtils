@@ -235,7 +235,7 @@ public class MuchThreadDown {
                     /*
                      * 将网络流中的文件写入本地
                      */
-                    byte[] buffer = new byte[5 * 1024];
+                    byte[] buffer = new byte[10 * 1024];
                     int length = -1;
                     while ((length = inputStream.read(buffer)) != -1) {
                         randomAccessFile.write(buffer, 0, length);
