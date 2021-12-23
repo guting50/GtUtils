@@ -258,8 +258,8 @@ public class MuchThreadDown {
                     connection.disconnect();
                     Log("======" + getFileName(url) + "======" + "线程" + threadId + "下载完毕");
                     completeNum++;
-//                    if (completedTotalLength >= fileTotalLength) {
-                    if (completeNum == threadCount) {
+                   if (completedTotalLength >= fileTotalLength) {
+//                     if (completeNum == threadCount) {
                         if (downloadListener != null) {
                             downloadListener.onDownloadComplete(getFileName(url), fileUrl, filePath);
                             Log("======" + getFileName(url) + "======" + "耗时" + format(System.currentTimeMillis() - startTime));
@@ -275,7 +275,7 @@ public class MuchThreadDown {
                         downloadListener.onDownloadError("线程" + threadId + "==" + fileUrl, new Exception("响应码是" + connection.getResponseCode() + ". 服务器不支持多线程下载"));
                     }
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
                 if (downloadListener != null) {
                     downloadListener.onDownloadError("线程" + threadId + "==" + fileUrl, e);
