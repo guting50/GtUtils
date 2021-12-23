@@ -317,7 +317,7 @@ public class MuchThreadDown {
         if (name.equals("0")) {
             name = filename.substring(filename.indexOf("/") + 1).split("\\.")[0] + ".jpg";
         }
-        if (!name.contains("\\.")) {
+        if (!name.contains(".")) {
             name = name + ".jpg";
         }
         return name;
