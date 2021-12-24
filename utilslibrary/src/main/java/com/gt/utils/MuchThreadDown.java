@@ -175,17 +175,18 @@ public class MuchThreadDown {
                         }
 
                         completedTotalLength += completed;
-//                            if (endIndex - startIndex > completed) // 已下载完的就不用再开线程下载了
                         SCHEDULEDTHREADPOOL.execute(new DownLoadRunnable(threadId, startIndex, endIndex, completed));
                     }
                     Log("======" + getFileName(url) + "======" + "总共已完成 " + completedTotalLength + "  总长度: " + fileTotalLength);
                 } else {
+                    SCHEDULEDTHREADPOOL.shutdownNow();
                     if (downloadListener != null) {
                         downloadListener.onDownloadError(fileUrl, new Exception(code + ""));
                     }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                SCHEDULEDTHREADPOOL.shutdownNow();
                 if (downloadListener != null) {
                     downloadListener.onDownloadError(fileUrl, e);
                 }
@@ -209,77 +210,88 @@ public class MuchThreadDown {
 
         @Override
         public void run() {
-            try {
-                //分段请求网络连接,分段将文件保存到本地.
-                URL url = new URL(fileUrl);
-                Log("======" + getFileName(url) + "======" + "线程" + threadId + "开始下载");
+            if (endIndex - startIndex > completed) { // 已下载完的就不用再下载了
+                try {
+                    //分段请求网络连接,分段将文件保存到本地.
+                    URL url = new URL(fileUrl);
+                    Log("======" + getFileName(url) + "======" + "线程" + threadId + "开始下载");
 
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("GET");
-                connection.setConnectTimeout(100000);
-                connection.setRequestProperty("Accept-Encoding", "identity");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.setConnectTimeout(100000);
+                    connection.setRequestProperty("Accept-Encoding", "identity");
 
-                //设置分段下载的头信息。  Range:做分段数据请求用的。格式: Range bytes=0-1024  或者 bytes:0-1024
-                connection.setRequestProperty("Range", "bytes=" + (startIndex + completed) + "-" + endIndex);
+                    //设置分段下载的头信息。  Range:做分段数据请求用的。格式: Range bytes=0-1024  或者 bytes:0-1024
+                    connection.setRequestProperty("Range", "bytes=" + (startIndex + completed) + "-" + endIndex);
 
-                Log("======" + getFileName(url) + "======" + "线程_" + threadId + "的下载起点是 " + startIndex + "  下载终点是: " + endIndex + " 已完成：" + completed);
+                    Log("======" + getFileName(url) + "======" + "线程_" + threadId + "的下载起点是 " + startIndex + "  下载终点是: " + endIndex + " 已完成：" + completed);
 
-                if (connection.getResponseCode() == 200 || connection.getResponseCode() == 206) {//200：请求全部资源成功， 206代表部分资源请求成功
-                    InputStream inputStream = connection.getInputStream();//获取流
-                    RandomAccessFile randomAccessFile = new RandomAccessFile(
-                            new File(filePath + ".bak"), "rw");//获取前面已创建的文件.
-                    randomAccessFile.seek(startIndex + completed);//文件写入的开始位置.
+                    if (connection.getResponseCode() == 200 || connection.getResponseCode() == 206) {//200：请求全部资源成功， 206代表部分资源请求成功
+                        InputStream inputStream = connection.getInputStream();//获取流
+                        RandomAccessFile randomAccessFile = new RandomAccessFile(
+                                new File(filePath + ".bak"), "rw");//获取前面已创建的文件.
+                        randomAccessFile.seek(startIndex + completed);//文件写入的开始位置.
 
-                    //加载下载位置的文件
-                    File downThreadFile = new File(targetFilePath, "downThread_" + getFileName(url).split("\\.")[0] + "_.dt");
-                    RandomAccessFile downThreadStream = new RandomAccessFile(downThreadFile, "rwd");
-                    /*
-                     * 将网络流中的文件写入本地
-                     */
-                    byte[] buffer = new byte[10 * 1024];
-                    int length = -1;
-                    while ((length = inputStream.read(buffer)) != -1) {
-                        randomAccessFile.write(buffer, 0, length);
-                        completed += length;
+                        //加载下载位置的文件
+                        File downThreadFile = new File(targetFilePath, "downThread_" + getFileName(url).split("\\.")[0] + "_.dt");
+                        RandomAccessFile downThreadStream = new RandomAccessFile(downThreadFile, "rwd");
                         /*
-                         * 将当前现在到的位置保存到文件中
+                         * 将网络流中的文件写入本地
                          */
-                        int seek = (threadId * (fileTotalLength + "").length() * 4) + (startIndex + "&" + endIndex + "&").length();
-                        downThreadStream.seek(seek);
-                        downThreadStream.write((completed + (threadId == threadCount - 1 ? "" : "*")).getBytes("UTF-8"));
-                        completedTotalLength += length;
+                        byte[] buffer = new byte[10 * 1024];
+                        int length = -1;
+                        while ((length = inputStream.read(buffer)) != -1) {
+                            randomAccessFile.write(buffer, 0, length);
+                            completed += length;
+                            /*
+                             * 将当前现在到的位置保存到文件中
+                             */
+                            int seek = (threadId * (fileTotalLength + "").length() * 4) + (startIndex + "&" + endIndex + "&").length();
+                            downThreadStream.seek(seek);
+                            downThreadStream.write((completed + (threadId == threadCount - 1 ? "" : "*")).getBytes("UTF-8"));
+                            completedTotalLength += length;
+                            if (downloadListener != null) {
+                                downloadListener.onDownloads("《threadId:" + threadId + "》" + fileUrl, completedTotalLength, fileTotalLength);
+                            }
+                        }
+
+                        inputStream.close();
+                        randomAccessFile.close();
+                        downThreadStream.close();
+                        connection.disconnect();
+                        singleThreadDownloadComplete(getFileName(url), threadId);
+                    } else {
+                        completeNum++;
+                        Log("======" + getFileName(url) + "======" + "线程" + threadId + "响应码是" + connection.getResponseCode() + ". 服务器不支持多线程下载");
+                        SCHEDULEDTHREADPOOL.shutdownNow();
                         if (downloadListener != null) {
-                            downloadListener.onDownloads("《threadId:" + threadId + "》" + fileUrl, completedTotalLength, fileTotalLength);
+                            downloadListener.onDownloadError("线程" + threadId + "==" + fileUrl, new Exception("响应码是" + connection.getResponseCode() + ". 服务器不支持多线程下载"));
                         }
                     }
-
-                    inputStream.close();
-                    randomAccessFile.close();
-                    downThreadStream.close();
-                    connection.disconnect();
-                    Log("======" + getFileName(url) + "======" + "线程" + threadId + "下载完毕");
-                    completeNum++;
-                   if (completedTotalLength >= fileTotalLength) {
-//                     if (completeNum == threadCount) {
-                        if (downloadListener != null) {
-                            downloadListener.onDownloadComplete(getFileName(url), fileUrl, filePath);
-                            Log("======" + getFileName(url) + "======" + "耗时" + format(System.currentTimeMillis() - startTime));
-                            new File(filePath + ".bak").renameTo(new File(filePath)); // 重命名
-
-                            cleanTemp(downThreadFile);//删除临时文件
-                        }
-                    }
-                } else {
-                    completeNum++;
-                    Log("======" + getFileName(url) + "======" + "线程" + threadId + "响应码是" + connection.getResponseCode() + ". 服务器不支持多线程下载");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    SCHEDULEDTHREADPOOL.shutdownNow();
                     if (downloadListener != null) {
-                        downloadListener.onDownloadError("线程" + threadId + "==" + fileUrl, new Exception("响应码是" + connection.getResponseCode() + ". 服务器不支持多线程下载"));
+                        downloadListener.onDownloadError("线程" + threadId + "==" + fileUrl, e);
                     }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                singleThreadDownloadComplete(fileUrl, threadId);
+            }
+        }
+
+        private void singleThreadDownloadComplete(String fileUrl, int threadId) {
+            File downThreadFile = new File(targetFilePath, "downThread_" + fileUrl.split("\\.")[0] + "_.dt");
+            Log("======" + fileUrl + "======" + "线程" + threadId + "下载完毕");
+            completeNum++;
+//                    if (completedTotalLength >= fileTotalLength) {
+            if (completeNum == threadCount) {
                 if (downloadListener != null) {
-                    downloadListener.onDownloadError("线程" + threadId + "==" + fileUrl, e);
+                    downloadListener.onDownloadComplete(fileUrl, fileUrl, filePath);
+                    Log("======" + fileUrl + "======" + "耗时" + format(System.currentTimeMillis() - startTime));
+                    new File(filePath + ".bak").renameTo(new File(filePath)); // 重命名
+
+                    cleanTemp(downThreadFile);//删除临时文件
                 }
             }
         }
@@ -364,8 +376,8 @@ public class MuchThreadDown {
 
     public static void main(String[] args) {
         try {
-            new MuchThreadDown("http://img1.kuaimashi.com/69_1526641455014.mp4", "D:/video/")
-                    .isAlone(true).isCover(true).isShowLog(true).download(new OnDownloadListener() {
+            new MuchThreadDown("https://bhtwz.cypc.com.cn/app/download/20211222/counter_V1.0_1.apk", "D:/video/")
+                    .isCover(true).isShowLog(true).download(new OnDownloadListener() {
                 @Override
                 protected void onDownloadComplete(String name, String url, String filePath) {
                     System.out.println("下载成功==" + "url:" + url);
