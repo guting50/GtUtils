@@ -179,14 +179,14 @@ public class MuchThreadDown {
                     }
                     Log("======" + getFileName(url) + "======" + "总共已完成 " + completedTotalLength + "  总长度: " + fileTotalLength);
                 } else {
-                    SCHEDULEDTHREADPOOL.shutdownNow();
+                    stop();
                     if (downloadListener != null) {
                         downloadListener.onDownloadError(fileUrl, new Exception(code + ""));
                     }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                SCHEDULEDTHREADPOOL.shutdownNow();
+                stop();
                 if (downloadListener != null) {
                     downloadListener.onDownloadError(fileUrl, e);
                 }
@@ -263,14 +263,14 @@ public class MuchThreadDown {
                     } else {
                         completeNum++;
                         Log("======" + getFileName(url) + "======" + "线程" + threadId + "响应码是" + connection.getResponseCode() + ". 服务器不支持多线程下载");
-                        SCHEDULEDTHREADPOOL.shutdownNow();
+                        stop();
                         if (downloadListener != null) {
                             downloadListener.onDownloadError("线程" + threadId + "==" + fileUrl, new Exception("响应码是" + connection.getResponseCode() + ". 服务器不支持多线程下载"));
                         }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    SCHEDULEDTHREADPOOL.shutdownNow();
+                    stop();
                     if (downloadListener != null) {
                         downloadListener.onDownloadError("线程" + threadId + "==" + fileUrl, e);
                     }
@@ -293,6 +293,13 @@ public class MuchThreadDown {
                     downloadListener.onDownloadComplete(fileUrl, fileUrl, filePath);
                 }
             }
+        }
+    }
+
+    public void stop() {
+        if (SCHEDULEDTHREADPOOL != null) {
+            SCHEDULEDTHREADPOOL.shutdownNow();
+            SCHEDULEDTHREADPOOL = null;
         }
     }
 
