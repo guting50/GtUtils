@@ -286,12 +286,11 @@ public class MuchThreadDown {
             completeNum++;
 //                    if (completedTotalLength >= fileTotalLength) {
             if (completeNum == threadCount) {
+                Log("======" + fileUrl + "======" + "耗时" + format(System.currentTimeMillis() - startTime));
+                new File(filePath + ".bak").renameTo(new File(filePath)); // 重命名
+                cleanTemp(downThreadFile);//删除临时文件
                 if (downloadListener != null) {
                     downloadListener.onDownloadComplete(fileUrl, fileUrl, filePath);
-                    Log("======" + fileUrl + "======" + "耗时" + format(System.currentTimeMillis() - startTime));
-                    new File(filePath + ".bak").renameTo(new File(filePath)); // 重命名
-
-                    cleanTemp(downThreadFile);//删除临时文件
                 }
             }
         }
