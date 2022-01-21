@@ -89,6 +89,15 @@ public class PermissionUtils {
 
     }
 
+    public interface PermissionGranted {
+        void onGranted(int... requestCode);
+
+    }
+
+    public interface PermissionDenied {
+        void onDenied(int... requestCode);
+    }
+
     /**
      * 申请权限
      *
@@ -236,4 +245,54 @@ public class PermissionUtils {
         });
     }
 
+    public static class Builder {
+        private final Context mContext;
+        private int mRequestCode;
+        private PermissionGranted mPermissionGranted;
+        private PermissionDenied mPermissionDenied;
+
+        public Builder(@NonNull Context context) {
+            this.mContext = context;
+        }
+
+        public Builder permission(int requestCode) {
+            this.mRequestCode = requestCode;
+            return this;
+        }
+
+        public Builder onGranted(PermissionGranted permissionGranted) {
+            this.mPermissionGranted = permissionGranted;
+            return this;
+        }
+
+        public Builder onDenied(PermissionDenied permissionDenied) {
+            this.mPermissionDenied = permissionDenied;
+            return this;
+        }
+
+        public void start() {
+            long key = new Date().getTime();
+            PermissionActivity.permissionGrants.put(key, new PermissionGrant() {
+                @Override
+                public void onPermissionGranted(int... requestCode) {
+                    mPermissionGranted.onGranted(requestCode);
+                }
+
+                @Override
+                public void onRefuseGranted() {
+                    mPermissionDenied.onDenied(mRequestCode);
+                }
+            });
+            Intent intent = new Intent(mContext, PermissionActivity.class);
+            intent.putExtra("requestCode", mRequestCode);
+            intent.putExtra("key", key);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
+            try {//增加一个线程阻塞，确保每次生成的key都不相同
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
