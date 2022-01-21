@@ -50,7 +50,7 @@
 ```
 ## PermissionUtils
 ```Java
-  PermissionUtils.requestPermission(this, PermissionUtils.CODE_CAMERA, new PermissionUtils.PermissionGrant() {
+  PermissionUtils.requestPermission(this, PermissionUtils.CAMERA, new PermissionUtils.PermissionGrant() {
       @Override
       public void onPermissionGranted(int... requestCode) {
         Toast.makeText(MainActivity.this, "CODE_CAMERA : 允许", Toast.LENGTH_LONG).show();
