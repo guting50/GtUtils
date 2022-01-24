@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
+import static android.content.DialogInterface.*;
+
 /**
  * Created by Administrator on 2017/2/21.
  */
@@ -48,7 +50,7 @@ public class PermissionUtils {
     public static final String PERMISSION_READ_CONTACTS = Manifest.permission.READ_CONTACTS;
     public static final String PERMISSION_READ_SMS = Manifest.permission.READ_SMS;
     public static final String PERMISSION_REQUEST_INSTALL_PACKAGES = Manifest.permission.REQUEST_INSTALL_PACKAGES;
-    private static final String[] mRequestPermissions = {
+    public static final String[] mRequestPermissions = {
             PERMISSION_RECORD_AUDIO,
             PERMISSION_GET_ACCOUNTS,
             PERMISSION_READ_PHONE_STATE,
@@ -180,7 +182,7 @@ public class PermissionUtils {
         }
     }
 
-    private static void showMessageOKCancel(final Activity context, String message, DialogInterface.OnClickListener okListener, DialogInterface.OnClickListener cancelListener) {
+    private static void showMessageOKCancel(final Activity context, String message, OnClickListener okListener, OnClickListener cancelListener) {
         new AlertDialog.Builder(context)
                 .setMessage(message)
                 .setPositiveButton("去开启", okListener)
@@ -227,27 +229,19 @@ public class PermissionUtils {
     }
 
     private static void openSettingActivity(final Activity activity, String message, final PermissionGrant permissionGrant) {
-        showMessageOKCancel(activity, message, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                Log.d(TAG, "getPackageName(): " + activity.getPackageName());
-                Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
-                intent.setData(uri);
-                activity.startActivityForResult(intent, REQUEST_CODE);
-            }
-        }, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                permissionGrant.onRefuseGranted();
-            }
-        });
+        showMessageOKCancel(activity, message, (dialog, which) -> {
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Log.d(TAG, "getPackageName(): " + activity.getPackageName());
+            Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
+            intent.setData(uri);
+            activity.startActivityForResult(intent, REQUEST_CODE);
+        }, (dialog, which) -> permissionGrant.onRefuseGranted());
     }
 
     public static class Builder {
         private final Context mContext;
-        private int mRequestCode;
+        private int[] mRequestCodes;
         private PermissionGranted mPermissionGranted;
         private PermissionDenied mPermissionDenied;
 
@@ -255,8 +249,8 @@ public class PermissionUtils {
             this.mContext = context;
         }
 
-        public Builder permission(int requestCode) {
-            this.mRequestCode = requestCode;
+        public Builder permission(int... requestCode) {
+            this.mRequestCodes = requestCode;
             return this;
         }
 
@@ -271,20 +265,29 @@ public class PermissionUtils {
         }
 
         public void start() {
+            if (mRequestCodes != null && mRequestCodes.length > 0)
+                request(0);
+        }
+
+        private void request(int requestCodeIndex) {
             long key = new Date().getTime();
             PermissionActivity.permissionGrants.put(key, new PermissionGrant() {
                 @Override
                 public void onPermissionGranted(int... requestCode) {
-                    mPermissionGranted.onGranted(requestCode);
+                    if (requestCodeIndex < mRequestCodes.length - 1) {
+                        request(requestCodeIndex + 1);
+                    } else {
+                        mPermissionGranted.onGranted(mRequestCodes);
+                    }
                 }
 
                 @Override
                 public void onRefuseGranted() {
-                    mPermissionDenied.onDenied(mRequestCode);
+                    mPermissionDenied.onDenied(mRequestCodes[requestCodeIndex]);
                 }
             });
             Intent intent = new Intent(mContext, PermissionActivity.class);
-            intent.putExtra("requestCode", mRequestCode);
+            intent.putExtra("requestCode", mRequestCodes[requestCodeIndex]);
             intent.putExtra("key", key);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
