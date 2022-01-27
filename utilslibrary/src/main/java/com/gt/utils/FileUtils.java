@@ -30,7 +30,7 @@ public class FileUtils {
     /**
      * 文件路径  Environment.getExternalStorageDirectory() + File.separator + "Gt";
      */
-    public static final String GT_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Gt";
+    public static String GT_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Gt";
 
     /**
      * 保存图片
