@@ -108,34 +108,44 @@ public class MainActivity extends AppCompatActivity {
             }
             new DateSelectDialog(this).setOnSelectedListener(data -> {
                 tv.setText(data);
-            }).setDefauleDate(date).setDatePattern(pattern).show();
+            }).setDefaultDate(date).setDatePattern(pattern).show();
         });
     }
 
     public void bnOnRpClick(View view) {
-        PermissionUtils.requestPermission(this, PermissionUtils.CAMERA, new PermissionUtils.PermissionGrant() {
-            @Override
-            public void onPermissionGranted(int... requestCode) {
-                Toast.makeText(MainActivity.this, "CODE_CAMERA : 允许", Toast.LENGTH_LONG).show();
-            }
+        new PermissionUtils.Builder(this)
+                .permission(PermissionUtils.CAMERA, PermissionUtils.RECORD_AUDIO)
+                .onGranted(requestCode -> {
+                    Toast.makeText(this, PermissionUtils.mRequestPermissions[requestCode[0]] + " : 允许", Toast.LENGTH_LONG).show();
+                })
+                .onDenied(requestCode -> {
+                    Toast.makeText(this, PermissionUtils.mRequestPermissions[requestCode[0]] + " : 拒绝", Toast.LENGTH_LONG).show();
+                })
+                .start();
 
-            @Override
-            public void onRefuseGranted() {
-                Toast.makeText(MainActivity.this, "CODE_CAMERA : 拒绝", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        PermissionUtils.requestPermission(this, PermissionUtils.REQUEST_INSTALL_PACKAGES, new PermissionUtils.PermissionGrant() {
-            @Override
-            public void onPermissionGranted(int... requestCode) {
-                Toast.makeText(MainActivity.this, "CODE_RECORD_AUDIO : 允许", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onRefuseGranted() {
-                Toast.makeText(MainActivity.this, "CODE_RECORD_AUDIO : 拒绝", Toast.LENGTH_LONG).show();
-            }
-        });
+//        PermissionUtils.requestPermission(this, PermissionUtils.CAMERA, new PermissionUtils.PermissionGrant() {
+//            @Override
+//            public void onPermissionGranted(int... requestCode) {
+//                Toast.makeText(MainActivity.this, "CODE_CAMERA : 允许", Toast.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void onRefuseGranted() {
+//                Toast.makeText(MainActivity.this, "CODE_CAMERA : 拒绝", Toast.LENGTH_LONG).show();
+//            }
+//        });
+//
+//        PermissionUtils.requestPermission(this, PermissionUtils.REQUEST_INSTALL_PACKAGES, new PermissionUtils.PermissionGrant() {
+//            @Override
+//            public void onPermissionGranted(int... requestCode) {
+//                Toast.makeText(MainActivity.this, "CODE_RECORD_AUDIO : 允许", Toast.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void onRefuseGranted() {
+//                Toast.makeText(MainActivity.this, "CODE_RECORD_AUDIO : 拒绝", Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 
     public void bnOnHttpRClick(View view) {

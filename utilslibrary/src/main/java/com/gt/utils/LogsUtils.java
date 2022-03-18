@@ -40,7 +40,7 @@ public class LogsUtils {
         writeLog(ct, id, "info", error);
     }
 
-    private static void writeLog(Context ct, String id, String pathName, String context) {
+    public static void writeLog(Context ct, String id, String pathName, String context) {
         String versionName = "";
         int versioncode = 0;
         try {
@@ -84,7 +84,7 @@ public class LogsUtils {
         });
     }
 
-    private static void writeFile(String pathName, final String context) {
+    public static void writeFile(String pathName, final String context) {
         try {
             File path = new File(FileUtils.GT_DIR);
             String str = "gt_" + pathName + "_" + new SimpleDateFormat("yyyyMMdd").format(new Date()) + ".log";
@@ -106,7 +106,7 @@ public class LogsUtils {
         }
     }
 
-    private static void writeLog(String id, String context) {
+    public static void writeLog(String id, String context) {
         String versionName = "";
         int versioncode = 0;
         final String version = versioncode + "；" + versionName;
