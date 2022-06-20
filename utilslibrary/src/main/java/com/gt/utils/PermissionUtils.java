@@ -1,23 +1,22 @@
 package com.gt.utils;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
-
-import java.util.Date;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
-import static android.content.DialogInterface.*;
+import java.util.Arrays;
+import java.util.Date;
+
+import static android.content.DialogInterface.OnClickListener;
 
 /**
  * Created by Administrator on 2017/2/21.
@@ -25,65 +24,12 @@ import static android.content.DialogInterface.*;
 
 public class PermissionUtils {
     private static final String TAG = PermissionUtils.class.getSimpleName();
-    public static final int RECORD_AUDIO = 0;
-    public static final int GET_ACCOUNTS = 1;
-    public static final int READ_PHONE_STATE = 2;
-    public static final int CALL_PHONE = 3;
-    public static final int CAMERA = 4;
-    public static final int ACCESS_FINE_LOCATION = 5;
-    public static final int ACCESS_COARSE_LOCATION = 6;
-    public static final int READ_EXTERNAL_STORAGE = 7;
-    public static final int WRITE_EXTERNAL_STORAGE = 8;
-    public static final int READ_CONTACTS = 9;
-    public static final int READ_SMS = 10;
-    public static final int REQUEST_INSTALL_PACKAGES = 11;
-
-    public static final String PERMISSION_RECORD_AUDIO = Manifest.permission.RECORD_AUDIO;
-    public static final String PERMISSION_GET_ACCOUNTS = Manifest.permission.GET_ACCOUNTS;
-    public static final String PERMISSION_READ_PHONE_STATE = Manifest.permission.READ_PHONE_STATE;
-    public static final String PERMISSION_CALL_PHONE = Manifest.permission.CALL_PHONE;
-    public static final String PERMISSION_CAMERA = Manifest.permission.CAMERA;
-    public static final String PERMISSION_ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-    public static final String PERMISSION_ACCESS_COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
-    public static final String PERMISSION_READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
-    public static final String PERMISSION_WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
-    public static final String PERMISSION_READ_CONTACTS = Manifest.permission.READ_CONTACTS;
-    public static final String PERMISSION_READ_SMS = Manifest.permission.READ_SMS;
-    public static final String PERMISSION_REQUEST_INSTALL_PACKAGES = Manifest.permission.REQUEST_INSTALL_PACKAGES;
-    public static final String[] mRequestPermissions = {
-            PERMISSION_RECORD_AUDIO,
-            PERMISSION_GET_ACCOUNTS,
-            PERMISSION_READ_PHONE_STATE,
-            PERMISSION_CALL_PHONE,
-            PERMISSION_CAMERA,
-            PERMISSION_ACCESS_FINE_LOCATION,
-            PERMISSION_ACCESS_COARSE_LOCATION,
-            PERMISSION_READ_EXTERNAL_STORAGE,
-            PERMISSION_WRITE_EXTERNAL_STORAGE,
-            PERMISSION_READ_CONTACTS,
-            PERMISSION_READ_SMS,
-            PERMISSION_REQUEST_INSTALL_PACKAGES
-    };
     public static String permissionsHintHead = "没有此权限，无法开启这个功能，请开启权限：";
-    private static final String[] permissionsHint = {
-            permissionsHintHead + "麦克风",
-            permissionsHintHead + "访问GMail账户",
-            permissionsHintHead + "读取电话状态",
-            permissionsHintHead + "电话呼叫",
-            permissionsHintHead + "摄像头",
-            permissionsHintHead + "定位",
-            permissionsHintHead + "定位",
-            permissionsHintHead + "存储",
-            permissionsHintHead + "存储",
-            permissionsHintHead + "读写联系人",
-            permissionsHintHead + "读写短信",
-            permissionsHintHead + "安装未知来源应用"
-    };
 
-    public static int REQUEST_CODE = 50;
+    public static int REQUEST_CODE_OPEN_SETTING = 50, REQUEST_CODE_PERMISSION = 100;
 
     public abstract static class PermissionGrant {
-        public abstract void onPermissionGranted(int... requestCode);
+        public abstract void onPermissionGranted(String... requestPermissions);
 
         public void onRefuseGranted() {
 
@@ -92,61 +38,36 @@ public class PermissionUtils {
     }
 
     public interface PermissionGranted {
-        void onGranted(int... requestCode);
-
+        void onGranted();
     }
 
     public interface PermissionDenied {
-        void onDenied(int... requestCode);
-    }
-
-    /**
-     * 申请权限
-     *
-     * @param context
-     * @param requestCode request code, e.g. if you need request CAMERA permission,parameters is PermissionUtils.CODE_CAMERA
-     */
-    public static synchronized void requestPermission(Context context, int requestCode, PermissionGrant permissionGrant) {
-        long key = new Date().getTime();
-        PermissionActivity.permissionGrants.put(key, permissionGrant);
-        Intent intent = new Intent(context, PermissionActivity.class);
-        intent.putExtra("requestCode", requestCode);
-        intent.putExtra("key", key);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-        try {//增加一个线程阻塞，确保每次生成的key都不相同
-            Thread.sleep(5);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        void onDenied(String requestPermissions);
     }
 
     /**
      * 检查或申请权限
      *
-     * @param activity
-     * @param requestCode request code, e.g. if you need request CAMERA permission,parameters is PermissionUtils.CODE_CAMERA
+     * @param requestPermission request , Manifest.permission.CAMERA
      */
-    static void checkOrRequestPermissions(final Activity activity, final int requestCode, PermissionGrant permissionGrant) {
+    static void checkOrRequestPermissions(final Activity activity, final String requestPermission, PermissionGrant permissionGrant) {
         if (activity == null) {
             return;
         }
 
-        Log.i(TAG, "requestPermission requestCode:" + requestCode);
-        if (requestCode < 0 || requestCode >= mRequestPermissions.length) {
-            Log.w(TAG, "requestPermission illegal requestCode:" + requestCode);
+        Log.i(TAG, "requestPermission:" + requestPermission);
+        if (TextUtils.isEmpty(requestPermission)) {
+            Log.w(TAG, "requestPermission illegal :" + requestPermission);
             return;
         }
-
-        final String requestPermission = mRequestPermissions[requestCode];
 
         //如果是6.0以下的手机，ActivityCompat.checkSelfPermission()会始终等于PERMISSION_GRANTED，
         // 但是，如果用户关闭了你申请的权限，ActivityCompat.checkSelfPermission(),会导致程序崩溃(java.lang.RuntimeException: Unknown exception code: 1 msg null)，
         // 你可以使用try{}catch(){},处理异常，也可以在这个地方，低于23就什么都不做，
         // 个人建议try{}catch(){}单独处理，提示用户开启权限。
-        /*if (Build.VERSION.SDK_INT < 23) {
-            return;
-        }*/
+        //if (Build.VERSION.SDK_INT < 23) {
+        //    return;
+        ///
 
         int checkSelfPermission;
         try {
@@ -173,12 +94,12 @@ public class PermissionUtils {
 //                return;
             }
             Log.d(TAG, "requestCameraPermission else");
-            ActivityCompat.requestPermissions(activity, new String[]{requestPermission}, requestCode);
+            ActivityCompat.requestPermissions(activity, new String[]{requestPermission}, REQUEST_CODE_PERMISSION);
 
         } else {
             Log.d(TAG, "ActivityCompat.checkSelfPermission ==== PackageManager.PERMISSION_GRANTED");
-            Log.d(TAG, "opened:" + mRequestPermissions[requestCode]);
-            permissionGrant.onPermissionGranted(requestCode);
+            Log.d(TAG, "opened:" + requestPermission);
+            permissionGrant.onPermissionGranted(requestPermission);
         }
     }
 
@@ -193,55 +114,47 @@ public class PermissionUtils {
     }
 
     /**
-     * @param activity
-     * @param requestCode  Need consistent with requestPermission
-     * @param permissions
-     * @param grantResults
+     * @param requestCode Need consistent with requestPermission
      */
     static void requestPermissionsResult(final Activity activity, final int requestCode, @NonNull String[] permissions,
                                          @NonNull int[] grantResults, PermissionGrant permissionGrant) {
-
+        Log.i(TAG, "onRequestPermissionsResult permissions:" + Arrays.toString(permissions)
+                + ",grantResults:" + Arrays.toString(grantResults) + ",length:" + grantResults.length);
         if (activity == null) {
             return;
         }
-        Log.d(TAG, "requestPermissionsResult requestCode:" + requestCode);
-
-        if (requestCode < 0 || requestCode >= mRequestPermissions.length) {
-            Log.w(TAG, "requestPermissionsResult illegal requestCode:" + requestCode);
-            Toast.makeText(activity, "illegal requestCode:" + requestCode, Toast.LENGTH_SHORT).show();
+        if (requestCode != REQUEST_CODE_PERMISSION) {
+            Log.w(TAG, "requestPermissionsResult illegal:" + Arrays.toString(permissions));
             return;
         }
-
-        Log.i(TAG, "onRequestPermissionsResult requestCode:" + requestCode + ",permissions:" + permissions.toString()
-                + ",grantResults:" + grantResults.toString() + ",length:" + grantResults.length);
 
         if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "onRequestPermissionsResult PERMISSION_GRANTED");
             //TODO success, do something, can use onCallback
-            permissionGrant.onPermissionGranted(requestCode);
+            permissionGrant.onPermissionGranted(permissions);
 
         } else {
             //TODO hint user this permission function
             Log.i(TAG, "onRequestPermissionsResult PERMISSION NOT GRANTED");
             //TODO
-            openSettingActivity(activity, permissionsHint[requestCode], permissionGrant);
+            openSettingActivity(activity, Arrays.toString(permissions), permissionGrant);
         }
     }
 
     private static void openSettingActivity(final Activity activity, String message, final PermissionGrant permissionGrant) {
-        showMessageOKCancel(activity, message, (dialog, which) -> {
+        showMessageOKCancel(activity, permissionsHintHead + message, (dialog, which) -> {
             Intent intent = new Intent();
             intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             Log.d(TAG, "getPackageName(): " + activity.getPackageName());
             Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
             intent.setData(uri);
-            activity.startActivityForResult(intent, REQUEST_CODE);
+            activity.startActivityForResult(intent, REQUEST_CODE_OPEN_SETTING);
         }, (dialog, which) -> permissionGrant.onRefuseGranted());
     }
 
     public static class Builder {
         private final Context mContext;
-        private int[] mRequestCodes;
+        private String[] mRequestPermissions;
         private PermissionGranted mPermissionGranted;
         private PermissionDenied mPermissionDenied;
 
@@ -249,8 +162,8 @@ public class PermissionUtils {
             this.mContext = context;
         }
 
-        public Builder permission(int... requestCode) {
-            this.mRequestCodes = requestCode;
+        public Builder permission(String... requestPermissions) {
+            this.mRequestPermissions = requestPermissions;
             return this;
         }
 
@@ -265,29 +178,29 @@ public class PermissionUtils {
         }
 
         public void start() {
-            if (mRequestCodes != null && mRequestCodes.length > 0)
+            if (mRequestPermissions != null && mRequestPermissions.length > 0)
                 request(0);
         }
 
-        private void request(int requestCodeIndex) {
+        private void request(int requestPermissionIndex) {
             long key = new Date().getTime();
             PermissionActivity.permissionGrants.put(key, new PermissionGrant() {
                 @Override
-                public void onPermissionGranted(int... requestCode) {
-                    if (requestCodeIndex < mRequestCodes.length - 1) {
-                        request(requestCodeIndex + 1);
+                public void onPermissionGranted(String... requestPermissions) {
+                    if (requestPermissionIndex < mRequestPermissions.length - 1) {
+                        request(requestPermissionIndex + 1);
                     } else {
-                        mPermissionGranted.onGranted(mRequestCodes);
+                        mPermissionGranted.onGranted();
                     }
                 }
 
                 @Override
                 public void onRefuseGranted() {
-                    mPermissionDenied.onDenied(mRequestCodes[requestCodeIndex]);
+                    mPermissionDenied.onDenied(mRequestPermissions[requestPermissionIndex]);
                 }
             });
             Intent intent = new Intent(mContext, PermissionActivity.class);
-            intent.putExtra("requestCode", mRequestCodes[requestCodeIndex]);
+            intent.putExtra("requestPermission", mRequestPermissions[requestPermissionIndex]);
             intent.putExtra("key", key);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);

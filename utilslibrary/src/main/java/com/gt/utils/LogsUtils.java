@@ -1,11 +1,13 @@
 package com.gt.utils;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.util.Log;
 
+import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -68,20 +70,17 @@ public class LogsUtils {
      * @param context
      */
     public static void writeFileToSD(Context ct, final String pathName, final String context) {
-        PermissionUtils.requestPermission(ct, PermissionUtils.WRITE_EXTERNAL_STORAGE, new PermissionUtils.PermissionGrant() {
-            @Override
-            public void onPermissionGranted(int... requestCode) {
-                if (requestCode[0] == -1) {
-                    return;
-                }
-                String sdStatus = Environment.getExternalStorageState();
-                if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
-                    Log.e("TestFile", "SD card is not avaiable/writeable icon_xingge_right now.");
-                    return;
-                }
-                writeFile(pathName, context);
-            }
-        });
+        new PermissionUtils.Builder(ct)
+                .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .onGranted(() -> {
+                    String sdStatus = Environment.getExternalStorageState();
+                    if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
+                        Log.e("TestFile", "SD card is not avaiable/writeable icon_xingge_right now.");
+                        return;
+                    }
+                    writeFile(pathName, context);
+                })
+                .start();
     }
 
     public static void writeFile(String pathName, final String context) {

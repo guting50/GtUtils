@@ -1,5 +1,6 @@
 package com.gt.utils.widget.multigridview;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,7 +11,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-
+import androidx.annotation.DrawableRes;
+import androidx.annotation.FloatRange;
+import androidx.annotation.IntRange;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.gt.photopicker.SelectModel;
 import com.gt.photopicker.intent.PhotoPickerIntent;
@@ -19,15 +22,7 @@ import com.gt.utils.R;
 import com.gt.utils.widget.AntiShake;
 import com.gt.utils.widget.ImagePagerActivity;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import androidx.annotation.DrawableRes;
-import androidx.annotation.FloatRange;
-import androidx.annotation.IntRange;
+import java.util.*;
 
 /**
  * 上传多张图片网格控件
@@ -172,37 +167,29 @@ public class MultiGridView extends GridView {
             }
         });
 
-        setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (AntiShake.check(view.getId())) {
-                    return;
-                }
-                if (itemClick(ActivityUtils.getTopActivity(), position)) {
-                    if (onAddListener != null)
-                        onAddListener.onAdd();
-                    else
-                        PermissionUtils.requestPermission(getContext(), PermissionUtils.CAMERA, new PermissionUtils.PermissionGrant() {
-                            @Override
-                            public void onPermissionGranted(int... requestCode) {
-                                PermissionUtils.requestPermission(getContext(), PermissionUtils.WRITE_EXTERNAL_STORAGE, new PermissionUtils.PermissionGrant() {
-                                    @Override
-                                    public void onPermissionGranted(int... requestCode) {
-                                        PhotoPickerIntent intent = new PhotoPickerIntent(getContext());
-                                        intent.setSelectModel(SelectModel.MULTI);
-                                        intent.showCarema(true);
-                                        intent.setMaxTotal(getMaxItems());
-                                        intent.setSelectedPaths((ArrayList<String>) getLocalPaths());
-                                        intent.gotoPhotoPickerActivity(getContext(), resultList -> {
-                                            setFilenamesData(resultList);
-                                            if (onAddedListener != null)
-                                                onAddedListener.onAdded();
-                                        });
-                                    }
+        setOnItemClickListener((parent, view, position, id) -> {
+            if (AntiShake.check(view.getId())) {
+                return;
+            }
+            if (itemClick(ActivityUtils.getTopActivity(), position)) {
+                if (onAddListener != null)
+                    onAddListener.onAdd();
+                else
+                    new PermissionUtils.Builder(getContext())
+                            .permission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            .onGranted(() -> {
+                                PhotoPickerIntent intent = new PhotoPickerIntent(getContext());
+                                intent.setSelectModel(SelectModel.MULTI);
+                                intent.showCarema(true);
+                                intent.setMaxTotal(getMaxItems());
+                                intent.setSelectedPaths((ArrayList<String>) getLocalPaths());
+                                intent.gotoPhotoPickerActivity(getContext(), resultList -> {
+                                    setFilenamesData(resultList);
+                                    if (onAddedListener != null)
+                                        onAddedListener.onAdded();
                                 });
-                            }
-                        });
-                }
+                            })
+                            .start();
             }
         });
     }

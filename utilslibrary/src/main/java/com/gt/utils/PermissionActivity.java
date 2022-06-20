@@ -32,10 +32,10 @@ public class PermissionActivity extends AppCompatActivity {
 
         permission = new PermissionUtils.PermissionGrant() {
             @Override
-            public void onPermissionGranted(int... requestCode) {
+            public void onPermissionGranted(String... requestPermissions) {
                 PermissionUtils.PermissionGrant permissionGrant = permissionGrants.get(getIntent().getLongExtra("key", -1));
                 if (permissionGrant != null) {
-                    permissionGrant.onPermissionGranted(requestCode);
+                    permissionGrant.onPermissionGranted(requestPermissions);
                     permissionGrants.remove(permissionGrant);
                 }
                 finish();
@@ -54,18 +54,19 @@ public class PermissionActivity extends AppCompatActivity {
     }
 
     private void requestPermission() {
-        PermissionUtils.checkOrRequestPermissions(PermissionActivity.this, getIntent().getIntExtra("requestCode", -1), permission);
+        PermissionUtils.checkOrRequestPermissions(PermissionActivity.this, getIntent().getStringExtra("requestPermission"), permission);
     }
 
     @Override
     public void onRequestPermissionsResult(final int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionUtils.requestPermissionsResult(this, requestCode, permissions, grantResults, permission);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PermissionUtils.REQUEST_CODE) {
+        if (requestCode == PermissionUtils.REQUEST_CODE_OPEN_SETTING) {
             requestPermission();
         }
     }

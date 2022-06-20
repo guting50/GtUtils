@@ -1,5 +1,6 @@
 package com.gt.githublibrary;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,7 +12,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import com.gt.utils.CacheUtils;
 import com.gt.utils.PermissionUtils;
 import com.gt.utils.floatingeditor.DefaultEditorHolder;
@@ -20,23 +22,11 @@ import com.gt.utils.floatingeditor.FloatEditorActivity;
 import com.gt.utils.floatingeditor.InputCheckRule;
 import com.gt.utils.http.RetrofitHelper;
 import com.gt.utils.ormlite.DbHelper;
-import com.gt.utils.widget.CircleButtonView;
-import com.gt.utils.widget.DateSelectDialog;
-import com.gt.utils.widget.FlowLayout;
-import com.gt.utils.widget.ImagePagerActivity;
-import com.gt.utils.widget.OnNoDoubleClickListener;
+import com.gt.utils.widget.*;
 import com.gt.utils.widget.multigridview.MultiGridView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
+import java.util.*;
 
 public class MainActivity extends AppCompatActivity {
     FlowLayout fl_flow;
@@ -114,38 +104,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void bnOnRpClick(View view) {
         new PermissionUtils.Builder(this)
-                .permission(PermissionUtils.CAMERA, PermissionUtils.RECORD_AUDIO)
-                .onGranted(requestCode -> {
-                    Toast.makeText(this, PermissionUtils.mRequestPermissions[requestCode[0]] + " : 允许", Toast.LENGTH_LONG).show();
+                .permission(Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA)
+                .onGranted(() -> {
+                    Toast.makeText(this, "允许", Toast.LENGTH_LONG).show();
                 })
-                .onDenied(requestCode -> {
-                    Toast.makeText(this, PermissionUtils.mRequestPermissions[requestCode[0]] + " : 拒绝", Toast.LENGTH_LONG).show();
+                .onDenied(requestPermissions -> {
+                    Toast.makeText(this, requestPermissions + " : 拒绝", Toast.LENGTH_LONG).show();
                 })
                 .start();
-
-//        PermissionUtils.requestPermission(this, PermissionUtils.CAMERA, new PermissionUtils.PermissionGrant() {
-//            @Override
-//            public void onPermissionGranted(int... requestCode) {
-//                Toast.makeText(MainActivity.this, "CODE_CAMERA : 允许", Toast.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onRefuseGranted() {
-//                Toast.makeText(MainActivity.this, "CODE_CAMERA : 拒绝", Toast.LENGTH_LONG).show();
-//            }
-//        });
-//
-//        PermissionUtils.requestPermission(this, PermissionUtils.REQUEST_INSTALL_PACKAGES, new PermissionUtils.PermissionGrant() {
-//            @Override
-//            public void onPermissionGranted(int... requestCode) {
-//                Toast.makeText(MainActivity.this, "CODE_RECORD_AUDIO : 允许", Toast.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onRefuseGranted() {
-//                Toast.makeText(MainActivity.this, "CODE_RECORD_AUDIO : 拒绝", Toast.LENGTH_LONG).show();
-//            }
-//        });
+//        new PermissionUtils.Builder(this)
+//                .permission(Manifest.permission.CAMERA)
+//                .onGranted(requestPermissions -> {
+//                    Toast.makeText(this, Arrays.toString(requestPermissions) + " : 允许", Toast.LENGTH_LONG).show();
+//                })
+//                .onDenied(requestPermissions -> {
+//                    Toast.makeText(this, Arrays.toString(requestPermissions) + " : 拒绝", Toast.LENGTH_LONG).show();
+//                })
+//                .start();
     }
 
     public void bnOnHttpRClick(View view) {
