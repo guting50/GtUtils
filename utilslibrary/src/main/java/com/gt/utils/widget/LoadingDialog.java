@@ -17,13 +17,16 @@ import com.gt.utils.R;
 
 public class LoadingDialog {
 
-    public static Dialog dialog;
+    public static Dialog mDialog;
 
-    public static Dialog create(Context context) {
+    public Dialog dialog;
+    public TextView tipTextView;
+
+    public static LoadingDialog create(Context context) {
         return create(context, "请稍等", true, false);
     }
 
-    public static Dialog create(Context context, String msg, boolean isCancelable) {
+    public static LoadingDialog create(Context context, String msg, boolean isCancelable) {
         return create(context, msg, isCancelable, false);
     }
 
@@ -36,21 +39,22 @@ public class LoadingDialog {
      * @param isAlone      是否单独使用
      * @return 返回Dialog
      */
-    public static Dialog create(Context context, String msg, boolean isCancelable, boolean isAlone) {
-        Dialog loadingDialog = new Dialog(context, R.style.MyDialogStyle);
+    public static LoadingDialog create(Context context, String msg, boolean isCancelable, boolean isAlone) {
+        LoadingDialog loadingDialog = new LoadingDialog();
+        loadingDialog.dialog = new Dialog(context, R.style.MyDialogStyle);
         try {
             LayoutInflater inflater = LayoutInflater.from(context);
             @SuppressLint("InflateParams") View v = inflater.inflate(R.layout.dialog_loading, null);// 得到加载view
             FrameLayout layout = v.findViewById(R.id.dialog_loading_view);// 加载布局
-            TextView tipTextView = v.findViewById(R.id.tipTextView);// 提示文字
-            tipTextView.setText(msg);// 设置加载信息
+            loadingDialog.tipTextView = v.findViewById(R.id.tipTextView);// 提示文字
+            loadingDialog.tipTextView.setText(msg);// 设置加载信息
 
-            loadingDialog.setCancelable(isCancelable); // 是否可以按“返回键”消失
-            loadingDialog.setCanceledOnTouchOutside(false); // 点击加载框以外的区域
-            loadingDialog.setContentView(layout, new FrameLayout.LayoutParams(
+            loadingDialog.dialog.setCancelable(isCancelable); // 是否可以按“返回键”消失
+            loadingDialog.dialog.setCanceledOnTouchOutside(false); // 点击加载框以外的区域
+            loadingDialog.dialog.setContentView(layout, new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT,
                     FrameLayout.LayoutParams.MATCH_PARENT));// 设置布局
-            Window window = loadingDialog.getWindow();
+            Window window = loadingDialog.dialog.getWindow();
             WindowManager.LayoutParams lp = window.getAttributes();
             lp.width = WindowManager.LayoutParams.MATCH_PARENT;
             lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -61,7 +65,7 @@ public class LoadingDialog {
 
             if (!isAlone) {
                 closeDialog();
-                dialog = loadingDialog;
+                mDialog = loadingDialog.dialog;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,13 +73,22 @@ public class LoadingDialog {
         return loadingDialog;
     }
 
+    public void show() {
+        dialog.show();
+    }
+
+    public void show(String msg) {
+        tipTextView.setText(msg);
+        dialog.show();
+    }
+
     /**
      * 关闭dialog
      */
     public static void closeDialog() {
         try {
-            if (dialog != null && dialog.isShowing()) {
-                dialog.dismiss();
+            if (mDialog != null && mDialog.isShowing()) {
+                mDialog.dismiss();
             }
         } catch (Exception e) {
             e.printStackTrace();
