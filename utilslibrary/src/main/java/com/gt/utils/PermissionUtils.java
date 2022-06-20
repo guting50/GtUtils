@@ -25,6 +25,7 @@ import static android.content.DialogInterface.OnClickListener;
 public class PermissionUtils {
     private static final String TAG = PermissionUtils.class.getSimpleName();
     public static String permissionsHintHead = "没有此权限，无法开启这个功能，请开启权限：";
+    public static boolean DEBUG = false;
 
     public static int REQUEST_CODE_OPEN_SETTING = 50, REQUEST_CODE_PERMISSION = 100;
 
@@ -55,9 +56,11 @@ public class PermissionUtils {
             return;
         }
 
-        Log.i(TAG, "requestPermission:" + requestPermission);
+        if (DEBUG)
+            Log.i(TAG, "requestPermission:" + requestPermission);
         if (TextUtils.isEmpty(requestPermission)) {
-            Log.w(TAG, "requestPermission illegal :" + requestPermission);
+            if (DEBUG)
+                Log.w(TAG, "requestPermission illegal :" + requestPermission);
             return;
         }
 
@@ -75,12 +78,14 @@ public class PermissionUtils {
         } catch (RuntimeException e) {
             Toast.makeText(activity, "please open this permission", Toast.LENGTH_SHORT)
                     .show();
-            Log.e(TAG, "RuntimeException:" + e.getMessage());
+            if (DEBUG)
+                Log.e(TAG, "RuntimeException:" + e.getMessage());
             return;
         }
 
         if (checkSelfPermission != PackageManager.PERMISSION_GRANTED) {
-            Log.i(TAG, "ActivityCompat.checkSelfPermission != PackageManager.PERMISSION_GRANTED");
+            if (DEBUG)
+                Log.i(TAG, "ActivityCompat.checkSelfPermission != PackageManager.PERMISSION_GRANTED");
 
 //          有时候你可能会需要跟用户解释一下权限的用途.
 //          注意不是每条权限都需要解释,显而易见的那种可以不解释,太多的解释会降低用户体验.
@@ -90,15 +95,19 @@ public class PermissionUtils {
 //          如果设备策略禁止应用拥有这条权限, 这个方法也返回false.
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity, requestPermission)) {
                 //默认不做解释
-                Log.i(TAG, "requestPermission shouldShowRequestPermissionRationale");
+                if (DEBUG)
+                    Log.i(TAG, "requestPermission shouldShowRequestPermissionRationale");
 //                return;
             }
-            Log.d(TAG, "requestCameraPermission else");
+            if (DEBUG)
+                Log.d(TAG, "requestCameraPermission else");
             ActivityCompat.requestPermissions(activity, new String[]{requestPermission}, REQUEST_CODE_PERMISSION);
 
         } else {
-            Log.d(TAG, "ActivityCompat.checkSelfPermission ==== PackageManager.PERMISSION_GRANTED");
-            Log.d(TAG, "opened:" + requestPermission);
+            if (DEBUG) {
+                Log.d(TAG, "ActivityCompat.checkSelfPermission ==== PackageManager.PERMISSION_GRANTED");
+                Log.d(TAG, "opened:" + requestPermission);
+            }
             permissionGrant.onPermissionGranted(requestPermission);
         }
     }
@@ -118,24 +127,28 @@ public class PermissionUtils {
      */
     static void requestPermissionsResult(final Activity activity, final int requestCode, @NonNull String[] permissions,
                                          @NonNull int[] grantResults, PermissionGrant permissionGrant) {
-        Log.i(TAG, "onRequestPermissionsResult permissions:" + Arrays.toString(permissions)
-                + ",grantResults:" + Arrays.toString(grantResults) + ",length:" + grantResults.length);
+        if (DEBUG)
+            Log.i(TAG, "onRequestPermissionsResult permissions:" + Arrays.toString(permissions)
+                    + ",grantResults:" + Arrays.toString(grantResults) + ",length:" + grantResults.length);
         if (activity == null) {
             return;
         }
         if (requestCode != REQUEST_CODE_PERMISSION) {
-            Log.w(TAG, "requestPermissionsResult illegal:" + Arrays.toString(permissions));
+            if (DEBUG)
+                Log.w(TAG, "requestPermissionsResult illegal:" + Arrays.toString(permissions));
             return;
         }
 
         if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Log.i(TAG, "onRequestPermissionsResult PERMISSION_GRANTED");
+            if (DEBUG)
+                Log.i(TAG, "onRequestPermissionsResult PERMISSION_GRANTED");
             //TODO success, do something, can use onCallback
             permissionGrant.onPermissionGranted(permissions);
 
         } else {
             //TODO hint user this permission function
-            Log.i(TAG, "onRequestPermissionsResult PERMISSION NOT GRANTED");
+            if (DEBUG)
+                Log.i(TAG, "onRequestPermissionsResult PERMISSION NOT GRANTED");
             //TODO
             openSettingActivity(activity, Arrays.toString(permissions), permissionGrant);
         }
@@ -145,7 +158,8 @@ public class PermissionUtils {
         showMessageOKCancel(activity, permissionsHintHead + message, (dialog, which) -> {
             Intent intent = new Intent();
             intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            Log.d(TAG, "getPackageName(): " + activity.getPackageName());
+            if (DEBUG)
+                Log.d(TAG, "getPackageName(): " + activity.getPackageName());
             Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
             intent.setData(uri);
             activity.startActivityForResult(intent, REQUEST_CODE_OPEN_SETTING);

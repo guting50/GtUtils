@@ -58,7 +58,6 @@ public class LoadingDialog {
             window.setAttributes(lp);
             //去掉动画，避免切换页面时闪烁
 //            window.setWindowAnimations(R.style.PopWindowAnimStyle);
-            loadingDialog.show();
 
             if (!isAlone) {
                 closeDialog();
