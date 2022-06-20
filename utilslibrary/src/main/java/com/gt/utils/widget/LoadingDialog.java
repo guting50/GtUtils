@@ -74,12 +74,20 @@ public class LoadingDialog {
     }
 
     public void show() {
-        dialog.show();
+        if (dialog != null)
+            dialog.show();
     }
 
     public void show(String msg) {
-        tipTextView.setText(msg);
-        dialog.show();
+        if (dialog != null) {
+            tipTextView.setText(msg);
+            dialog.show();
+        }
+    }
+
+    public void dismiss() {
+        if (dialog != null)
+            dialog.dismiss();
     }
 
     /**
