@@ -112,15 +112,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, requestPermissions + " : 拒绝", Toast.LENGTH_LONG).show();
                 })
                 .start();
-//        new PermissionUtils.Builder(this)
-//                .permission(Manifest.permission.CAMERA)
-//                .onGranted(requestPermissions -> {
-//                    Toast.makeText(this, Arrays.toString(requestPermissions) + " : 允许", Toast.LENGTH_LONG).show();
-//                })
-//                .onDenied(requestPermissions -> {
-//                    Toast.makeText(this, Arrays.toString(requestPermissions) + " : 拒绝", Toast.LENGTH_LONG).show();
-//                })
-//                .start();
     }
 
     public void bnOnHttpRClick(View view) {
