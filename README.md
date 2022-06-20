@@ -50,18 +50,15 @@
 ```
 ## PermissionUtils
 ```Java
-  PermissionUtils.requestPermission(this, PermissionUtils.CAMERA, new PermissionUtils.PermissionGrant() {
-      @Override
-      public void onPermissionGranted(int... requestCode) {
-        Toast.makeText(MainActivity.this, "CODE_CAMERA : 允许", Toast.LENGTH_LONG).show();
-      }
-
-      @Override
-      public void onRefuseGranted() {
-        Toast.makeText(MainActivity.this, "CODE_CAMERA : 拒绝", Toast.LENGTH_LONG).show();
-      }
-      
-  });
+  new PermissionUtils.Builder(this)
+        .permission(Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA)
+        .onGranted(() -> {
+            Toast.makeText(this, "允许", Toast.LENGTH_LONG).show();
+         })
+         .onDenied(requestPermissions -> {
+            Toast.makeText(this, requestPermissions + " : 拒绝", Toast.LENGTH_LONG).show();
+         })
+         .start();
 ```
 #### 设置拒绝后的弹窗提示语  默认提示语：没有此权限，无法开启这个功能，请开启权限：摄像头
 ````Java
