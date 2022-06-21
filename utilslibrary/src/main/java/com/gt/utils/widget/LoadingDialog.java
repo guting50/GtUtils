@@ -1,6 +1,7 @@
 package com.gt.utils.widget;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.*;
@@ -18,15 +19,15 @@ import com.gt.utils.R;
 public class LoadingDialog {
 
     public static Dialog mDialog;
-
+    public Activity mContext;
     public Dialog dialog;
     public TextView tipTextView;
 
-    public static LoadingDialog create(Context context) {
+    public static LoadingDialog create(Activity context) {
         return create(context, "请稍等", true, false);
     }
 
-    public static LoadingDialog create(Context context, String msg, boolean isCancelable) {
+    public static LoadingDialog create(Activity context, String msg, boolean isCancelable) {
         return create(context, msg, isCancelable, false);
     }
 
@@ -39,8 +40,9 @@ public class LoadingDialog {
      * @param isAlone      是否单独使用
      * @return 返回Dialog
      */
-    public static LoadingDialog create(Context context, String msg, boolean isCancelable, boolean isAlone) {
+    public static LoadingDialog create(Activity context, String msg, boolean isCancelable, boolean isAlone) {
         LoadingDialog loadingDialog = new LoadingDialog();
+        loadingDialog.mContext = context;
         loadingDialog.dialog = new Dialog(context, R.style.MyDialogStyle);
         try {
             LayoutInflater inflater = LayoutInflater.from(context);
@@ -74,12 +76,12 @@ public class LoadingDialog {
     }
 
     public void show() {
-        if (dialog != null)
+        if (dialog != null && !mContext.isDestroyed())
             dialog.show();
     }
 
     public void show(String msg) {
-        if (dialog != null) {
+        if (dialog != null && !mContext.isDestroyed()) {
             tipTextView.setText(msg);
             dialog.show();
         }
