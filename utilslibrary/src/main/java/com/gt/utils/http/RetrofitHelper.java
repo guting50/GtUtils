@@ -38,7 +38,7 @@ public class RetrofitHelper {
     private static Context mContext;
     private static List<Interceptor> mInterceptors;
 
-    public static boolean DEBUG = true;
+    public static GtHttpLoggingInterceptor.Level logLevel = GtHttpLoggingInterceptor.Level.NONE;
 
     public static <T> T create(Context context, String baseUrl, Class<T> clazz) {
         return create(context, baseUrl, null, clazz);
@@ -58,8 +58,7 @@ public class RetrofitHelper {
 
     private static OkHttpClient.Builder getOkHttpClientBuilder() {
         GtHttpLoggingInterceptor loggingInterceptor = new GtHttpLoggingInterceptor();
-        if (DEBUG)
-            loggingInterceptor.setLevel(GtHttpLoggingInterceptor.Level.BODY);
+        loggingInterceptor.setLevel(logLevel);
 
         File cacheFile = new File(mContext.getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
