@@ -56,12 +56,7 @@ public class MainActivity extends AppCompatActivity {
         CacheUtils.put("aaa", "bbb");
         Log.e("aaa", CacheUtils.getVal("aaa"));
         circleButton = findViewById(R.id.circle_button);
-        circleButton.setOnClickListener(new CircleButtonView.OnClickListener() {
-            @Override
-            public void onClick() {
-                Toast.makeText(MainActivity.this, "onClick", Toast.LENGTH_LONG).show();
-            }
-        });
+        circleButton.setOnClickListener(() -> Toast.makeText(MainActivity.this, "onClick", Toast.LENGTH_LONG).show());
         circleButton.setOnLongClickListener(new CircleButtonView.OnLongClickListener() {
             @Override
             public void onLongClick() {

@@ -1,42 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/dialog_loading_view"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/dialog_loading_view"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/loading_bg"
+              android:gravity="center"
+              android:layout_gravity="center"
+              android:orientation="vertical"
+              android:minWidth="140dp"
+              android:minHeight="100dp"
+              android:paddingTop="15dp"
+              android:paddingBottom="15dp">
 
-    <LinearLayout
+    <ProgressBar
+            android:id="@+id/progressBar1"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:indeterminateBehavior="repeat"
+            android:indeterminateDrawable="@drawable/dialog_loading"
+            android:indeterminateOnly="true"/>
+
+    <TextView
+            android:id="@+id/tipTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/loading_bg"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:gravity="center"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:layout_margin="50dp"
-            android:minWidth="140dp"
-            android:minHeight="100dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp">
+            android:text="加载中..."
+            android:textColor="#f0f0f0"
+            android:textSize="15sp"/>
+</LinearLayout>
 
-        <ProgressBar
-                android:id="@+id/progressBar1"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center_horizontal"
-                android:indeterminateBehavior="repeat"
-                android:indeterminateDrawable="@drawable/dialog_loading"
-                android:indeterminateOnly="true"/>
-
-        <TextView
-                android:id="@+id/tipTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:gravity="center"
-                android:text="加载中..."
-                android:textColor="#f0f0f0"
-                android:textSize="15sp"/>
-    </LinearLayout>
-
-</FrameLayout>

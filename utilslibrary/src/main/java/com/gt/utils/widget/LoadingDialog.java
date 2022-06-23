@@ -3,9 +3,8 @@ package com.gt.utils.widget;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.view.*;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.gt.utils.R;
 
@@ -17,7 +16,6 @@ import com.gt.utils.R;
  */
 
 public class LoadingDialog {
-
     public static Dialog mDialog;
     public Activity mContext;
     public Dialog dialog;
@@ -47,18 +45,18 @@ public class LoadingDialog {
         try {
             LayoutInflater inflater = LayoutInflater.from(context);
             @SuppressLint("InflateParams") View v = inflater.inflate(R.layout.dialog_loading, null);// 得到加载view
-            FrameLayout layout = v.findViewById(R.id.dialog_loading_view);// 加载布局
+            LinearLayout layout = v.findViewById(R.id.dialog_loading_view);// 加载布局
             loadingDialog.tipTextView = v.findViewById(R.id.tipTextView);// 提示文字
             loadingDialog.tipTextView.setText(msg);// 设置加载信息
 
             loadingDialog.dialog.setCancelable(isCancelable); // 是否可以按“返回键”消失
-            loadingDialog.dialog.setCanceledOnTouchOutside(false); // 点击加载框以外的区域
-            loadingDialog.dialog.setContentView(layout, new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT));// 设置布局
+            loadingDialog.dialog.setCanceledOnTouchOutside(isCancelable); // 点击加载框以外的区域
+            loadingDialog.dialog.setContentView(layout, new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT));// 设置布局
             Window window = loadingDialog.dialog.getWindow();
             WindowManager.LayoutParams lp = window.getAttributes();
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
             lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
             window.setGravity(Gravity.CENTER);
             window.setAttributes(lp);
@@ -102,6 +100,53 @@ public class LoadingDialog {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public static class Builder {
+        Activity context;
+        String msg = "请稍后";//          内容
+        boolean isCancelable = true;// 是否可取消
+        boolean isAlone = false;
+        LoadingDialog loadingDialog;
+        int count;
+
+        public Builder(Activity context) {
+            this.context = context;
+        }
+
+        public Builder setIsCancelable(boolean isCancelable) {
+            this.isCancelable = isCancelable;
+            return this;
+        }
+
+        public Builder setIsAlone(boolean isAlone) {
+            this.isAlone = isAlone;
+            return this;
+        }
+
+        public LoadingDialog create() {
+            if (loadingDialog == null) {
+                loadingDialog = LoadingDialog.create(context, msg, isCancelable, isAlone);
+            }
+            return loadingDialog;
+        }
+
+        public void show() {
+            count++;
+            create().show();
+        }
+
+        public void show(String msg) {
+            count++;
+            create().show(msg);
+        }
+
+        public void dismiss() {
+            if (--count == 0) {
+                loadingDialog.dismiss();
+            }
         }
     }
 }
