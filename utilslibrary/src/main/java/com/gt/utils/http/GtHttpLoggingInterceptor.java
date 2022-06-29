@@ -74,7 +74,8 @@ public class GtHttpLoggingInterceptor implements Interceptor {
          * <-- END HTTP
          * }</pre>
          */
-        BODY
+        BODY,
+        BODY_DETAILS
     }
 
     public interface Logger {
@@ -120,7 +121,8 @@ public class GtHttpLoggingInterceptor implements Interceptor {
             return chain.proceed(request);
         }
 
-        boolean logBody = level == Level.BODY;
+        boolean logBodyDetails = level == Level.BODY_DETAILS;
+        boolean logBody = logBodyDetails || level == Level.BODY;
         boolean logHeaders = logBody || level == Level.HEADERS;
 
         RequestBody requestBody = request.body();
@@ -174,7 +176,12 @@ public class GtHttpLoggingInterceptor implements Interceptor {
 
                 logStrs.add("");
                 if (isPlaintext(buffer)) {
-                    logStrs.add(buffer.readString(charset));
+                    String result = buffer.readString(charset);
+                    if (logBodyDetails) {
+                        logStrs.add(result);
+                    } else {
+                        logStrs.add(result.substring(0, Math.min(result.length(), 1000)));
+                    }
                     logStrs.add("--> END " + request.method()
                             + " (" + requestBody.contentLength() + "-byte body)");
                 } else {
@@ -234,7 +241,12 @@ public class GtHttpLoggingInterceptor implements Interceptor {
 
                 if (contentLength != 0) {
                     logStrs.add("");
-                    logStrs.add(buffer.clone().readString(charset));
+                    String result = buffer.clone().readString(charset);
+                    if (logBodyDetails) {
+                        logStrs.add(result);
+                    } else {
+                        logStrs.add(result.substring(0, Math.min(result.length(), 1000)));
+                    }
                 }
 
                 logStrs.add("<-- END HTTP (" + buffer.size() + "-byte body)");
