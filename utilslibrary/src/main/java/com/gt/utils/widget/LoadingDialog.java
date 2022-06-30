@@ -55,7 +55,7 @@ public class LoadingDialog {
                     LinearLayout.LayoutParams.MATCH_PARENT));// 设置布局
             Window window = loadingDialog.dialog.getWindow();
             WindowManager.LayoutParams lp = window.getAttributes();
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
             lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
             window.setGravity(Gravity.CENTER);
             window.setAttributes(lp);
