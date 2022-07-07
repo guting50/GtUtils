@@ -346,8 +346,7 @@ public class GtHttpLoggingInterceptor implements Interceptor {
     private static void handleLogStr(StringBuilder sb, String str, int padding, int totalLength) {
         try {
             str = URLDecoder.decode(str, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
         }
 
         List<String> list = interception(str, totalLength - padding);
