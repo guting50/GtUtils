@@ -1,8 +1,16 @@
 package com.gt.utils.widget;
 
 import android.app.Activity;
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import com.gt.utils.BR;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -11,10 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 此适配器适用于简单、单一的列表（每个item的布局都一样）
@@ -35,27 +39,36 @@ import androidx.recyclerview.widget.RecyclerView;
  * 因为获取的实例不对而出错，目前最好的办法就是带上obj
  * 当最外层为fragment的时候，也是不能直接newInstance的，所以也要带上obj
  */
+
 public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
 
-    private Class<? extends VHolder> clazz;
+    private Class<? extends SimpleAdapter.VHolder> clazz;
+    private Context context;
+    private int resId;
     private List data = new ArrayList<>();
     private Object obj;
 
-    public SimpleAdapter(@NonNull Class<? extends VHolder> holder) {
+    public SimpleAdapter(Context context, int resId) {
+        this.clazz = SimpleAdapter.DataBindingHolder.class;
+        this.context = context;
+        this.resId = resId;
+    }
+
+    public SimpleAdapter(@NonNull Class<? extends SimpleAdapter.VHolder> holder) {
         this.clazz = holder;
     }
 
-    public SimpleAdapter(List data, @NonNull Class<? extends VHolder> holder) {
+    public SimpleAdapter(List data, @NonNull Class<? extends SimpleAdapter.VHolder> holder) {
         this.clazz = holder;
         this.data = data;
     }
 
-    public SimpleAdapter(Object obj, @NonNull Class<? extends VHolder> holder) {
+    public SimpleAdapter(Object obj, @NonNull Class<? extends SimpleAdapter.VHolder> holder) {
         this.clazz = holder;
         this.obj = obj;
     }
 
-    public SimpleAdapter(Object obj, List data, @NonNull Class<? extends VHolder> holder) {
+    public SimpleAdapter(Object obj, List data, @NonNull Class<? extends SimpleAdapter.VHolder> holder) {
         this.clazz = holder;
         this.obj = obj;
         this.data = data;
@@ -65,6 +78,11 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
     @Override
     public VHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         try {
+            if (resId > 0) {
+                Constructor ct = clazz.getDeclaredConstructor(View.class);
+                ct.setAccessible(true);
+                return (VHolder) ct.newInstance(LayoutInflater.from(context).inflate(resId, parent, false));
+            }
             if (clazz.getEnclosingClass() == null) {//如果不是匿名内部类
                 Constructor ct = clazz.getDeclaredConstructor(ViewGroup.class);
                 ct.setAccessible(true);
@@ -91,7 +109,6 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
                     ct.setAccessible(true);
                     result = ct.newInstance(result);
                 }
-
                 Constructor ct = clazz.getDeclaredConstructor(result.getClass(), ViewGroup.class);
                 ct.setAccessible(true);
                 return (VHolder) ct.newInstance(result, parent);
@@ -148,6 +165,30 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
         }
 
         public abstract void onBindViewHolder(T item, int position);
+    }
+
+    public static class DataBindingHolder<T> extends SimpleAdapter.VHolder<T> {
+        private List data = new ArrayList<>();
+
+        private ViewDataBinding mBinding;
+
+        public DataBindingHolder(@NonNull View itemView) {
+            super(itemView);
+            mBinding = DataBindingUtil.bind(itemView);
+        }
+
+        public void setData(List data) {
+            this.data = data;
+        }
+
+        public int getItemCount() {
+            return data.size();
+        }
+
+        @Override
+        public void onBindViewHolder(T item, int position) {
+            mBinding.setVariable(BR.itemData, item);
+        }
     }
 
     public Map<String, Activity> getAllActivitys() {
