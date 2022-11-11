@@ -7,7 +7,7 @@
             android:layout_height="wrap_content"/>
 
     <data>
-
+/
         <variable
                 name="itemData"
                 type="java.lang.Object"/>
