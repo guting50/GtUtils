@@ -188,6 +188,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
         @Override
         public void onBindViewHolder(T item, int position) {
             mBinding.setVariable(BR.itemData, item);
+            mBinding.setVariable(BR.position, position);
         }
     }
 

@@ -10,5 +10,8 @@
         <variable
                 name="itemData"
                 type="java.lang.Object"/>
+        <variable
+                name="position"
+                type="java.lang.Integer"/>
     </data>
 </layout>
