@@ -6,19 +6,15 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
-
-import com.gt.utils.R;
-
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import com.gt.utils.R;
 
 public class BgCLayout extends ConstraintLayout {
 
     public ViewBgControl viewBgControl;
-    private OnClickListener onClickListener;
 
     public BgCLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -28,15 +24,13 @@ public class BgCLayout extends ConstraintLayout {
         super(context, attrs, defStyleAttr);
         viewBgControl = new ViewBgControl(this);
         viewBgControl.initBgStyle(context.obtainStyledAttributes(attrs, R.styleable.BgCLayout));
+    }
 
-        //当设置在触摸模式下可以获取焦点时，如果不设置点击事件，onFocusChanged不回调
-        super.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewBgControl.setChecked(!viewBgControl.checked);
-                if (onClickListener != null) {
-                    onClickListener.onClick(v);
-                }
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        super.setOnClickListener(v -> {
+            viewBgControl.setChecked(!viewBgControl.checked);
+            if (l != null) {
+                l.onClick(v);
             }
         });
     }
@@ -62,10 +56,6 @@ public class BgCLayout extends ConstraintLayout {
     protected void onFocusChanged(boolean gainFocus, int direction, @Nullable Rect previouslyFocusedRect) {
         super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
         viewBgControl.setFocused(gainFocus);
-    }
-
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        onClickListener = l;
     }
 
     public void setEnabled(boolean enabled) {

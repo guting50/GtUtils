@@ -70,14 +70,6 @@ public class BgTextView extends TextView {
         viewBgControl.initBgStyle(typedArray);
 
 //        typedArray.recycle();//释放资源
-
-        //当设置在触摸模式下可以获取焦点时，如果不设置点击事件，onFocusChanged不回调
-        super.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBgClick(v);
-            }
-        });
     }
 
     @Override
@@ -112,13 +104,6 @@ public class BgTextView extends TextView {
         super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
         setFocused(gainFocus);
         viewBgControl.setFocused(gainFocus);
-    }
-
-    private void onBgClick(View view) {
-        setChecked(!checked);
-        if (onClickListener != null) {
-            onClickListener.onClick(view);
-        }
     }
 
     public void setCurrentStyle(Style style) {
@@ -158,6 +143,14 @@ public class BgTextView extends TextView {
 
     public void setOnClickListener(@Nullable OnClickListener l) {
         this.onClickListener = l;
+        super.setOnClickListener(this::onBgClick);
+    }
+
+    private void onBgClick(View view) {
+        setChecked(!checked);
+        if (onClickListener != null) {
+            onClickListener.onClick(view);
+        }
     }
 
     public void setText(String text) {

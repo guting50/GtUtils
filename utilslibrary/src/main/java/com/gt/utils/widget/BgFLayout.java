@@ -18,7 +18,6 @@ import androidx.annotation.RequiresApi;
 public class BgFLayout extends FrameLayout {
 
     public ViewBgControl viewBgControl;
-    private OnClickListener onClickListener;
 
     public BgFLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -28,15 +27,13 @@ public class BgFLayout extends FrameLayout {
         super(context, attrs, defStyleAttr);
         viewBgControl = new ViewBgControl(this);
         viewBgControl.initBgStyle(context.obtainStyledAttributes(attrs, R.styleable.BgFLayout));
+    }
 
-        //当设置在触摸模式下可以获取焦点时，如果不设置点击事件，onFocusChanged不回调
-        super.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewBgControl.setChecked(!viewBgControl.checked);
-                if (onClickListener != null) {
-                    onClickListener.onClick(v);
-                }
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        super.setOnClickListener(v -> {
+            viewBgControl.setChecked(!viewBgControl.checked);
+            if (l != null) {
+                l.onClick(v);
             }
         });
     }
@@ -62,10 +59,6 @@ public class BgFLayout extends FrameLayout {
     protected void onFocusChanged(boolean gainFocus, int direction, @Nullable Rect previouslyFocusedRect) {
         super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
         viewBgControl.setFocused(gainFocus);
-    }
-
-    public void setOnClickListener(@Nullable OnClickListener l) {
-        onClickListener = l;
     }
 
     public void setEnabled(boolean enabled) {

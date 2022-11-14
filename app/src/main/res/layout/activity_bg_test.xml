@@ -30,7 +30,7 @@
                 android:textColor="#ffffffff"
                 android:textSize="16sp" />
 
-            <com.gt.utils.widget.BgLayout
+            <com.gt.utils.widget.BgLLayout
                 android:id="@+id/bgLayout"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
@@ -54,13 +54,13 @@
                     android:textColor="#ffffffff"
                     android:textSize="16sp" />
 
-            </com.gt.utils.widget.BgLayout>
+            </com.gt.utils.widget.BgLLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.gt.utils.widget.BgLayout
+                <com.gt.utils.widget.BgLLayout
                     android:id="@+id/bgLayout1"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
@@ -83,13 +83,13 @@
                         android:textColor="#ffffffff"
                         android:textSize="16sp" />
 
-                </com.gt.utils.widget.BgLayout>
+                </com.gt.utils.widget.BgLLayout>
 
                 <View
                     android:layout_width="20dp"
                     android:layout_height="1dp" />
 
-                <com.gt.utils.widget.BgLayout
+                <com.gt.utils.widget.BgLLayout
                     android:id="@+id/bgLayout1_1"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
@@ -108,11 +108,11 @@
                         android:textColor="#ffffffff"
                         android:textSize="16sp" />
 
-                </com.gt.utils.widget.BgLayout>
+                </com.gt.utils.widget.BgLLayout>
 
             </LinearLayout>
 
-            <com.gt.utils.widget.BgLayout
+            <com.gt.utils.widget.BgLLayout
                 android:id="@+id/bgLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
@@ -135,9 +135,9 @@
                     android:textColor="#ffffffff"
                     android:textSize="16sp" />
 
-            </com.gt.utils.widget.BgLayout>
+            </com.gt.utils.widget.BgLLayout>
 
-            <com.gt.utils.widget.BgLayout
+            <com.gt.utils.widget.BgLLayout
                 android:id="@+id/bgLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -172,9 +172,9 @@
                     android:textColor="#ffffffff"
                     android:textSize="16sp" />
 
-            </com.gt.utils.widget.BgLayout>
+            </com.gt.utils.widget.BgLLayout>
 
-            <com.gt.utils.widget.BgLayout
+            <com.gt.utils.widget.BgLLayout
                 android:id="@+id/bgLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
@@ -189,7 +189,7 @@
 
                 <com.gt.utils.widget.BgTextView
                     android:id="@+id/bgTextView1"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:focusableInTouchMode="true"
@@ -202,7 +202,7 @@
                     app:text_no_enabled="hahaha"
                     app:text_pressed="按下" />
 
-            </com.gt.utils.widget.BgLayout>
+            </com.gt.utils.widget.BgLLayout>
 
             <com.gt.utils.widget.BgTextView
                 android:id="@+id/bgTextView2"
@@ -213,7 +213,7 @@
                 android:focusableInTouchMode="true"
                 android:gravity="center"
                 android:text="BgTextView"
-                android:textColor="#ffffff"
+                android:textColor="#ffff11"
                 android:textSize="16sp"
                 app:corners_radius="8dp"
                 app:solid_color="@color/colorPrimary"
