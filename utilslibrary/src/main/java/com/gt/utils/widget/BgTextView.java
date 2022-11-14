@@ -11,12 +11,10 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
-
-import com.gt.utils.GsonUtils;
-import com.gt.utils.R;
-
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
+import com.gt.utils.GsonUtils;
+import com.gt.utils.R;
 
 @SuppressLint("AppCompatCustomView")
 public class BgTextView extends TextView {
@@ -245,4 +243,203 @@ public class BgTextView extends TextView {
             invalidate();
         }
     }
+
+    //**********def_color************
+    public void setSolid_start_color(@ColorInt int resId) {
+        viewBgControl.defStyle.solid_start_color = resId;
+        invalidateDef();
+    }
+
+    public void setSolid_end_color(@ColorInt int resId) {
+        viewBgControl.defStyle.solid_end_color = resId;
+        invalidateDef();
+    }
+
+    public void setSolid_color(@ColorInt int resId) {
+        viewBgControl.defStyle.solid_start_color = resId;
+        viewBgControl.defStyle.solid_end_color = resId;
+        invalidateDef();
+    }
+
+    public void setStroke_start_color(@ColorInt int resId) {
+        viewBgControl.defStyle.stroke_start_color = resId;
+        invalidateDef();
+    }
+
+    public void setStroke_end_color(@ColorInt int resId) {
+        viewBgControl.defStyle.stroke_end_color = resId;
+        invalidateDef();
+    }
+
+    public void setStroke_color(@ColorInt int resId) {
+        viewBgControl.defStyle.stroke_start_color = resId;
+        viewBgControl.defStyle.stroke_end_color = resId;
+        invalidateDef();
+    }
+
+    public void invalidateDef() {
+        viewBgControl.setCurrentStyle(viewBgControl.defStyle);
+        invalidate();
+    }
+    //**********def_color************
+
+    //**********color_pressed************
+    public void setSolid_start_color_pressed(@ColorInt int resId) {
+        viewBgControl.pressedStyle.solid_start_color = resId;
+    }
+
+    public void setSolid_end_color_pressed(@ColorInt int resId) {
+        viewBgControl.pressedStyle.solid_end_color = resId;
+    }
+
+    public void setSolid_color_pressed(@ColorInt int resId) {
+        viewBgControl.pressedStyle.solid_start_color = resId;
+        viewBgControl.pressedStyle.solid_end_color = resId;
+    }
+
+    public void setStroke_start_color_pressed(@ColorInt int resId) {
+        viewBgControl.pressedStyle.stroke_start_color = resId;
+    }
+
+    public void setStroke_end_color_pressed(@ColorInt int resId) {
+        viewBgControl.pressedStyle.stroke_end_color = resId;
+    }
+
+    public void setStroke_color_pressed(@ColorInt int resId) {
+        viewBgControl.pressedStyle.stroke_start_color = resId;
+        viewBgControl.pressedStyle.stroke_end_color = resId;
+    }
+
+    public void setTextColor_pressed(@ColorInt int resId) {
+        pressedStyle.textColor = resId;
+    }
+
+    public void setTextSize_pressed(int size) {
+        pressedStyle.textSize = size;
+    }
+
+    public void setText_pressed(String text) {
+        pressedStyle.text = text;
+    }
+    //**********color_pressed************
+
+    //**********color_focused************
+    public void setSolid_start_color_focused(@ColorInt int resId) {
+        viewBgControl.focusedStyle.solid_start_color = resId;
+    }
+
+    public void setSolid_end_color_focused(@ColorInt int resId) {
+        viewBgControl.focusedStyle.solid_end_color = resId;
+    }
+
+    public void setSolid_color_focused(@ColorInt int resId) {
+        viewBgControl.focusedStyle.solid_start_color = resId;
+        viewBgControl.focusedStyle.solid_end_color = resId;
+    }
+
+    public void setStroke_start_color_focused(@ColorInt int resId) {
+        viewBgControl.focusedStyle.stroke_start_color = resId;
+    }
+
+    public void setStroke_end_color_focused(@ColorInt int resId) {
+        viewBgControl.focusedStyle.stroke_end_color = resId;
+    }
+
+    public void setStroke_color_focused(@ColorInt int resId) {
+        viewBgControl.focusedStyle.stroke_start_color = resId;
+        viewBgControl.focusedStyle.stroke_end_color = resId;
+    }
+
+    public void setTextColor_focused(@ColorInt int resId) {
+        focusedStyle.textColor = resId;
+    }
+
+    public void setTextSize_focused(int size) {
+        focusedStyle.textSize = size;
+    }
+
+    public void setText_focused(String text) {
+        focusedStyle.text = text;
+    }
+    //**********color_focused************
+
+    //**********color_checked************
+    public void setSolid_start_color_checked(@ColorInt int resId) {
+        viewBgControl.checkedStyle.solid_start_color = resId;
+    }
+
+    public void setSolid_end_color_checked(@ColorInt int resId) {
+        viewBgControl.checkedStyle.solid_end_color = resId;
+    }
+
+    public void setSolid_color_checked(@ColorInt int resId) {
+        viewBgControl.checkedStyle.solid_start_color = resId;
+        viewBgControl.checkedStyle.solid_end_color = resId;
+    }
+
+    public void setStroke_start_color_checked(@ColorInt int resId) {
+        viewBgControl.checkedStyle.stroke_start_color = resId;
+    }
+
+    public void setStroke_end_color_checked(@ColorInt int resId) {
+        viewBgControl.checkedStyle.stroke_end_color = resId;
+    }
+
+    public void setStroke_color_checked(@ColorInt int resId) {
+        viewBgControl.checkedStyle.stroke_start_color = resId;
+        viewBgControl.checkedStyle.stroke_end_color = resId;
+    }
+
+    public void setTextColor_checked(@ColorInt int resId) {
+        checkedStyle.textColor = resId;
+    }
+
+    public void setTextSize_checked(int size) {
+        checkedStyle.textSize = size;
+    }
+
+    public void setText_checked(String text) {
+        checkedStyle.text = text;
+    }
+    //**********color_checked************
+
+    //**********color_no_enabled************
+    public void setSolid_start_color_no_enabled(@ColorInt int resId) {
+        viewBgControl.noEnabledStyle.solid_start_color = resId;
+    }
+
+    public void setSolid_end_color_no_enabled(@ColorInt int resId) {
+        viewBgControl.noEnabledStyle.solid_end_color = resId;
+    }
+
+    public void setSolid_color_no_enabled(@ColorInt int resId) {
+        viewBgControl.noEnabledStyle.solid_start_color = resId;
+        viewBgControl.noEnabledStyle.solid_end_color = resId;
+    }
+
+    public void setStroke_start_color_no_enabled(@ColorInt int resId) {
+        viewBgControl.noEnabledStyle.stroke_start_color = resId;
+    }
+
+    public void setStroke_end_color_no_enabled(@ColorInt int resId) {
+        viewBgControl.noEnabledStyle.stroke_end_color = resId;
+    }
+
+    public void setStroke_color_no_enabled(@ColorInt int resId) {
+        viewBgControl.noEnabledStyle.stroke_start_color = resId;
+        viewBgControl.noEnabledStyle.stroke_end_color = resId;
+    }
+
+    public void setTextColor_no_enabled(@ColorInt int resId) {
+        noEnabledStyle.textColor = resId;
+    }
+
+    public void setTextSize_no_enabled(int size) {
+        noEnabledStyle.textSize = size;
+    }
+
+    public void setText_no_enabled(String text) {
+        noEnabledStyle.text = text;
+    }
+    //**********color_no_enabled************
 }

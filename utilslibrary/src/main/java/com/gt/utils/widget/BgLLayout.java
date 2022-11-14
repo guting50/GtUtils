@@ -99,4 +99,155 @@ public class BgLLayout extends LinearLayout {
             invalidate();
         }
     }
+
+    //**********color_def************
+    public void setSolid_start_color(@ColorInt int resId) {
+        viewBgControl.defStyle.solid_start_color = resId;
+        invalidateDef();
+    }
+
+    public void setSolid_end_color(@ColorInt int resId) {
+        viewBgControl.defStyle.solid_end_color = resId;
+        invalidateDef();
+    }
+
+    public void setSolid_color(@ColorInt int resId) {
+        viewBgControl.defStyle.solid_start_color = resId;
+        viewBgControl.defStyle.solid_end_color = resId;
+        invalidateDef();
+    }
+
+    public void setStroke_start_color(@ColorInt int resId) {
+        viewBgControl.defStyle.stroke_start_color = resId;
+        invalidateDef();
+    }
+
+    public void setStroke_end_color(@ColorInt int resId) {
+        viewBgControl.defStyle.stroke_end_color = resId;
+        invalidateDef();
+    }
+
+    public void setStroke_color(@ColorInt int resId) {
+        viewBgControl.defStyle.stroke_start_color = resId;
+        viewBgControl.defStyle.stroke_end_color = resId;
+        invalidateDef();
+    }
+
+    public void invalidateDef(){
+        viewBgControl.setCurrentStyle(viewBgControl.defStyle);
+        invalidate();
+    }
+    //**********color_def************
+
+    //**********color_pressed************
+    public void setSolid_start_color_pressed(@ColorInt int resId) {
+        viewBgControl.pressedStyle.solid_start_color = resId;
+    }
+
+    public void setSolid_end_color_pressed(@ColorInt int resId) {
+        viewBgControl.pressedStyle.solid_end_color = resId;
+    }
+
+    public void setSolid_color_pressed(@ColorInt int resId) {
+        viewBgControl.pressedStyle.solid_start_color = resId;
+        viewBgControl.pressedStyle.solid_end_color = resId;
+    }
+
+    public void setStroke_start_color_pressed(@ColorInt int resId) {
+        viewBgControl.pressedStyle.stroke_start_color = resId;
+    }
+
+    public void setStroke_end_color_pressed(@ColorInt int resId) {
+        viewBgControl.pressedStyle.stroke_end_color = resId;
+    }
+
+    public void setStroke_color_pressed(@ColorInt int resId) {
+        viewBgControl.pressedStyle.stroke_start_color = resId;
+        viewBgControl.pressedStyle.stroke_end_color = resId;
+    }
+    //**********color_pressed************
+
+    //**********color_focused************
+    public void setSolid_start_color_focused(@ColorInt int resId) {
+        viewBgControl.focusedStyle.solid_start_color = resId;
+    }
+
+    public void setSolid_end_color_focused(@ColorInt int resId) {
+        viewBgControl.focusedStyle.solid_end_color = resId;
+    }
+
+    public void setSolid_color_focused(@ColorInt int resId) {
+        viewBgControl.focusedStyle.solid_start_color = resId;
+        viewBgControl.focusedStyle.solid_end_color = resId;
+    }
+
+    public void setStroke_start_color_focused(@ColorInt int resId) {
+        viewBgControl.focusedStyle.stroke_start_color = resId;
+    }
+
+    public void setStroke_end_color_focused(@ColorInt int resId) {
+        viewBgControl.focusedStyle.stroke_end_color = resId;
+    }
+
+    public void setStroke_color_focused(@ColorInt int resId) {
+        viewBgControl.focusedStyle.stroke_start_color = resId;
+        viewBgControl.focusedStyle.stroke_end_color = resId;
+    }
+    //**********color_focused************
+
+    //**********color_checked************
+    public void setSolid_start_color_checked(@ColorInt int resId) {
+        viewBgControl.checkedStyle.solid_start_color = resId;
+    }
+
+    public void setSolid_end_color_checked(@ColorInt int resId) {
+        viewBgControl.checkedStyle.solid_end_color = resId;
+    }
+
+    public void setSolid_color_checked(@ColorInt int resId) {
+        viewBgControl.checkedStyle.solid_start_color = resId;
+        viewBgControl.checkedStyle.solid_end_color = resId;
+    }
+
+    public void setStroke_start_color_checked(@ColorInt int resId) {
+        viewBgControl.checkedStyle.stroke_start_color = resId;
+    }
+
+    public void setStroke_end_color_checked(@ColorInt int resId) {
+        viewBgControl.checkedStyle.stroke_end_color = resId;
+    }
+
+    public void setStroke_color_checked(@ColorInt int resId) {
+        viewBgControl.checkedStyle.stroke_start_color = resId;
+        viewBgControl.checkedStyle.stroke_end_color = resId;
+    }
+    //**********color_checked************
+
+    //**********color_no_enabled************
+    public void setSolid_start_color_no_enabled(@ColorInt int resId) {
+        viewBgControl.noEnabledStyle.solid_start_color = resId;
+    }
+
+    public void setSolid_end_color_no_enabled(@ColorInt int resId) {
+        viewBgControl.noEnabledStyle.solid_end_color = resId;
+    }
+
+    public void setSolid_color_no_enabled(@ColorInt int resId) {
+        viewBgControl.noEnabledStyle.solid_start_color = resId;
+        viewBgControl.noEnabledStyle.solid_end_color = resId;
+    }
+
+    public void setStroke_start_color_no_enabled(@ColorInt int resId) {
+        viewBgControl.noEnabledStyle.stroke_start_color = resId;
+    }
+
+    public void setStroke_end_color_no_enabled(@ColorInt int resId) {
+        viewBgControl.noEnabledStyle.stroke_end_color = resId;
+    }
+
+    public void setStroke_color_no_enabled(@ColorInt int resId) {
+        viewBgControl.noEnabledStyle.stroke_start_color = resId;
+        viewBgControl.noEnabledStyle.stroke_end_color = resId;
+    }
+    //**********color_no_enabled************
 }
