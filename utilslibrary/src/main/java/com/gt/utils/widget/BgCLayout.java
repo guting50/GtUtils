@@ -15,6 +15,7 @@ import com.gt.utils.R;
 public class BgCLayout extends ConstraintLayout {
 
     public ViewBgControl viewBgControl;
+    private OnClickListener onClickListener;
 
     public BgCLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -27,6 +28,7 @@ public class BgCLayout extends ConstraintLayout {
     }
 
     public void setOnClickListener(@Nullable OnClickListener l) {
+        this.onClickListener = l;
         super.setOnClickListener(v -> {
             viewBgControl.setChecked(!viewBgControl.checked);
             if (l != null) {
@@ -45,11 +47,12 @@ public class BgCLayout extends ConstraintLayout {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         viewBgControl.dispatchTouchEvent(ev);
-        if (!hasOnClickListeners()) {
-            return !super.dispatchTouchEvent(ev) ? true : super.dispatchTouchEvent(ev);
-        } else {
-            return super.dispatchTouchEvent(ev);
+        if (onClickListener != null) {
+            if (!hasOnClickListeners()) {
+                return !super.dispatchTouchEvent(ev) ? true : super.dispatchTouchEvent(ev);
+            }
         }
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override

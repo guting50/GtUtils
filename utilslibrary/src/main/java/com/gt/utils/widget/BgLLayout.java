@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi;
 public class BgLLayout extends LinearLayout {
 
     public ViewBgControl viewBgControl;
+    private OnClickListener onClickListener;
 
     public BgLLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -30,6 +31,7 @@ public class BgLLayout extends LinearLayout {
     }
 
     public void setOnClickListener(@Nullable OnClickListener l) {
+        this.onClickListener = l;
         super.setOnClickListener(v -> {
             viewBgControl.setChecked(!viewBgControl.checked);
             if (l != null) {
@@ -48,11 +50,12 @@ public class BgLLayout extends LinearLayout {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         viewBgControl.dispatchTouchEvent(ev);
-        if (!hasOnClickListeners()) {
-            return !super.dispatchTouchEvent(ev) ? true : super.dispatchTouchEvent(ev);
-        } else {
-            return super.dispatchTouchEvent(ev);
+        if (onClickListener != null) {
+            if (!hasOnClickListeners()) {
+                return !super.dispatchTouchEvent(ev) ? true : super.dispatchTouchEvent(ev);
+            }
         }
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
