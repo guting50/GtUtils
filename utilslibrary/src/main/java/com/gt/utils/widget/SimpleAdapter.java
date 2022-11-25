@@ -23,7 +23,8 @@ import java.util.Map;
 /**
  * 此适配器适用于简单、单一的列表（每个item的布局都一样）
  * 通过反射获取自定义的Holder
- * 反射创建匿名内部类实例的时候需要外部类的实例
+ * 反射创建匿名内部类实例的时候（最好是使用静态匿名内部类）
+ * 如果不是静态的匿名内部类，需要外部类的实例
  * 如果嵌套的有多层外部类，需要循环创建（尽量避免多层嵌套）
  * 当最外层的外部类为activity且该activity存在于activity堆栈中时，
  * ***不能直接newInstance，需要从堆栈中获取，如果堆栈中没有就newInstance
@@ -83,11 +84,13 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
                 ct.setAccessible(true);
                 return (VHolder) ct.newInstance(LayoutInflater.from(context).inflate(resId, parent, false));
             }
-            if (clazz.getEnclosingClass() == null) {//如果不是匿名内部类
+
+            try {
+                //如果不是匿名内部类 或者是静态的匿名内部类
                 Constructor ct = clazz.getDeclaredConstructor(ViewGroup.class);
                 ct.setAccessible(true);
-                return (VHolder) ct.newInstance(parent);
-            } else {
+                return (SimpleAdapter.VHolder) ct.newInstance(parent);
+            } catch (NoSuchMethodException e) {
                 List<Class> clss = new ArrayList<>();
                 Class enclosingClass = clazz.getEnclosingClass();
                 clss.add(enclosingClass);
@@ -111,7 +114,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
                 }
                 Constructor ct = clazz.getDeclaredConstructor(result.getClass(), ViewGroup.class);
                 ct.setAccessible(true);
-                return (VHolder) ct.newInstance(result, parent);
+                return (SimpleAdapter.VHolder) ct.newInstance(result, parent);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -152,7 +155,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
             super(parent);
         }
 
-        public VHolder(@NonNull View itemView) {
+        private VHolder(@NonNull View itemView) {
             super(itemView);
         }
 
