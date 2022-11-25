@@ -155,7 +155,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
             super(parent);
         }
 
-        private VHolder(@NonNull View itemView) {
+        public VHolder(@NonNull View itemView) {
             super(itemView);
         }
 
