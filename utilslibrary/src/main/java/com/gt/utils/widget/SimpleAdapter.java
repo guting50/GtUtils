@@ -48,6 +48,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
     private int resId;
     private List data = new ArrayList<>();
     private Object obj;
+    private OnBindHolderListener onBindHolderListener;
 
     public SimpleAdapter(Context context, int resId) {
         this.clazz = SimpleAdapter.DataBindingHolder.class;
@@ -89,7 +90,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
                 //如果不是匿名内部类 或者是静态的匿名内部类
                 Constructor ct = clazz.getDeclaredConstructor(ViewGroup.class);
                 ct.setAccessible(true);
-                return (SimpleAdapter.VHolder) ct.newInstance(parent);
+                return (VHolder) ct.newInstance(parent);
             } catch (NoSuchMethodException e) {
                 List<Class> clss = new ArrayList<>();
                 Class enclosingClass = clazz.getEnclosingClass();
@@ -114,7 +115,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
                 }
                 Constructor ct = clazz.getDeclaredConstructor(result.getClass(), ViewGroup.class);
                 ct.setAccessible(true);
-                return (SimpleAdapter.VHolder) ct.newInstance(result, parent);
+                return (VHolder) ct.newInstance(result, parent);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -126,6 +127,10 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
     public void onBindViewHolder(@NonNull VHolder holder, int position) {
         holder.setData(data);
         holder.onBindViewHolder(data.get(position), position);
+
+        if (onBindHolderListener != null) {
+            onBindHolderListener.onBindViewHolder(holder, data.get(position), position);
+        }
     }
 
     @Override
@@ -146,6 +151,14 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
 
     public List getData() {
         return data;
+    }
+
+    public void setOnBindHolderListener(OnBindHolderListener listener) {
+        this.onBindHolderListener = listener;
+    }
+
+    public interface OnBindHolderListener<T> {
+        public void onBindViewHolder(VHolder holder, T item, int position);
     }
 
     public abstract static class VHolder<T> extends RecyclerView.ViewHolder {
@@ -170,10 +183,10 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.VHolder> {
         public abstract void onBindViewHolder(T item, int position);
     }
 
-    public static class DataBindingHolder<T> extends SimpleAdapter.VHolder<T> {
+    public static class DataBindingHolder<T> extends VHolder<T> {
         private List data = new ArrayList<>();
 
-        private ViewDataBinding mBinding;
+        public ViewDataBinding mBinding;
 
         public DataBindingHolder(@NonNull View itemView) {
             super(itemView);
