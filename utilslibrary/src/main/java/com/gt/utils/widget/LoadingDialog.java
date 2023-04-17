@@ -61,6 +61,7 @@ public class LoadingDialog {
             window.setAttributes(lp);
             //去掉动画，避免切换页面时闪烁
 //            window.setWindowAnimations(R.style.PopWindowAnimStyle);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
             if (!isAlone) {
                 closeDialog();
