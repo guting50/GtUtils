@@ -18,6 +18,8 @@ import java.util.concurrent.TimeUnit;
 
 public class GtHttpLoggingInterceptor implements Interceptor {
     private static final Charset UTF8 = Charset.forName("UTF-8");
+    public static int totalLength = 140;//计算每行最长的长度
+    public static int padding = 12;//左右间距
 
     public enum Level {
         /**
@@ -292,8 +294,6 @@ public class GtHttpLoggingInterceptor implements Interceptor {
      * @param list
      */
     public static synchronized void printLog(List<String> list) {
-        int totalLength = 140;//计算每行最长的长度
-        int padding = 12;//左右间距
         StringBuilder sb = new StringBuilder();
 //        for (String str : list) {
 //            if (str.contains("\n")) {//有换行的拆分处理
