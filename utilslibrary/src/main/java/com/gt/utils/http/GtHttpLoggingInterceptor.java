@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public class GtHttpLoggingInterceptor implements Interceptor {
     private static final Charset UTF8 = Charset.forName("UTF-8");
-    public static int totalLength = 140;//计算每行最长的长度
+    public static int totalLength = 120;//计算每行最长的长度
     public static int padding = 12;//左右间距
 
     public enum Level {
